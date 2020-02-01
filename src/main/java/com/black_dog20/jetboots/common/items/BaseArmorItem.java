@@ -4,8 +4,12 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import com.black_dog20.jetboots.Jetboots;
+
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.item.Item;
+import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.ArmorItem;
+import net.minecraft.item.IArmorMaterial;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -13,12 +17,12 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class ItemBase extends Item {
-	
-	public ItemBase() {
-		super(ModItems.ITEM_GROUP.maxStackSize(1));
-	}
+public class BaseArmorItem extends ArmorItem {
 
+	public BaseArmorItem(IArmorMaterial materialIn, EquipmentSlotType slot, Properties builder) {
+		super(materialIn, slot, builder);
+	}
+	
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn, String text) {
 		super.addInformation(stack, worldIn, tooltip, flagIn);
