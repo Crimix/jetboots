@@ -1,0 +1,151 @@
+buildscript {
+    repositories {
+        jcenter()
+        maven {
+			name = "forge"
+			url = "http://files.minecraftforge.net/maven"
+		}
+		maven {
+            name = "sonatype"
+            url = "https://oss.sonatype.org/content/repositories/snapshots/"
+        }
+        maven {
+      		url "https://plugins.gradle.org/m2/"
+    	}
+    }
+    dependencies {
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
+        classpath 'gradle.plugin.com.matthewprenger:CurseGradle:1.4.0'
+    }
+}
+
+apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'com.matthewprenger.cursegradle'
+apply plugin: 'eclipse'
+//Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
+
+ext.priv = parseConfig(file('private.properties'))
+
+version = version_major + '.' + version_minor + '.' + version_patch
+group = "${mod_group}" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = mod_archivesBaseName + "-" + mc_version
+
+sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
+
+minecraft {
+    mappings channel: 'snapshot', version: "${mcp_mappings}"
+    // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
+    
+    // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+
+    // Default run configurations.
+    // These can be tweaked, removed, or duplicated as needed.
+    runs {
+        client = {
+        	workingDirectory project.file('eclipse/assets')
+            // recommended logging data for a userdev environment
+            properties 'forge.logging.markers': 'SCAN,REGISTRIES,REGISTRYDUMP'
+            // recommended logging level for the console
+            properties 'forge.logging.console.level': 'debug'
+            mods {
+                ServerTabInfo {
+                    source sourceSets.main
+                }
+            }
+        }
+        server = {
+            workingDirectory project.file('eclipse/assets')
+            // recommended logging data for a userdev environment
+            properties 'forge.logging.markers': 'SCAN,REGISTRIES,REGISTRYDUMP'
+            // recommended logging level for the console
+            properties 'forge.logging.console.level': 'debug'
+            mods {
+                ServerTabInfo {
+                    source sourceSets.main
+                }
+            }
+        }
+        data {
+            workingDirectory project.file('eclipse/assets')
+            // Recommended logging data for a userdev environment
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            // Recommended logging level for the console
+            property 'forge.logging.console.level', 'debug'
+            args '--mod', 'ServerTabInfo', '--all', '--output', file('src/generated/resources/')
+            mods {
+                ServerTabInfo {
+                    source sourceSets.main
+                }
+            }
+        }
+    }
+}
+
+repositories {
+  jcenter()
+  mavenCentral()
+  maven {
+    // location of the maven that hosts JEI files
+    name = "Progwml6 maven"
+    url = "http://dvs1.progwml6.com/files/maven"
+  }
+  maven {
+    // location of a maven mirror for JEI files, as a fallback
+    name = "ModMaven"
+    url = "modmaven.k-4u.nl"
+  }
+  maven {
+	name = "forge"
+	url = "http://files.minecraftforge.net/maven"
+  }
+}
+
+dependencies {
+	minecraft([
+		group  : "${project.forge_group}",
+		name   : "forge",
+		version: "${project.mc_version}-${project.forge_version}"
+	])
+	
+	compileOnly fg.deobf("mezz.jei:jei-${jei_version}:api")
+    runtimeOnly fg.deobf("mezz.jei:jei-${jei_version}")
+}
+
+processResources {
+    exclude '**/*.xcf'
+    from(sourceSets.main.resources.srcDirs) {
+        include 'META-INF/mods.toml'
+
+        expand 'version': project.version, 'mc_version': mc_version, 'forge_version': forge_version_toml
+    }
+    
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'META-INF/mods.toml'
+    }
+}
+
+jar {
+    manifest {
+        attributes(["Specification-Title": "jetboots",
+                    "Specification-Vendor": "black_dog20",
+                    "Specification-Version": "1",  // We are version 1 of ourselves
+                    "Implementation-Title": "Jet Boots",
+                    "Implementation-Version": "${version}",
+                    "Implementation-Vendor" :"black_dog20",
+                    "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")],)
+    }
+}
+
+def clearFile(File f) {
+    f.withWriter  {
+    	writer -> writer.write('')
+    }
+}
+
+def parseConfig(File config) {
+    config.withReader {
+        def prop = new Properties()
+        prop.load(it)
+        return (new ConfigSlurper().parse(prop))
+    }
+}

@@ -1,0 +1,20 @@
+{
+    "_comment": "Items",
+	"item.jukeman:jukeman": "Jukeman",
+	
+	"_comment": "Tooltips",
+	"tooltips.jukeman:jukeman": "Portable record player",
+	
+	"_comment": "Tab",
+	"itemGroup.jukeman": "Jukeman",
+	
+	"_comment": "Config",
+	"config.jukeman.title": "Jukeman",
+	"config.jukeman.server": "Server",
+	"config.jukeman.client": "Client",
+	
+	"_comment": "MSG",
+	"record.loading": "Loading: %s",
+	"record.resuming": "Resuming: %s",
+	"record.paused": "Paused: %s"
+}
