@@ -1,0 +1,20 @@
+{
+  "type": "jetboots:jetboots_shaped_nbt",
+  "pattern": [
+    "iii",
+    "iji",
+    "iii"
+  ],
+  "key": {
+    "i": {
+      "tag": "forge:leather"
+    },
+    "j": {
+      "item": "jetboots:jetboots"
+    }
+  },
+  "result": {
+    "item": "jetboots:jetboots",
+    "nbt": "{jetboots-upgrade-leather:1b}"
+  }
+}

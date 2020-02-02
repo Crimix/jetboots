@@ -27,7 +27,7 @@ public class ModGenerator {
     private static void registerClientProviders(DataGenerator generator, GatherDataEvent event) {
         ExistingFileHelper helper = event.getExistingFileHelper();
 
-        generator.addProvider(new GeneratorItemModels(generator, helper));
+        //generator.addProvider(new GeneratorItemModels(generator, helper));
         generator.addProvider(new GeneratorLanguage(generator));
     }
 

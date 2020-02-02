@@ -3,11 +3,10 @@ package com.black_dog20.jetboots.common.util;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 
+import static com.black_dog20.jetboots.common.util.NBTTags.*;
+
 public class JetBootsProperties {
     private JetBootsProperties() {}
-
-    private static final String KEY_MODE = "jetboots-mode";
-    private static final String KEY_SPEED = "jetboots-speed";
 
     public static boolean setMode(ItemStack jetboots, boolean mode) {
     	if(jetboots.isEmpty()) {

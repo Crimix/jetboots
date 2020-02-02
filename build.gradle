@@ -42,38 +42,38 @@ minecraft {
     // These can be tweaked, removed, or duplicated as needed.
     runs {
         client = {
-        	workingDirectory project.file('eclipse/assets')
+        	workingDirectory project.file("run/client")
             // recommended logging data for a userdev environment
             properties 'forge.logging.markers': 'SCAN,REGISTRIES,REGISTRYDUMP'
             // recommended logging level for the console
             properties 'forge.logging.console.level': 'debug'
             mods {
-                ServerTabInfo {
+                jetboots {
                     source sourceSets.main
                 }
             }
         }
         server = {
-            workingDirectory project.file('eclipse/assets')
+            workingDirectory project.file("run/server")
             // recommended logging data for a userdev environment
             properties 'forge.logging.markers': 'SCAN,REGISTRIES,REGISTRYDUMP'
             // recommended logging level for the console
             properties 'forge.logging.console.level': 'debug'
             mods {
-                ServerTabInfo {
+                jetboots {
                     source sourceSets.main
                 }
             }
         }
         data {
-            workingDirectory project.file('eclipse/assets')
+            workingDirectory project.file("run/data")
             // Recommended logging data for a userdev environment
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
-            args '--mod', 'ServerTabInfo', '--all', '--output', file('src/generated/resources/')
+            args '--mod', 'jetboots', '--all', '--output', file("src/generated/resources/"), '--existing', file('src/main/resources/')
             mods {
-                ServerTabInfo {
+                jetboots {
                     source sourceSets.main
                 }
             }

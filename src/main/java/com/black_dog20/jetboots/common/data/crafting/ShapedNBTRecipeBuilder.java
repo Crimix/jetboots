@@ -99,25 +99,11 @@ public class ShapedNBTRecipeBuilder extends ShapedRecipeBuilder {
 		}
 	}
 
-	private void validate(final ResourceLocation id) {
-		if (!result.hasTag() && itemGroup == null) {
-			throw new IllegalStateException("Enhanced Shaped Recipe " + id + " has no NBT and no custom item group - use ShapedRecipeBuilder instead");
-		}
-
-		if (itemGroup == null && result.getItem().getGroup() == null) {
-			throw new IllegalStateException("Enhanced Shaped Recipe " + id + " has result " + result + " with no item group - use ShapedNBTRecipeBuilder.itemGroup to specify one");
-		}
-	}
-
-
 	@Override
 	public void build(final Consumer<IFinishedRecipe> consumer, final ResourceLocation id) {
 		try {
 			// Perform the super class's validation
 			VALIDATE.invoke(this, id);
-
-			// Perform our validation
-			validate(id);
 
 			final Advancement.Builder advancementBuilder = ((Advancement.Builder) ADVANCEMENT_BUILDER.get(this))
 					.withParentId(new ResourceLocation("minecraft", "recipes/root"))
@@ -146,7 +132,7 @@ public class ShapedNBTRecipeBuilder extends ShapedRecipeBuilder {
 
 			consumer.accept(new Result(id, result, group, pattern, key, advancementBuilder, advancementID));
 		} catch (final IllegalAccessException | InvocationTargetException e) {
-			throw new RuntimeException("Failed to build Enhanced Shaped Recipe " + id, e);
+			throw new RuntimeException("Failed to build Shaped NBT Recipe " + id, e);
 		}
 	}
 

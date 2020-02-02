@@ -3,6 +3,7 @@ package com.black_dog20.jetboots.common.events;
 import com.black_dog20.jetboots.Jetboots;
 import com.black_dog20.jetboots.common.util.JetBootsProperties;
 import com.black_dog20.jetboots.common.util.JetbootsUtil;
+import com.black_dog20.jetboots.common.util.NBTTags;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
@@ -32,12 +33,12 @@ public class FlyingHandler {
 				if(JetbootsUtil.hasJetBoots(player)) {
 					player.abilities.allowFlying = true;
 					ItemStack jetboots = JetbootsUtil.getJetBoots(player);
-					if(!player.getPersistentData().getBoolean("had-jetboots-boots")) {
-						player.getPersistentData().putBoolean("had-jetboots-boots", true);
+					if(!player.getPersistentData().getBoolean(NBTTags.HAD_BOOTS_BEFORE)) {
+						player.getPersistentData().putBoolean(NBTTags.HAD_BOOTS_BEFORE, true);
 					}		
 					if(!player.onGround && JetBootsProperties.getMode(jetboots) && (getAltitudeAboveGround(player) > 0.9 || player.isInWater())) {
 						if(player.abilities.isFlying) {
-							player.getPersistentData().putBoolean("was-jetboots-flying", true);
+							player.getPersistentData().putBoolean(NBTTags.WAS_FLYING_BEFORE, true);
 							player.abilities.isFlying = false;
 						}
 						player.abilities.isFlying = false;
@@ -57,16 +58,16 @@ public class FlyingHandler {
 						}
 					} else if(player.isElytraFlying()) {
 						player.func_226568_ek_();
-						if(player.getPersistentData().getBoolean("was-jetboots-flying")) {
+						if(player.getPersistentData().getBoolean(NBTTags.WAS_FLYING_BEFORE)) {
 							player.abilities.isFlying = true;
-							player.getPersistentData().remove("was-jetboots-flying");
+							player.getPersistentData().remove(NBTTags.WAS_FLYING_BEFORE);
 						}
 					}
 				} else {
-					if(player.getPersistentData().getBoolean("had-jetboots-boots")) {
+					if(player.getPersistentData().getBoolean(NBTTags.HAD_BOOTS_BEFORE)) {
 						player.abilities.allowFlying = false;
 						player.abilities.isFlying = false;
-						player.getPersistentData().putBoolean("had-jetboots-boots", true);
+						player.getPersistentData().putBoolean(NBTTags.HAD_BOOTS_BEFORE, true);
 					}
 				}
 			}

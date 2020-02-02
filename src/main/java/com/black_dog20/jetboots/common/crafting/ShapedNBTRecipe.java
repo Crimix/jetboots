@@ -37,12 +37,7 @@ public class ShapedNBTRecipe extends ShapedRecipe {
 		return output;
 	}
 
-	@Override
-	public IRecipeSerializer<?> getSerializer() {
-		return ModCrafting.SHAPED_NBT.get();
-	}
-
-	public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<ShapedNBTRecipe> {
+	/*public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<ShapedNBTRecipe> {
 		@Override
 		public ShapedNBTRecipe read(final ResourceLocation recipeID, final JsonObject json) {
 			final String group = JSONUtils.getString(json, "group", "");
@@ -80,5 +75,5 @@ public class ShapedNBTRecipe extends ShapedRecipe {
 
 			buffer.writeItemStack(recipe.getRecipeOutput());
 		}
-	}
+	}*/
 }

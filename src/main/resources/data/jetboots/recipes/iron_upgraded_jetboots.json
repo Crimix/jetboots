@@ -1,0 +1,23 @@
+{
+  "type": "jetboots:jetboots_shaped_nbt",
+  "pattern": [
+    "iii",
+    "iji",
+    "iii"
+  ],
+  "key": {
+    "i": {
+      "tag": "forge:ingots/iron"
+    },
+    "j": {
+      "type": "forge:nbt",
+      "item": "jetboots:jetboots",
+      "count": 1,
+      "nbt": "{jetboots-upgrade-leather:1b}"
+    }
+  },
+  "result": {
+    "item": "jetboots:jetboots",
+    "nbt": "{jetboots-upgrade-iron:1b}"
+  }
+}

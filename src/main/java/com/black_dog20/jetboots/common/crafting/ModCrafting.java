@@ -12,6 +12,6 @@ public class ModCrafting {
 	
 	public static final DeferredRegister<IRecipeSerializer<?>> RECIPE_SERIALIZERS = new DeferredRegister<>(ForgeRegistries.RECIPE_SERIALIZERS, Jetboots.MOD_ID);
     
-    public static final RegistryObject<IRecipeSerializer<?>> SHAPED_NBT = RECIPE_SERIALIZERS.register("jetboots_shaped_nbt", ()-> new ShapedNBTRecipe.Serializer().setRegistryName(new ResourceLocation(Jetboots.MOD_ID, "jetboots_shaped_nbt")));
+    public static final RegistryObject<IRecipeSerializer<?>> SHAPED_NBT = RECIPE_SERIALIZERS.register("jetboots_shaped_nbt", ()-> new ShapedNBTRecipe.Serializer());
 	
 }
