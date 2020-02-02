@@ -35,4 +35,59 @@ public class JetBootsProperties {
         CompoundNBT compound = jetboots.getOrCreateTag();
         return !compound.contains(KEY_SPEED) ? setSpeed(jetboots, false) : compound.getBoolean(KEY_SPEED);
     }
+    
+    public static boolean getLeatherArmorUpgrade(ItemStack jetboots) {
+        CompoundNBT compound = jetboots.getOrCreateTag();
+        return !compound.contains(UPGRAE_ARMOR_LEATHER) ? false : compound.getBoolean(UPGRAE_ARMOR_LEATHER);
+    }
+
+    public static boolean getIronArmorUpgrade(ItemStack jetboots) {
+        CompoundNBT compound = jetboots.getOrCreateTag();
+        return !compound.contains(UPGRAE_ARMOR_IRON) ? false : compound.getBoolean(UPGRAE_ARMOR_IRON);
+    }
+    
+    public static boolean getDiamondArmorUpgrade(ItemStack jetboots) {
+        CompoundNBT compound = jetboots.getOrCreateTag();
+        return !compound.contains(UPGRAE_ARMOR_DIAMOND) ? false : compound.getBoolean(UPGRAE_ARMOR_DIAMOND);
+    }
+    
+    public static int getCustomArmorUpgrade(ItemStack jetboots) {
+        CompoundNBT compound = jetboots.getOrCreateTag();
+        return !compound.contains(UPGRAE_ARMOR_CUSTOM) ? -1 : compound.getInt(UPGRAE_ARMOR_CUSTOM);
+    }
+    
+    public static int getCustomToughnessUpgrade(ItemStack jetboots) {
+        CompoundNBT compound = jetboots.getOrCreateTag();
+        return !compound.contains(UPGRAE_TOUGHNESS_CUSTOM) ? -1 : compound.getInt(UPGRAE_TOUGHNESS_CUSTOM);
+    }
+    
+    public static String getCustomArmorUpgradeName(ItemStack jetboots) {
+        CompoundNBT compound = jetboots.getOrCreateTag();
+        return !compound.contains(UPGRAE_ARMOR_CUSTOM_NAME) ? "" : compound.getString(UPGRAE_ARMOR_CUSTOM_NAME);
+    }
+    
+    public static boolean getEngineUpgrade(ItemStack jetboots) {
+        CompoundNBT compound = jetboots.getOrCreateTag();
+        return !compound.contains(UPGRAE_ENGINE) ? false : compound.getBoolean(UPGRAE_ENGINE);
+    }
+    
+    public static boolean getThrusterUpgrade(ItemStack jetboots) {
+        CompoundNBT compound = jetboots.getOrCreateTag();
+        return !compound.contains(UPGRAE_THRUSTER) ? false : compound.getBoolean(UPGRAE_THRUSTER);
+    }
+    
+    public static boolean getShockUpgrade(ItemStack jetboots) {
+        CompoundNBT compound = jetboots.getOrCreateTag();
+        return !compound.contains(UPGRAE_SHOCK_ABSORBER) ? false : compound.getBoolean(UPGRAE_SHOCK_ABSORBER);
+    }
+    
+    public static boolean getUnderWaterUpgrade(ItemStack jetboots) {
+        CompoundNBT compound = jetboots.getOrCreateTag();
+        return !compound.contains(UPGRAE_UNDERWATER) ? false : compound.getBoolean(UPGRAE_UNDERWATER);
+    }
+    
+    public static boolean getSoulboundUpgrade(ItemStack jetboots) {
+        CompoundNBT compound = jetboots.getOrCreateTag();
+        return !compound.contains(UPGRAE_SOULBOUND) ? false : compound.getBoolean(UPGRAE_SOULBOUND);
+    }
 }

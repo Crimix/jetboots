@@ -21,7 +21,23 @@ public class GeneratorLanguage extends LanguageProvider {
         //addBlock(ModBlocks., "");
 
         // Tooltips
-        addPrefixed("tooltip.single.insert", "Insert");
+        addPrefixed("tooltip.item.show_upgrades","Hold %s to show upgrades");
+        addPrefixed("tooltip.item.upgrades","Upgrades");
+        addPrefixed("tooltip.item.custom_armor_upgrade","Armored: %s");
+        addPrefixed("tooltip.item.leather_armor_upgrade","Armored: Leather");
+        addPrefixed("tooltip.item.iron_armor_upgrade","Armored: Iron");
+        addPrefixed("tooltip.item.diamond_armor_upgrade","Armored: Diamond");
+        addPrefixed("tooltip.item.engine_upgrade","Upgraded engine");
+        addPrefixed("tooltip.item.thruster_upgrade","Upgraded thruster");
+        addPrefixed("tooltip.item.shock_absorber_upgrade","Shock absorber");
+        addPrefixed("tooltip.item.underwater_upgrade","Water proofing");
+        addPrefixed("tooltip.item.soulbound_upgrade","Soulbound");
+        
+        addPrefixed("tooltip.item.flight_mode","Flight mode: %s");
+        addPrefixed("tooltip.item.speed_mode","Speed: %s");
+        addPrefixed("tooltip.item.normal","Normal");
+        addPrefixed("tooltip.item.super","Super");
+        addPrefixed("tooltip.item.elytra","Elytra");
 
     }
 
