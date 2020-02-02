@@ -1,6 +1,7 @@
 package com.black_dog20.jetboots.common.util;
 
 import javax.annotation.Nonnull;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
@@ -10,7 +11,6 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
-import net.minecraft.world.dimension.DimensionType;
 
 /**
  * Pos3D - a way of performing operations on objects in a three dimensional environment.

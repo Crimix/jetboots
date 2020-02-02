@@ -10,11 +10,14 @@ import com.black_dog20.jetboots.common.util.Pos3D;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+@OnlyIn(Dist.CLIENT)
 @Mod.EventBusSubscriber(modid = Jetboots.MOD_ID)
 public class ClientHandler {
 
@@ -36,7 +39,7 @@ public class ClientHandler {
 		if (event.phase == TickEvent.Phase.END) {
 			if (mc.player != null && mc.world != null && JetbootsUtil.isFlying(mc.player)) {
 				spawnJetParticals(mc, player);
-				if (!JetbootSound.playing(mc.player.getEntityId())) {
+				if (!JetbootSound.playing(mc.player.getEntityId()) && !player.isInWater()) {
 					mc.getSoundHandler().play(new JetbootSound(mc.player));
 				}
 			}

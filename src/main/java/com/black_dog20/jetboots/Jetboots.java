@@ -5,7 +5,9 @@ import org.apache.logging.log4j.Logger;
 
 import com.black_dog20.jetboots.client.keybinds.Keybinds;
 import com.black_dog20.jetboots.client.sound.ModSounds;
+import com.black_dog20.jetboots.common.crafting.ModCrafting;
 import com.black_dog20.jetboots.common.items.ModItems;
+import com.black_dog20.jetboots.common.network.PacketHandler;
 
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -38,6 +40,7 @@ public class Jetboots
 
 		ModItems.ITEMS.register(event);
 		ModSounds.SOUNDS.register(event);
+		ModCrafting.RECIPE_SERIALIZERS.register(event);
 
 		event.addListener(this::setup);
 		event.addListener(this::setupClient);
@@ -54,10 +57,11 @@ public class Jetboots
 	}
 
 	private void setup(final FMLCommonSetupEvent event){
+        PacketHandler.register();
 	}
 
 	private void setupClient(final FMLClientSetupEvent event) {
-		ClientRegistry.registerKeyBinding(Keybinds.keyEngine);
+		ClientRegistry.registerKeyBinding(Keybinds.keyMode);
 		ClientRegistry.registerKeyBinding(Keybinds.keySpeed);
 	}
 

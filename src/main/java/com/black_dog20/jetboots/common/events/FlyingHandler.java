@@ -1,11 +1,13 @@
 package com.black_dog20.jetboots.common.events;
 
 import com.black_dog20.jetboots.Jetboots;
+import com.black_dog20.jetboots.common.util.JetBootsProperties;
 import com.black_dog20.jetboots.common.util.JetbootsUtil;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
@@ -15,7 +17,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.player.PlayerFlyableFallEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -30,26 +31,42 @@ public class FlyingHandler {
 				PlayerEntity player = event.player;
 				if(JetbootsUtil.hasJetBoots(player)) {
 					player.abilities.allowFlying = true;
-					if(!player.getPersistentData().getBoolean("jetboots-boots")) {
-						player.getPersistentData().putBoolean("jetboots-boots", true);
-					}
-					if(!player.onGround && !player.abilities.isFlying && (getAltitudeAboveGround(player) > 0.9 || player.isInWater())) {
+					ItemStack jetboots = JetbootsUtil.getJetBoots(player);
+					if(!player.getPersistentData().getBoolean("had-jetboots-boots")) {
+						player.getPersistentData().putBoolean("had-jetboots-boots", true);
+					}		
+					if(!player.onGround && JetBootsProperties.getMode(jetboots) && (getAltitudeAboveGround(player) > 0.9 || player.isInWater())) {
+						if(player.abilities.isFlying) {
+							player.getPersistentData().putBoolean("was-jetboots-flying", true);
+							player.abilities.isFlying = false;
+						}
+						player.abilities.isFlying = false;
 						player.func_226567_ej_();
 						Vec3d vec3d = player.getLookVec();
 						double d0 = 1.5D;
 						double d1 = 0.1D;
 						double d2 = 0.5D;
-						double d3 = 4D;
+						double d3 = 3D;
 						Vec3d vec3d1 = player.getMotion();
-						player.setMotion(vec3d1.add(vec3d.x * d1 + (vec3d.x * d0 - vec3d1.x) * d2, vec3d.y * d1 + (vec3d.y * d0 - vec3d1.y) * d2, vec3d.z * d1 + (vec3d.z * d0 - vec3d1.z) * d2));
+						if(!player.isInWater()) {
+							double speed = JetBootsProperties.getSpeed(jetboots) ? d3 : d0;
+							player.setMotion(vec3d1.add(vec3d.x * d1 + (vec3d.x * speed - vec3d1.x) * d2, vec3d.y * d1 + (vec3d.y * speed - vec3d1.y) * d2, vec3d.z * d1 + (vec3d.z * speed - vec3d1.z) * d2));
+						} else {
+							double speed = JetBootsProperties.getSpeed(jetboots) ? d0 : d2;
+							player.setMotion(vec3d1.add(vec3d.x * d1 + (vec3d.x * speed - vec3d1.x) * d2, vec3d.y * d1 + (vec3d.y * speed - vec3d1.y) * d2, vec3d.z * d1 + (vec3d.z * speed - vec3d1.z) * d2));
+						}
 					} else if(player.isElytraFlying()) {
 						player.func_226568_ek_();
+						if(player.getPersistentData().getBoolean("was-jetboots-flying")) {
+							player.abilities.isFlying = true;
+							player.getPersistentData().remove("was-jetboots-flying");
+						}
 					}
 				} else {
-					if(player.getPersistentData().getBoolean("jetboots-boots")) {
+					if(player.getPersistentData().getBoolean("had-jetboots-boots")) {
 						player.abilities.allowFlying = false;
 						player.abilities.isFlying = false;
-						player.getPersistentData().putBoolean("jetboots-boots", true);
+						player.getPersistentData().putBoolean("had-jetboots-boots", true);
 					}
 				}
 			}

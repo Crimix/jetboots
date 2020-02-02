@@ -5,6 +5,8 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 import com.black_dog20.jetboots.Jetboots;
+import com.black_dog20.jetboots.common.network.packets.PacketUpdateFlightMode;
+import com.black_dog20.jetboots.common.network.packets.PacketUpdateFlightSpeed;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -29,7 +31,8 @@ public class PacketHandler {
 	            .simpleChannel();
 
 	    public static void register() {
-	        //registerMessage(PacketSyncBootCapability.class, PacketSyncBootCapability::encode, PacketSyncBootCapability::decode, PacketSyncBootCapability.Handler::handle);
+	        registerMessage(PacketUpdateFlightMode.class, PacketUpdateFlightMode::encode, PacketUpdateFlightMode::decode, PacketUpdateFlightMode.Handler::handle);
+	        registerMessage(PacketUpdateFlightSpeed.class, PacketUpdateFlightSpeed::encode, PacketUpdateFlightSpeed::decode, PacketUpdateFlightSpeed.Handler::handle);
 	    }
 
 	    public static void sendTo(Object msg, ServerPlayerEntity player) {
