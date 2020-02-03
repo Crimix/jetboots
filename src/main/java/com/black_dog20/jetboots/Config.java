@@ -20,10 +20,20 @@ public class Config {
 
     public static ForgeConfigSpec COMMON_CONFIG;
     public static ForgeConfigSpec CLIENT_CONFIG;
+    
+    public static ForgeConfigSpec.BooleanValue USE_POWER;
+    public static ForgeConfigSpec.IntValue DEFAULT_MAX_POWER;
+    public static ForgeConfigSpec.IntValue POWER_COST;
 
     static {
 
         COMMON_BUILDER.comment("General settings").push(CATEGORY_GENERAL);
+        USE_POWER = COMMON_BUILDER.comment("Does jetboots use power?")
+        		.define("usePower", false);
+        DEFAULT_MAX_POWER = COMMON_BUILDER.comment("Default maximum power for jetboots")
+                .defineInRange("defaultMaxPower", 100000, 0, Integer.MAX_VALUE);
+        POWER_COST = COMMON_BUILDER.comment("Cost per tick to use jetboots")
+                .defineInRange("powerCost", 100, 0, Integer.MAX_VALUE);
         COMMON_BUILDER.pop();
 
 

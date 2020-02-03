@@ -1,5 +1,6 @@
 package com.black_dog20.jetboots.common.events;
 
+import com.black_dog20.jetboots.Config;
 import com.black_dog20.jetboots.Jetboots;
 import com.black_dog20.jetboots.common.util.JetBootsProperties;
 import com.black_dog20.jetboots.common.util.JetbootsUtil;
@@ -17,6 +18,8 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerFlyableFallEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -30,13 +33,14 @@ public class FlyingHandler {
 		if(event.phase == TickEvent.Phase.END) { //END phase is important, otherwise this won't work because vanilla keeps resetting the elytra state!
 			if(event.player instanceof PlayerEntity) {
 				PlayerEntity player = event.player;
-				if(JetbootsUtil.hasJetBoots(player)) {
+				if(JetbootsUtil.canFlyWithBoots(player)) {
 					player.abilities.allowFlying = true;
 					ItemStack jetboots = JetbootsUtil.getJetBoots(player);
 					if(!player.getPersistentData().getBoolean(NBTTags.HAD_BOOTS_BEFORE)) {
 						player.getPersistentData().putBoolean(NBTTags.HAD_BOOTS_BEFORE, true);
 					}		
-					if(!player.onGround && JetBootsProperties.getMode(jetboots) && (getAltitudeAboveGround(player) > 0.9 || player.isInWater())) {
+					if(JetBootsProperties.getEngineUpgrade(jetboots) && !player.onGround && JetBootsProperties.getMode(jetboots) && (getAltitudeAboveGround(player) > 0.9 || player.isInWater())) {
+						drawpower(jetboots);
 						if(player.abilities.isFlying) {
 							player.getPersistentData().putBoolean(NBTTags.WAS_FLYING_BEFORE, true);
 							player.abilities.isFlying = false;
@@ -62,6 +66,8 @@ public class FlyingHandler {
 							player.abilities.isFlying = true;
 							player.getPersistentData().remove(NBTTags.WAS_FLYING_BEFORE);
 						}
+					} else if(player.abilities.isFlying) {
+						drawpower(jetboots);
 					}
 				} else {
 					if(player.getPersistentData().getBoolean(NBTTags.HAD_BOOTS_BEFORE)) {
@@ -72,6 +78,12 @@ public class FlyingHandler {
 				}
 			}
 		}
+	}
+
+	private static void drawpower(ItemStack jetboots) {
+		IEnergyStorage energy = jetboots.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
+		if(energy != null)
+			energy.extractEnergy(Config.POWER_COST.get(), false);
 	}
 
 	public static double getAltitudeAboveGround(PlayerEntity player)
