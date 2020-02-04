@@ -19,4 +19,6 @@ public class NBTTags {
 	public static final String UPGRAE_SHOCK_ABSORBER = "jetboots-upgrade-shock-absorber";
 	public static final String UPGRAE_UNDERWATER = "jetboots-upgrade-underwater";
 	public static final String UPGRAE_SOULBOUND = "jetboots-upgrade-soulbound";
+	public static final String UPGRAE_ADVANCED_BATTERY = "jetboots-upgrade-advanced-battery";
+	public static final String UPGRAE_SUPER_BATTERY = "jetboots-upgrade-super-battery";
 }
