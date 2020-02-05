@@ -23,11 +23,6 @@ public class GeneratorItemModels extends ItemModelProvider {
         });
     }
 
-    private void registerBlockModel(Block block) {
-        String path = block.getRegistryName().getPath();
-        getBuilder(path).parent(new ModelFile.UncheckedModelFile(modLoc("block/" + path)));
-    }
-
     @Override
     public String getName() {
         return "Item Models";

@@ -1,5 +1,7 @@
 package com.black_dog20.jetboots.common.util;
 
+import com.black_dog20.jetboots.Config;
+
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.energy.EnergyStorage;
 
@@ -18,17 +20,13 @@ public class EnergyItem extends EnergyStorage {
     }
 
     private static int getMaxCapacity(ItemStack stack, int capacity) {
-        if( !stack.hasTag() || !stack.getTag().contains("max_energy") )
+        if( !stack.hasTag() || !stack.getTag().contains("max_energy") ) {
+            stack.getOrCreateTag().putInt("max_energy", capacity);
+            stack.getOrCreateTag().putInt("energy_mult", 1);
             return capacity;
+        }
 
-        return stack.getTag().getInt("max_energy");
-    }
-
-    public void updatedMaxEnergy(int max) {
-        stack.getOrCreateTag().putInt("max_energy", max);
-        this.capacity = max;
-        
-        this.receiveEnergy(1, false);
+        return stack.getTag().getInt("max_energy")*stack.getTag().getInt("energy_mult");
     }
 
     @Override
@@ -45,6 +43,30 @@ public class EnergyItem extends EnergyStorage {
         stack.getOrCreateTag().putInt("energy", amount);
 
         return amount;
+    }
+    
+    @Override
+    public int getMaxEnergyStored()
+    {
+        return capacity;
+    }
+    
+    @Override
+    public boolean canExtract()
+    {
+        if(Config.USE_POWER.get()) {
+        	return super.canExtract();
+        }
+        return false;
+    }
+
+    @Override
+    public boolean canReceive()
+    {
+        if(Config.USE_POWER.get()) {
+        	return super.canReceive();
+        }
+        return false;
     }
 }
     

@@ -81,9 +81,11 @@ public class FlyingHandler {
 	}
 
 	private static void drawpower(ItemStack jetboots) {
-		IEnergyStorage energy = jetboots.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
-		if(energy != null)
-			energy.extractEnergy(Config.POWER_COST.get(), false);
+		if(Config.USE_POWER.get()) {
+			IEnergyStorage energy = jetboots.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
+			if(energy != null)
+				energy.extractEnergy(Config.POWER_COST.get(), false);
+		}
 	}
 
 	public static double getAltitudeAboveGround(PlayerEntity player)

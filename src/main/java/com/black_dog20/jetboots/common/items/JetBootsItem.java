@@ -170,6 +170,7 @@ public class JetBootsItem extends BaseArmorItem {
 	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundNBT nbt) {
 		return new CapabilityEnergyProvider(stack, Config.DEFAULT_MAX_POWER.get());
 	}
+	
 
 	@Override
 	public double getDurabilityForDisplay(ItemStack stack) {
