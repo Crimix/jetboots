@@ -1,0 +1,23 @@
+{
+  "type": "jetboots:jetboots_shaped_nbt",
+  "pattern": [
+    "iii",
+    "iji",
+    "iii"
+  ],
+  "key": {
+    "i": {
+      "tag": "forge:gems/lapis"
+    },
+    "j": {
+      "type": "forge:nbt",
+      "item": "jetboots:jetboots",
+      "count": 1,
+      "nbt": "{jetboots-upgrade-advanced-battery:1b}"
+    }
+  },
+  "result": {
+    "item": "jetboots:jetboots",
+    "nbt": "{jetboots-upgrade-super-battery:1b,energy_mult:6}"
+  }
+}

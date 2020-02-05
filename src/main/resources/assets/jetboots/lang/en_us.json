@@ -1,6 +1,10 @@
 {
   "item.jetboots.jetboots": "Jet Boots",
   "itemGroup.mininggadgets": "Mining Gadgets",
+  "jetboots.jetboots.tooltip.item.stored_energy": "Energy mode: %d/%d",
+  "jetboots.tooltip.item.advanced": "Advanced",
+  "jetboots.tooltip.item.basic": "Basic",
+  "jetboots.tooltip.item.battery_upgrade": "Battery: %s",
   "jetboots.tooltip.item.custom_armor_upgrade": "Armored: %s",
   "jetboots.tooltip.item.diamond_armor_upgrade": "Armored: Diamond",
   "jetboots.tooltip.item.elytra": "Elytra",
