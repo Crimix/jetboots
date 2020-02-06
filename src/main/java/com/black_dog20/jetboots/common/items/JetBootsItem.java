@@ -14,6 +14,7 @@ import com.google.common.collect.Multimap;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.client.util.InputMappings;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -73,6 +74,11 @@ public class JetBootsItem extends BaseArmorItem {
 			return 4;
 		else
 			return 0;
+	}
+	
+	@Override
+	public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
+		return "jetboots:textures/armor/jetboots.png";
 	}
 
 	@Override
