@@ -1,20 +1,32 @@
 {
-  "type": "jetboots:jetboots_shaped_nbt",
-  "pattern": [
-    "iii",
-    "iji",
-    "iii"
-  ],
-  "key": {
-    "i": {
-      "tag": "forge:dusts/redstone"
-    },
-    "j": {
-      "item": "jetboots:jetboots"
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "jetboots:battery_on"
+        }
+      ],
+      "recipe": {
+        "type": "jetboots:jetboots_shaped_nbt",
+        "pattern": [
+          "iii",
+          "iji",
+          "iii"
+        ],
+        "key": {
+          "i": {
+            "tag": "forge:dusts/redstone"
+          },
+          "j": {
+            "item": "jetboots:jetboots"
+          }
+        },
+        "result": {
+          "item": "jetboots:jetboots",
+          "nbt": "{jetboots-upgrade-advanced-battery:1b,energy_mult:3}"
+        }
+      }
     }
-  },
-  "result": {
-    "item": "jetboots:jetboots",
-    "nbt": "{jetboots-upgrade-advanced-battery:1b,energy_mult:3}"
-  }
+  ]
 }

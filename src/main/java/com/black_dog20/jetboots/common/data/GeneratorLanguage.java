@@ -14,7 +14,7 @@ public class GeneratorLanguage extends LanguageProvider {
 
     @Override
     protected void addTranslations() {
-        add("itemGroup.mininggadgets", "Mining Gadgets");
+        add("itemGroup.jetboots", "Jet Boots");
         addItem(ModItems.JET_BOOTS, "Jet Boots");
 
         // Blocks
