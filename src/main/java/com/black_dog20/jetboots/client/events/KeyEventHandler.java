@@ -6,6 +6,7 @@ import com.black_dog20.jetboots.common.network.PacketHandler;
 import com.black_dog20.jetboots.common.network.packets.PacketUpdateFlightMode;
 import com.black_dog20.jetboots.common.network.packets.PacketUpdateFlightSpeed;
 
+import net.minecraft.client.Minecraft;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.InputEvent.KeyInputEvent;
@@ -19,10 +20,12 @@ public class KeyEventHandler {
 	@SubscribeEvent
 	public static void onEvent(KeyInputEvent event)
 	{
-		if(Keybinds.keyMode.isPressed()) {
-			PacketHandler.sendToServer(new PacketUpdateFlightMode());
-		} else if(Keybinds.keySpeed.isPressed()) {
-			PacketHandler.sendToServer(new PacketUpdateFlightSpeed());
+		if(Minecraft.getInstance().currentScreen == null) {
+			if(Keybinds.keyMode.isPressed()) {
+				PacketHandler.sendToServer(new PacketUpdateFlightMode());
+			} else if(Keybinds.keySpeed.isPressed()) {
+				PacketHandler.sendToServer(new PacketUpdateFlightSpeed());
+			}
 		}
 	}
 }

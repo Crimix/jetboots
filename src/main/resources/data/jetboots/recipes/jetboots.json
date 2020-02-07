@@ -1,22 +1,25 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "rlr",
-    "dgd",
-    "rlr"
+    "oeo",
+    "oio",
+    "bgb"
   ],
   "key": {
-    "r": {
-      "tag": "forge:dusts/redstone"
+    "o": {
+      "tag": "forge:obsidian"
+    },
+    "e": {
+      "tag": "forge:gems/emerald"
+    },
+    "i": {
+      "item": "minecraft:iron_boots"
+    },
+    "b": {
+      "tag": "forge:rods/blaze"
     },
     "g": {
-      "tag": "forge:glass_panes"
-    },
-    "l": {
-      "tag": "forge:gems/lapis"
-    },
-    "d": {
-      "tag": "forge:gems/diamond"
+      "tag": "forge:ingots/gold"
     }
   },
   "result": {

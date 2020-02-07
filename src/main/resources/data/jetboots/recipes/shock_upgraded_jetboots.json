@@ -1,16 +1,19 @@
 {
   "type": "jetboots:shaped_nbt",
   "pattern": [
-    "idi",
-    "iji",
-    "iii"
+    "odo",
+    "wjw",
+    "www"
   ],
   "key": {
-    "i": {
-      "tag": "forge:leather"
+    "w": {
+      "tag": "minecraft:wool"
     },
     "j": {
       "item": "jetboots:jetboots"
+    },
+    "o": {
+      "tag": "forge:obsidian"
     },
     "d": {
       "tag": "forge:gems/diamond"
@@ -18,6 +21,6 @@
   },
   "result": {
     "item": "jetboots:jetboots",
-    "nbt": "{jetboots-upgrade-leather:1b}"
+    "nbt": "{jetboots-upgrade-shock-absorber:1b}"
   }
 }

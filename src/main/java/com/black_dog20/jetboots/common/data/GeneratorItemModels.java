@@ -3,11 +3,9 @@ package com.black_dog20.jetboots.common.data;
 import com.black_dog20.jetboots.Jetboots;
 import com.black_dog20.jetboots.common.items.ModItems;
 
-import net.minecraft.block.Block;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.client.model.generators.ExistingFileHelper;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
-import net.minecraftforge.client.model.generators.ModelFile;
 
 public class GeneratorItemModels extends ItemModelProvider {
     public GeneratorItemModels(DataGenerator generator, ExistingFileHelper existingFileHelper) {

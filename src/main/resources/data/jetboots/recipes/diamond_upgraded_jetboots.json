@@ -7,20 +7,20 @@
   ],
   "key": {
     "i": {
-      "tag": "forge:ingots/iron"
+      "tag": "forge:gems/diamond"
     },
     "j": {
       "type": "jetboots:nbt",
       "item": "jetboots:jetboots",
       "count": 1,
-      "nbt": "{jetboots-upgrade-leather:1b}"
+      "nbt": "{jetboots-upgrade-iron:1b}"
     },
     "d": {
-      "tag": "forge:gems/diamond"
+      "tag": "forge:gems/emerald"
     }
   },
   "result": {
     "item": "jetboots:jetboots",
-    "nbt": "{jetboots-upgrade-iron:1b}"
+    "nbt": "{jetboots-upgrade-diamond:1b}"
   }
 }

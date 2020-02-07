@@ -1,16 +1,19 @@
 {
   "type": "jetboots:shaped_nbt",
   "pattern": [
-    "idi",
-    "iji",
-    "iii"
+    "opo",
+    "djd",
+    "opo"
   ],
   "key": {
-    "i": {
-      "tag": "forge:leather"
+    "p": {
+      "item": "minecraft:piston"
     },
     "j": {
       "item": "jetboots:jetboots"
+    },
+    "o": {
+      "tag": "forge:obsidian"
     },
     "d": {
       "tag": "forge:gems/diamond"
@@ -18,6 +21,6 @@
   },
   "result": {
     "item": "jetboots:jetboots",
-    "nbt": "{jetboots-upgrade-leather:1b}"
+    "nbt": "{jetboots-upgrade-engine:1b}"
   }
 }

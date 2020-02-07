@@ -1,19 +1,25 @@
 {
   "type": "jetboots:shaped_nbt",
   "pattern": [
-    "idi",
-    "iji",
-    "iii"
+    "ogo",
+    "djd",
+    "hhh"
   ],
   "key": {
-    "i": {
-      "tag": "forge:ingots/iron"
+    "h": {
+      "item": "minecraft:hopper"
     },
     "j": {
       "type": "jetboots:nbt",
       "item": "jetboots:jetboots",
       "count": 1,
-      "nbt": "{jetboots-upgrade-leather:1b}"
+      "nbt": "{jetboots-upgrade-engine:1b}"
+    },
+    "o": {
+      "tag": "forge:obsidian"
+    },
+    "g": {
+      "tag": "forge:ingots/gold"
     },
     "d": {
       "tag": "forge:gems/diamond"
@@ -21,6 +27,6 @@
   },
   "result": {
     "item": "jetboots:jetboots",
-    "nbt": "{jetboots-upgrade-iron:1b}"
+    "nbt": "{jetboots-upgrade-thruster:1b}"
   }
 }

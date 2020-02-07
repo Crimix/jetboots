@@ -6,6 +6,7 @@ import java.util.UUID;
 import javax.annotation.Nullable;
 
 import com.black_dog20.jetboots.Config;
+import com.black_dog20.jetboots.client.keybinds.Keybinds;
 import com.black_dog20.jetboots.common.capabilities.CapabilityEnergyProvider;
 import com.black_dog20.jetboots.common.util.JetBootsProperties;
 import com.black_dog20.jetboots.common.util.Utils;
@@ -54,7 +55,7 @@ public class JetBootsItem extends BaseArmorItem {
 	}
 
 	private double getJetBootsDamageReduceAmount(ItemStack stack) {
-		
+
 		if(JetBootsProperties.getCustomArmorUpgrade(stack) >= 0)
 			return JetBootsProperties.getCustomArmorUpgrade(stack);
 		else if(JetBootsProperties.getDiamondArmorUpgrade(stack))
@@ -75,7 +76,7 @@ public class JetBootsItem extends BaseArmorItem {
 		else
 			return 0;
 	}
-	
+
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
 		return "jetboots:textures/armor/jetboots.png";
@@ -88,6 +89,17 @@ public class JetBootsItem extends BaseArmorItem {
 		Minecraft mc = Minecraft.getInstance();
 
 		if(JetBootsProperties.getEngineUpgrade(stack) || JetBootsProperties.getThrusterUpgrade(stack)) {
+
+			if(JetBootsProperties.getEngineUpgrade(stack)) {
+				tooltip.add(new TranslationTextComponent("jetboots.tooltip.item.change_flight",
+						Keybinds.keyMode.getLocalizedName().toUpperCase())
+						.applyTextStyle(TextFormatting.GRAY));
+			}
+			if(JetBootsProperties.getThrusterUpgrade(stack)) {
+				tooltip.add(new TranslationTextComponent("jetboots.tooltip.item.change_speed",
+						Keybinds.keySpeed.getLocalizedName().toUpperCase())
+						.applyTextStyle(TextFormatting.GRAY));
+			}
 
 			if(JetBootsProperties.getEngineUpgrade(stack)) {
 				String mode = "";
@@ -110,10 +122,10 @@ public class JetBootsItem extends BaseArmorItem {
 			}
 			if(Config.USE_POWER.get()) {
 				stack.getCapability(CapabilityEnergy.ENERGY, null)
-                .ifPresent(energy -> tooltip.add(
-                        new TranslationTextComponent("jetboots.tooltip.item.stored_energy",
-                                Utils.format(energy.getEnergyStored()),
-                                Utils.format(energy.getMaxEnergyStored())).applyTextStyles(TextFormatting.GREEN)));
+				.ifPresent(energy -> tooltip.add(
+						new TranslationTextComponent("jetboots.tooltip.item.stored_energy",
+								Utils.format(energy.getEnergyStored()),
+								Utils.format(energy.getMaxEnergyStored())).applyTextStyles(TextFormatting.GREEN)));
 			}
 
 			tooltip.add(new TranslationTextComponent(""));
@@ -148,7 +160,7 @@ public class JetBootsItem extends BaseArmorItem {
 				}
 				tooltip.add(new TranslationTextComponent("jetboots.tooltip.item.battery_upgrade", mode).applyTextStyle(TextFormatting.WHITE));
 			}
-			
+
 			if(JetBootsProperties.getEngineUpgrade(stack))
 				tooltip.add(new TranslationTextComponent("jetboots.tooltip.item.engine_upgrade").applyTextStyle(TextFormatting.GREEN));
 			if(JetBootsProperties.getThrusterUpgrade(stack))
@@ -161,7 +173,7 @@ public class JetBootsItem extends BaseArmorItem {
 				tooltip.add(new TranslationTextComponent("jetboots.tooltip.item.soulbound_upgrade").applyTextStyle(TextFormatting.LIGHT_PURPLE));
 		}
 	}
-	
+
 	@Override
 	public boolean showDurabilityBar(ItemStack stack) {
 		if(Config.USE_POWER.get()) {
@@ -176,7 +188,7 @@ public class JetBootsItem extends BaseArmorItem {
 	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundNBT nbt) {
 		return new CapabilityEnergyProvider(stack, Config.DEFAULT_MAX_POWER.get());
 	}
-	
+
 
 	@Override
 	public double getDurabilityForDisplay(ItemStack stack) {

@@ -1,16 +1,19 @@
 {
   "type": "jetboots:shaped_nbt",
   "pattern": [
-    "idi",
-    "iji",
-    "iii"
+    "djd",
+    "iii",
+    "lll"
   ],
   "key": {
-    "i": {
-      "tag": "forge:leather"
+    "l": {
+      "tag": "forge:gems/lapis"
     },
     "j": {
       "item": "jetboots:jetboots"
+    },
+    "i": {
+      "item": "minecraft:iron_bars"
     },
     "d": {
       "tag": "forge:gems/diamond"
@@ -18,6 +21,6 @@
   },
   "result": {
     "item": "jetboots:jetboots",
-    "nbt": "{jetboots-upgrade-leather:1b}"
+    "nbt": "{jetboots-upgrade-underwater:1b}"
   }
 }

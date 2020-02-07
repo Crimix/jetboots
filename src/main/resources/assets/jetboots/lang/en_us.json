@@ -1,10 +1,11 @@
 {
   "item.jetboots.jetboots": "Jet Boots",
-  "itemGroup.mininggadgets": "Mining Gadgets",
-  "jetboots.jetboots.tooltip.item.stored_energy": "Energy mode: %d/%d",
+  "itemGroup.jetboots": "Jet Boots",
   "jetboots.tooltip.item.advanced": "Advanced",
   "jetboots.tooltip.item.basic": "Basic",
   "jetboots.tooltip.item.battery_upgrade": "Battery: %s",
+  "jetboots.tooltip.item.change_flight": "Use %s to change flight mode",
+  "jetboots.tooltip.item.change_speed": "Use %s to change speed",
   "jetboots.tooltip.item.custom_armor_upgrade": "Armored: %s",
   "jetboots.tooltip.item.diamond_armor_upgrade": "Armored: Diamond",
   "jetboots.tooltip.item.elytra": "Elytra",
@@ -17,8 +18,9 @@
   "jetboots.tooltip.item.show_upgrades": "Hold %s to show upgrades",
   "jetboots.tooltip.item.soulbound_upgrade": "Soulbound",
   "jetboots.tooltip.item.speed_mode": "Speed: %s",
+  "jetboots.tooltip.item.stored_energy": "Energy mode: %d/%d",
   "jetboots.tooltip.item.super": "Super",
   "jetboots.tooltip.item.thruster_upgrade": "Upgraded thruster",
-  "jetboots.tooltip.item.underwater_upgrade": "Water proofing",
+  "jetboots.tooltip.item.underwater_upgrade": "Water proof",
   "jetboots.tooltip.item.upgrades": "Upgrades"
 }

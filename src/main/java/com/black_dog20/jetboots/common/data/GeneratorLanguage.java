@@ -30,12 +30,14 @@ public class GeneratorLanguage extends LanguageProvider {
         addPrefixed("tooltip.item.engine_upgrade","Upgraded engine");
         addPrefixed("tooltip.item.thruster_upgrade","Upgraded thruster");
         addPrefixed("tooltip.item.shock_absorber_upgrade","Shock absorber");
-        addPrefixed("tooltip.item.underwater_upgrade","Water proofing");
+        addPrefixed("tooltip.item.underwater_upgrade","Water proof");
         addPrefixed("tooltip.item.soulbound_upgrade","Soulbound");
         addPrefixed("tooltip.item.battery_upgrade","Battery: %s");
         
+        addPrefixed("tooltip.item.change_flight","Use %s to change flight mode");
+        addPrefixed("tooltip.item.change_speed","Use %s to change speed");
         addPrefixed("tooltip.item.flight_mode","Flight mode: %s");
-        addPrefixed("jetboots.tooltip.item.stored_energy","Energy mode: %d/%d");
+        addPrefixed("tooltip.item.stored_energy","Energy mode: %d/%d");
         addPrefixed("tooltip.item.speed_mode","Speed: %s");
         addPrefixed("tooltip.item.normal","Normal");
         addPrefixed("tooltip.item.basic","Basic");

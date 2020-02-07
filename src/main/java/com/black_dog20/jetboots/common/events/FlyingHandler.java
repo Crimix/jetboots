@@ -39,7 +39,8 @@ public class FlyingHandler {
 					if(!player.getPersistentData().getBoolean(NBTTags.HAD_BOOTS_BEFORE)) {
 						player.getPersistentData().putBoolean(NBTTags.HAD_BOOTS_BEFORE, true);
 					}		
-					if(JetBootsProperties.getEngineUpgrade(jetboots) && !player.onGround && JetBootsProperties.getMode(jetboots) && (getAltitudeAboveGround(player) > 0.9 || player.isInWater())) {
+					
+					if(JetBootsProperties.getEngineUpgrade(jetboots) && JetBootsProperties.getMode(jetboots) && (getAltitudeAboveGround(player) > 1.9 || player.isInWater())) {
 						drawpower(jetboots);
 						if(player.abilities.isFlying) {
 							player.getPersistentData().putBoolean(NBTTags.WAS_FLYING_BEFORE, true);
@@ -100,13 +101,16 @@ public class FlyingHandler {
 
 	@SubscribeEvent
 	public static void onPlayerFlyFall(PlayerFlyableFallEvent event) {
-		if(true) { //Change later to logic such that upgrades for the boots removes fall damage
-			PlayerEntity player = event.getPlayer();
-			int i = calc(player, event.getDistance(), event.getMultiplier());
-			if (i > 0) {
-				player.playSound(getFallSound(i), 1.0F, 1.0F);
-				playFallSound(player);
-				player.attackEntityFrom(DamageSource.FALL, (float)i);
+		PlayerEntity player = event.getPlayer();
+		if(JetbootsUtil.hasJetBoots(player)) {
+			ItemStack jetboots = JetbootsUtil.getJetBoots(player);
+			if(!JetBootsProperties.getShockUpgrade(jetboots)) {
+				int i = calc(player, event.getDistance(), event.getMultiplier());
+				if (i > 0) {
+					player.playSound(getFallSound(i), 1.0F, 1.0F);
+					playFallSound(player);
+					player.attackEntityFrom(DamageSource.FALL, (float)i);
+				}
 			}
 		}
 	}

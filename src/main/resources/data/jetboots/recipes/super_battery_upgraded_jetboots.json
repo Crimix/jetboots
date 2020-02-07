@@ -8,21 +8,24 @@
         }
       ],
       "recipe": {
-        "type": "jetboots:jetboots_shaped_nbt",
+        "type": "jetboots:shaped_nbt",
         "pattern": [
-          "iii",
+          "idi",
           "iji",
-          "iii"
+          "idi"
         ],
         "key": {
           "i": {
-            "tag": "forge:gems/lapis"
+            "tag": "forge:storage_blocks/lapis"
           },
           "j": {
-            "type": "forge:nbt",
+            "type": "jetboots:nbt",
             "item": "jetboots:jetboots",
             "count": 1,
             "nbt": "{jetboots-upgrade-advanced-battery:1b}"
+          },
+          "d": {
+            "tag": "forge:storage_blocks/diamond"
           }
         },
         "result": {
