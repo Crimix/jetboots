@@ -32,8 +32,10 @@ public class PacketUpdateFlightSpeed {
                 ItemStack stack = JetbootsUtil.getJetBoots(player);
                 
                 if(!stack.isEmpty())
-                	if(JetBootsProperties.getThrusterUpgrade(stack))
+                	if(JetBootsProperties.getThrusterUpgrade(stack)) {
                 		JetBootsProperties.setSpeed(stack, !JetBootsProperties.getSpeed(stack));
+                		player.sendStatusMessage(JetbootsUtil.getFlightSpeedText(player), true);
+                	}
             });
 
             ctx.get().setPacketHandled(true);

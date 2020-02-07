@@ -14,7 +14,6 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.crafting.IIngredientSerializer;
 import net.minecraftforge.common.crafting.NBTIngredient;
-import net.minecraftforge.common.crafting.NBTIngredient.Serializer;
 
 public class IngredientNBT extends NBTIngredient{
 

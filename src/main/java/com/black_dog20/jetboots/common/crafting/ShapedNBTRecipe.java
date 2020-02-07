@@ -1,8 +1,5 @@
 package com.black_dog20.jetboots.common.crafting;
 
-import java.util.Map;
-
-import com.black_dog20.jetboots.Jetboots;
 import com.black_dog20.jetboots.common.items.JetBootsItem;
 import com.google.gson.JsonObject;
 

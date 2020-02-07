@@ -9,6 +9,7 @@ import com.black_dog20.jetboots.Config;
 import com.black_dog20.jetboots.client.keybinds.Keybinds;
 import com.black_dog20.jetboots.common.capabilities.CapabilityEnergyProvider;
 import com.black_dog20.jetboots.common.util.JetBootsProperties;
+import com.black_dog20.jetboots.common.util.JetbootsUtil;
 import com.black_dog20.jetboots.common.util.Utils;
 import com.google.common.collect.Multimap;
 
@@ -102,23 +103,11 @@ public class JetBootsItem extends BaseArmorItem {
 			}
 
 			if(JetBootsProperties.getEngineUpgrade(stack)) {
-				String mode = "";
-				if(JetBootsProperties.getMode(stack)) {
-					mode = new TranslationTextComponent("jetboots.tooltip.item.elytra").applyTextStyle(TextFormatting.LIGHT_PURPLE).getFormattedText();
-				} else {
-					mode = new TranslationTextComponent("jetboots.tooltip.item.normal").applyTextStyle(TextFormatting.GREEN).getFormattedText();
-				}
-				tooltip.add(new TranslationTextComponent("jetboots.tooltip.item.flight_mode", mode).applyTextStyle(TextFormatting.WHITE));
+				tooltip.add(JetbootsUtil.getFlightModeText(stack));
 			}
 
 			if(JetBootsProperties.getThrusterUpgrade(stack)) {
-				String mode = "";
-				if(JetBootsProperties.getSpeed(stack)) {
-					mode = new TranslationTextComponent("jetboots.tooltip.item.super").applyTextStyle(TextFormatting.RED).getFormattedText();
-				} else {
-					mode = new TranslationTextComponent("jetboots.tooltip.item.normal").applyTextStyle(TextFormatting.GREEN).getFormattedText();
-				}
-				tooltip.add(new TranslationTextComponent("jetboots.tooltip.item.speed_mode", mode).applyTextStyle(TextFormatting.WHITE));
+				tooltip.add(JetbootsUtil.getFlightSpeedText(stack));
 			}
 			if(Config.USE_POWER.get()) {
 				stack.getCapability(CapabilityEnergy.ENERGY, null)

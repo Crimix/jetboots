@@ -32,8 +32,10 @@ public class PacketUpdateFlightMode {
                 ItemStack stack = JetbootsUtil.getJetBoots(player);
                 
                 if(!stack.isEmpty())
-                	if(JetBootsProperties.getEngineUpgrade(stack))
+                	if(JetBootsProperties.getEngineUpgrade(stack)) {
                 		JetBootsProperties.setMode(stack, !JetBootsProperties.getMode(stack));
+                		player.sendStatusMessage(JetbootsUtil.getFlightModeText(player), true);
+                	}
             });
 
             ctx.get().setPacketHandled(true);

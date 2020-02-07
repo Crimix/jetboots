@@ -6,6 +6,10 @@ import com.black_dog20.jetboots.common.items.JetBootsItem;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
@@ -40,5 +44,41 @@ public class JetbootsUtil {
 					return false;
 			}
 		}
+	}
+	
+	public static ITextComponent getFlightModeText(PlayerEntity player) {
+        ItemStack stack = JetbootsUtil.getJetBoots(player);
+        return getFlightModeText(stack);
+	}
+	
+	public static ITextComponent getFlightModeText(ItemStack stack) {
+        if(!stack.isEmpty()) {
+        	String mode = "";
+    		if(JetBootsProperties.getMode(stack)) {
+    			mode = new TranslationTextComponent("jetboots.tooltip.item.elytra").applyTextStyle(TextFormatting.LIGHT_PURPLE).getFormattedText();
+    		} else {
+    			mode = new TranslationTextComponent("jetboots.tooltip.item.normal").applyTextStyle(TextFormatting.GREEN).getFormattedText();
+    		}
+    		return new TranslationTextComponent("jetboots.tooltip.item.flight_mode", mode).applyTextStyle(TextFormatting.WHITE);
+        }
+        return new StringTextComponent("");
+	}
+	
+	public static ITextComponent getFlightSpeedText(PlayerEntity player) {
+        ItemStack stack = JetbootsUtil.getJetBoots(player);
+        return getFlightSpeedText(stack);
+	}
+	
+	public static ITextComponent getFlightSpeedText(ItemStack stack) {
+        if(!stack.isEmpty()) {
+        	String mode = "";
+			if(JetBootsProperties.getSpeed(stack)) {
+				mode = new TranslationTextComponent("jetboots.tooltip.item.super").applyTextStyle(TextFormatting.RED).getFormattedText();
+			} else {
+				mode = new TranslationTextComponent("jetboots.tooltip.item.normal").applyTextStyle(TextFormatting.GREEN).getFormattedText();
+			}
+			return new TranslationTextComponent("jetboots.tooltip.item.speed_mode", mode).applyTextStyle(TextFormatting.WHITE);
+        }
+        return new StringTextComponent("");
 	}
 }
