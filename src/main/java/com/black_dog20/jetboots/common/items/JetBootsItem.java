@@ -89,8 +89,15 @@ public class JetBootsItem extends BaseArmorItem {
 
 		Minecraft mc = Minecraft.getInstance();
 
-		if(JetBootsProperties.getEngineUpgrade(stack) || JetBootsProperties.getThrusterUpgrade(stack)) {
+		if(Config.USE_POWER.get()) {
+			stack.getCapability(CapabilityEnergy.ENERGY, null)
+			.ifPresent(energy -> tooltip.add(
+					new TranslationTextComponent("jetboots.tooltip.item.stored_energy",
+							Utils.format(energy.getEnergyStored()),
+							Utils.format(energy.getMaxEnergyStored())).applyTextStyles(TextFormatting.GREEN)));
+		}
 
+		if(JetBootsProperties.getEngineUpgrade(stack) || JetBootsProperties.getThrusterUpgrade(stack)) {
 			if(JetBootsProperties.getEngineUpgrade(stack)) {
 				tooltip.add(new TranslationTextComponent("jetboots.tooltip.item.change_flight",
 						Keybinds.keyMode.getLocalizedName().toUpperCase())
@@ -108,13 +115,6 @@ public class JetBootsItem extends BaseArmorItem {
 
 			if(JetBootsProperties.getThrusterUpgrade(stack)) {
 				tooltip.add(JetbootsUtil.getFlightSpeedText(stack));
-			}
-			if(Config.USE_POWER.get()) {
-				stack.getCapability(CapabilityEnergy.ENERGY, null)
-				.ifPresent(energy -> tooltip.add(
-						new TranslationTextComponent("jetboots.tooltip.item.stored_energy",
-								Utils.format(energy.getEnergyStored()),
-								Utils.format(energy.getMaxEnergyStored())).applyTextStyles(TextFormatting.GREEN)));
 			}
 
 			tooltip.add(new TranslationTextComponent(""));
@@ -143,7 +143,7 @@ public class JetBootsItem extends BaseArmorItem {
 				if(JetBootsProperties.getSuperBattery(stack)) {
 					mode = new TranslationTextComponent("jetboots.tooltip.item.super").applyTextStyle(TextFormatting.LIGHT_PURPLE).getFormattedText();
 				} else if(JetBootsProperties.getAdvancedBattery(stack)) {
-					mode = new TranslationTextComponent("jetboots.tooltip.item.advanced").applyTextStyle(TextFormatting.BOLD).getFormattedText();
+					mode = new TranslationTextComponent("jetboots.tooltip.item.advanced").applyTextStyle(TextFormatting.RED).getFormattedText();
 				} else {
 					mode = new TranslationTextComponent("jetboots.tooltip.item.basic").applyTextStyle(TextFormatting.GREEN).getFormattedText();
 				}

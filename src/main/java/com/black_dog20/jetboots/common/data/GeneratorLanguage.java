@@ -38,7 +38,7 @@ public class GeneratorLanguage extends LanguageProvider {
         addPrefixed("tooltip.item.change_flight","Use %s to change flight mode");
         addPrefixed("tooltip.item.change_speed","Use %s to change speed");
         addPrefixed("tooltip.item.flight_mode","Flight mode: %s");
-        addPrefixed("tooltip.item.stored_energy","Energy mode: %d/%d");
+        addPrefixed("tooltip.item.stored_energy","Energy: %d/%d");
         addPrefixed("tooltip.item.speed_mode","Speed: %s");
         addPrefixed("tooltip.item.normal","Normal");
         addPrefixed("tooltip.item.basic","Basic");

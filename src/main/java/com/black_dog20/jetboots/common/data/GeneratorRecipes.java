@@ -147,7 +147,6 @@ public class GeneratorRecipes extends RecipeProvider {
 				ShapedNBTRecipeBuilder.shapedNBTRecipe(
 						NBTItemBuilder.init(JET_BOOTS.get())
 						.addTag(NBTTags.UPGRAE_ADVANCED_BATTERY, true)
-						.addTag("energy_mult", 3)
 						.build())
 				.key('i', Tags.Items.STORAGE_BLOCKS_REDSTONE)
 				.key('j', JET_BOOTS.get())
@@ -177,7 +176,6 @@ public class GeneratorRecipes extends RecipeProvider {
 				ShapedNBTRecipeBuilder.shapedNBTRecipe(
 						NBTItemBuilder.init(JET_BOOTS.get())
 						.addTag(NBTTags.UPGRAE_SUPER_BATTERY, true)
-						.addTag("energy_mult", 6)
 						.build())
 				.key('i', Tags.Items.STORAGE_BLOCKS_LAPIS)
 				.key('j', IngredientNBT.fromNBTStack(getJetBootWithTag(NBTTags.UPGRAE_ADVANCED_BATTERY)))
