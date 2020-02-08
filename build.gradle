@@ -16,11 +16,13 @@ buildscript {
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
         classpath 'gradle.plugin.com.matthewprenger:CurseGradle:1.4.0'
+        classpath "com.wynprice.cursemaven:CurseMaven:2.1.1"
     }
 }
 
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'com.matthewprenger.cursegradle'
+apply plugin: "com.wynprice.cursemaven"
 apply plugin: 'eclipse'
 //Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 
@@ -87,17 +89,25 @@ repositories {
   maven {
     // location of the maven that hosts JEI files
     name = "Progwml6 maven"
-    url = "http://dvs1.progwml6.com/files/maven"
+    url = "https://dvs1.progwml6.com/files/maven/"
   }
   maven {
     // location of a maven mirror for JEI files, as a fallback
     name = "ModMaven"
-    url = "modmaven.k-4u.nl"
+    url = "https://modmaven.k-4u.nl/"
   }
   maven {
 	name = "forge"
-	url = "http://files.minecraftforge.net/maven"
+	url = "https://files.minecraftforge.net/maven/"
   }
+  maven {
+  	name = "theillusivec4"
+    url = "https://maven.theillusivec4.top/"
+  }
+  maven {
+	name = "Curse"
+	url = "https://minecraft.curseforge.com/api/maven/"
+  }  
 }
 
 dependencies {
@@ -109,6 +119,10 @@ dependencies {
 	
 	compileOnly fg.deobf("mezz.jei:jei-${jei_version}:api")
     runtimeOnly fg.deobf("mezz.jei:jei-${jei_version}")
+    //compileOnly fg.deobf("curse.maven:angelring:${angelring_version}")
+    //runtimeOnly fg.deobf("curse.maven:angelring:${angelring_version}")
+    //compileOnly fg.deobf("top.theillusivec4.caelus:caelus:${caelus_version}")
+	//runtimeOnly fg.deobf("top.theillusivec4.caelus:caelus:${caelus_version}") 
 }
 
 processResources {
