@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "jetboots:muffled_upgraded_jetboots"
+    ]
+  },
+  "criteria": {
+    "has_jetboots": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "jetboots:jetboots"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "jetboots:muffled_upgraded_jetboots"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_jetboots",
+      "has_the_recipe"
+    ]
+  ]
+}

@@ -13,6 +13,7 @@
   "jetboots.tooltip.item.flight_mode": "Flight mode: %s",
   "jetboots.tooltip.item.iron_armor_upgrade": "Armored: Iron",
   "jetboots.tooltip.item.leather_armor_upgrade": "Armored: Leather",
+  "jetboots.tooltip.item.muffled_upgrade": "Muffled",
   "jetboots.tooltip.item.normal": "Normal",
   "jetboots.tooltip.item.shock_absorber_upgrade": "Shock absorber",
   "jetboots.tooltip.item.show_upgrades": "Hold %s to show upgrades",

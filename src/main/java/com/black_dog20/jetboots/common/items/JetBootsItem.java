@@ -156,6 +156,8 @@ public class JetBootsItem extends BaseArmorItem {
 				tooltip.add(new TranslationTextComponent("jetboots.tooltip.item.thruster_upgrade").applyTextStyle(TextFormatting.GREEN));
 			if(JetBootsProperties.getShockUpgrade(stack))
 				tooltip.add(new TranslationTextComponent("jetboots.tooltip.item.shock_absorber_upgrade").applyTextStyle(TextFormatting.GREEN));
+			if(JetBootsProperties.getMuffledUpgrade(stack))
+				tooltip.add(new TranslationTextComponent("jetboots.tooltip.item.muffled_upgrade").applyTextStyle(TextFormatting.GREEN));
 			if(JetBootsProperties.getUnderWaterUpgrade(stack))
 				tooltip.add(new TranslationTextComponent("jetboots.tooltip.item.underwater_upgrade").applyTextStyle(TextFormatting.AQUA));
 			if(JetBootsProperties.getSoulboundUpgrade(stack))

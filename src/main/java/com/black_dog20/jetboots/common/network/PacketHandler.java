@@ -5,6 +5,9 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 import com.black_dog20.jetboots.Jetboots;
+import com.black_dog20.jetboots.common.network.packets.PacketSyncPartical;
+import com.black_dog20.jetboots.common.network.packets.PacketSyncSound;
+import com.black_dog20.jetboots.common.network.packets.PacketSyncStopSound;
 import com.black_dog20.jetboots.common.network.packets.PacketUpdateFlightMode;
 import com.black_dog20.jetboots.common.network.packets.PacketUpdateFlightSpeed;
 
@@ -33,6 +36,9 @@ public class PacketHandler {
 	    public static void register() {
 	        registerMessage(PacketUpdateFlightMode.class, PacketUpdateFlightMode::encode, PacketUpdateFlightMode::decode, PacketUpdateFlightMode.Handler::handle);
 	        registerMessage(PacketUpdateFlightSpeed.class, PacketUpdateFlightSpeed::encode, PacketUpdateFlightSpeed::decode, PacketUpdateFlightSpeed.Handler::handle);
+	        registerMessage(PacketSyncPartical.class, PacketSyncPartical::encode, PacketSyncPartical::decode, PacketSyncPartical.Handler::handle);
+	        registerMessage(PacketSyncSound.class, PacketSyncSound::encode, PacketSyncSound::decode, PacketSyncSound.Handler::handle);
+	        registerMessage(PacketSyncStopSound.class, PacketSyncStopSound::encode, PacketSyncStopSound::decode, PacketSyncStopSound.Handler::handle);
 	    }
 
 	    public static void sendTo(Object msg, ServerPlayerEntity player) {

@@ -130,6 +130,15 @@ public class GeneratorRecipes extends RecipeProvider {
 		.patternLine("iii")
 		.addCriterion("has_jetboots", hasItem(JET_BOOTS.get()))
 		.build(consumer, new ResourceLocation(Jetboots.MOD_ID, "soulbound_upgraded_jetboots"));
+		
+		ShapedNBTRecipeBuilder.shapedNBTRecipe(getJetBootWithTag(NBTTags.UPGRAE_MUFFLED))
+		.key('i', ItemTags.WOOL)
+		.key('j', JET_BOOTS.get())
+		.patternLine("iii")
+		.patternLine("iji")
+		.patternLine("iii")
+		.addCriterion("has_jetboots", hasItem(JET_BOOTS.get()))
+		.build(consumer, new ResourceLocation(Jetboots.MOD_ID, "muffled_upgraded_jetboots"));
 
 		ResourceLocation adv_battery_recipe = location("adv_battery_upgraded_jetboots");
 		ConditionalRecipe.builder()

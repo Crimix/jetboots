@@ -91,6 +91,11 @@ public class JetBootsProperties {
         return compound.getBoolean(UPGRAE_SOULBOUND);
     }
     
+    public static boolean getMuffledUpgrade(ItemStack jetboots) {
+        CompoundNBT compound = jetboots.getOrCreateTag();
+        return compound.getBoolean(UPGRAE_MUFFLED);
+    }
+    
     public static boolean getAdvancedBattery(ItemStack jetboots) {
         CompoundNBT compound = jetboots.getOrCreateTag();
         return compound.getBoolean(UPGRAE_ADVANCED_BATTERY);

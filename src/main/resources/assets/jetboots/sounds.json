@@ -1,6 +1,7 @@
 {
   "jetboots": {
     "sounds": ["jetboots:jetboots"],
+    "category": "player",
     "subtitle": "subtitle.jetboots.jetboots"
   }
 }

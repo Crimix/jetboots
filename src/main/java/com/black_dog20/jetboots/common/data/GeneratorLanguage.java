@@ -32,6 +32,7 @@ public class GeneratorLanguage extends LanguageProvider {
         addPrefixed("tooltip.item.shock_absorber_upgrade","Shock absorber");
         addPrefixed("tooltip.item.underwater_upgrade","Water proof");
         addPrefixed("tooltip.item.soulbound_upgrade","Soulbound");
+        addPrefixed("tooltip.item.muffled_upgrade","Muffled");
         addPrefixed("tooltip.item.battery_upgrade","Battery: %s");
         
         addPrefixed("tooltip.item.change_flight","Use %s to change flight mode");

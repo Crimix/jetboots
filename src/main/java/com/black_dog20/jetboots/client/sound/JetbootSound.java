@@ -3,19 +3,20 @@ package com.black_dog20.jetboots.client.sound;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
-import com.black_dog20.jetboots.common.util.JetbootsUtil;
-
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.TickableSound;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class JetbootSound extends TickableSound {
-	private static final Map<Integer, JetbootSound> PLAYING_FOR = Collections.synchronizedMap(new HashMap<>());
+	private static final Map<UUID, JetbootSound> PLAYING_FOR = Collections.synchronizedMap(new HashMap<>());
 	private final PlayerEntity player;
 	
 	public JetbootSound(PlayerEntity player) {
@@ -24,15 +25,21 @@ public class JetbootSound extends TickableSound {
 		this.repeat = true;
 	    this.repeatDelay = 0;
 	    this.volume = 1.0F;
-		PLAYING_FOR.put(player.getEntityId(), this);
+		PLAYING_FOR.put(player.getUniqueID(), this);
 	}
 	
-	public static boolean playing(int entityId) {
-		return PLAYING_FOR.containsKey(entityId) && PLAYING_FOR.get(entityId) != null && !PLAYING_FOR.get(entityId).donePlaying;
+	public static boolean playing(PlayerEntity player) {
+		return PLAYING_FOR.containsKey(player.getUniqueID()) && PLAYING_FOR.get(player.getUniqueID()) != null && !PLAYING_FOR.get(player.getUniqueID()).donePlaying;
 	}
 	
-	public static void stopPlaying() {
-		PLAYING_FOR.clear();
+	public static void stop(PlayerEntity player) {
+		if(PLAYING_FOR.containsKey(player.getUniqueID()) && PLAYING_FOR.get(player.getUniqueID()) != null) {
+			synchronized (PLAYING_FOR) {
+				JetbootSound sound = PLAYING_FOR.get(player.getUniqueID());
+				sound.donePlaying = true;
+				PLAYING_FOR.remove(player.getUniqueID());
+			}
+		}
 	}
 
 	@Override
@@ -41,12 +48,14 @@ public class JetbootSound extends TickableSound {
 		this.x = (float) pos.getX();
 		this.y = (float) pos.getY();
 		this.z = (float) pos.getZ();
-		
-		if (!JetbootsUtil.isFlying(this.player) || player.isInWater()) {
-			synchronized (PLAYING_FOR) {
-				PLAYING_FOR.remove(this.player.getEntityId());
-				this.donePlaying = true;
-			}
-		}
+		BlockPos posClient = Minecraft.getInstance().player.getPosition();
+		double maxDistance = 1024D;
+		double distance = posClient.distanceSq(pos);
+        if (distance < maxDistance) {
+        	double ratio = 1-(distance/maxDistance);
+           this.volume = MathHelper.clamp((float)ratio, 0.0F, 1.0F);
+        } else {
+           this.volume = 0.0F;
+        }
 	}
 }

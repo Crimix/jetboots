@@ -46,7 +46,6 @@ public class FlyingHandler {
 							player.getPersistentData().putBoolean(NBTTags.WAS_FLYING_BEFORE, true);
 							player.abilities.isFlying = false;
 						}
-						player.abilities.isFlying = false;
 						player.func_226567_ej_();
 						Vec3d vec3d = player.getLookVec();
 						double d0 = 1.5D;
@@ -65,6 +64,7 @@ public class FlyingHandler {
 						player.func_226568_ek_();
 						if(player.getPersistentData().getBoolean(NBTTags.WAS_FLYING_BEFORE)) {
 							player.abilities.isFlying = true;
+							player.sendPlayerAbilities();
 							player.getPersistentData().remove(NBTTags.WAS_FLYING_BEFORE);
 						}
 					} else if(player.abilities.isFlying) {
@@ -74,7 +74,7 @@ public class FlyingHandler {
 					if(player.getPersistentData().getBoolean(NBTTags.HAD_BOOTS_BEFORE)) {
 						player.abilities.allowFlying = false;
 						player.abilities.isFlying = false;
-						player.getPersistentData().putBoolean(NBTTags.HAD_BOOTS_BEFORE, true);
+						player.getPersistentData().remove(NBTTags.HAD_BOOTS_BEFORE);
 					}
 				}
 			}
