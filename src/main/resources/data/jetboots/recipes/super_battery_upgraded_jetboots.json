@@ -30,7 +30,7 @@
         },
         "result": {
           "item": "jetboots:jetboots",
-          "nbt": "{jetboots-upgrade-super-battery:1b,energy_mult:6}"
+          "nbt": "{jetboots-upgrade-super-battery:1b}"
         }
       }
     }

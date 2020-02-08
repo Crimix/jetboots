@@ -20,13 +20,17 @@ public class EnergyItem extends EnergyStorage {
     }
 
     private static int getMaxCapacity(ItemStack stack, int capacity) {
+    	int mult = 1;
+        if(JetBootsProperties.getAdvancedBattery(stack)) 
+        	mult = 3;
+        if(JetBootsProperties.getSuperBattery(stack)) 
+        	mult = 6;
         if( !stack.hasTag() || !stack.getTag().contains("max_energy") ) {
             stack.getOrCreateTag().putInt("max_energy", capacity);
-            stack.getOrCreateTag().putInt("energy_mult", 1);
-            return capacity;
+            return capacity * mult;
         }
 
-        return stack.getTag().getInt("max_energy")*stack.getTag().getInt("energy_mult");
+        return stack.getTag().getInt("max_energy")*mult;
     }
 
     @Override
@@ -48,7 +52,7 @@ public class EnergyItem extends EnergyStorage {
     @Override
     public int getMaxEnergyStored()
     {
-        return capacity;
+    	return capacity;
     }
     
     @Override

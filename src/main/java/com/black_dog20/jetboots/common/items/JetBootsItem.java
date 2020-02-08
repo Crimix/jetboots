@@ -142,7 +142,7 @@ public class JetBootsItem extends BaseArmorItem {
 				if(JetBootsProperties.getSuperBattery(stack)) {
 					mode = new TranslationTextComponent("jetboots.tooltip.item.super").applyTextStyle(TextFormatting.LIGHT_PURPLE).getFormattedText();
 				} else if(JetBootsProperties.getAdvancedBattery(stack)) {
-					mode = new TranslationTextComponent("jetboots.tooltip.item.advanced").applyTextStyle(TextFormatting.BOLD).getFormattedText();
+					mode = new TranslationTextComponent("jetboots.tooltip.item.advanced").applyTextStyle(TextFormatting.RED).getFormattedText();
 				} else {
 					mode = new TranslationTextComponent("jetboots.tooltip.item.basic").applyTextStyle(TextFormatting.GREEN).getFormattedText();
 				}

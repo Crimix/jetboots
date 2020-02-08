@@ -24,7 +24,7 @@
         },
         "result": {
           "item": "jetboots:jetboots",
-          "nbt": "{jetboots-upgrade-advanced-battery:1b,energy_mult:3}"
+          "nbt": "{jetboots-upgrade-advanced-battery:1b}"
         }
       }
     }
