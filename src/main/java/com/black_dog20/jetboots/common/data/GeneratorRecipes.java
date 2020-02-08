@@ -6,7 +6,7 @@ import java.util.function.Consumer;
 
 import com.black_dog20.jetboots.Jetboots;
 import com.black_dog20.jetboots.common.crafting.BatteryOnCondition;
-import com.black_dog20.jetboots.common.crafting.IngredientNBT;
+import com.black_dog20.jetboots.common.crafting.CIngredientNBT;
 import com.black_dog20.jetboots.common.data.crafting.ShapedNBTRecipeBuilder;
 import com.black_dog20.jetboots.common.util.NBTItemBuilder;
 import com.black_dog20.jetboots.common.util.NBTTags;
@@ -59,7 +59,7 @@ public class GeneratorRecipes extends RecipeProvider {
 
 		ShapedNBTRecipeBuilder.shapedNBTRecipe(getJetBootWithTag(NBTTags.UPGRAE_ARMOR_IRON))
 		.key('i', Tags.Items.INGOTS_IRON)
-		.key('j', IngredientNBT.fromNBTStack(getJetBootWithTag(NBTTags.UPGRAE_ARMOR_LEATHER)))
+		.key('j', CIngredientNBT.fromNBTStack(getJetBootWithTag(NBTTags.UPGRAE_ARMOR_LEATHER)))
 		.key('d', Tags.Items.GEMS_DIAMOND)
 		.patternLine("idi")
 		.patternLine("iji")
@@ -69,7 +69,7 @@ public class GeneratorRecipes extends RecipeProvider {
 
 		ShapedNBTRecipeBuilder.shapedNBTRecipe(getJetBootWithTag(NBTTags.UPGRAE_ARMOR_DIAMOND))
 		.key('i', Tags.Items.GEMS_DIAMOND)
-		.key('j', IngredientNBT.fromNBTStack(getJetBootWithTag(NBTTags.UPGRAE_ARMOR_IRON)))
+		.key('j', CIngredientNBT.fromNBTStack(getJetBootWithTag(NBTTags.UPGRAE_ARMOR_IRON)))
 		.key('d', Tags.Items.GEMS_EMERALD)
 		.patternLine("idi")
 		.patternLine("iji")
@@ -90,7 +90,7 @@ public class GeneratorRecipes extends RecipeProvider {
 
 		ShapedNBTRecipeBuilder.shapedNBTRecipe(getJetBootWithTag(NBTTags.UPGRAE_THRUSTER))
 		.key('h', Items.HOPPER)
-		.key('j', IngredientNBT.fromNBTStack(getJetBootWithTag(NBTTags.UPGRAE_ENGINE)))
+		.key('j', CIngredientNBT.fromNBTStack(getJetBootWithTag(NBTTags.UPGRAE_ENGINE)))
 		.key('o', Tags.Items.OBSIDIAN)
 		.key('g', Tags.Items.INGOTS_GOLD)
 		.key('d', Tags.Items.GEMS_DIAMOND)
@@ -180,7 +180,7 @@ public class GeneratorRecipes extends RecipeProvider {
 						.addTag("energy_mult", 6)
 						.build())
 				.key('i', Tags.Items.STORAGE_BLOCKS_LAPIS)
-				.key('j', IngredientNBT.fromNBTStack(getJetBootWithTag(NBTTags.UPGRAE_ADVANCED_BATTERY)))
+				.key('j', CIngredientNBT.fromNBTStack(getJetBootWithTag(NBTTags.UPGRAE_ADVANCED_BATTERY)))
 				.key('d', Tags.Items.STORAGE_BLOCKS_DIAMOND)
 				.patternLine("idi")
 				.patternLine("iji")

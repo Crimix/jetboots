@@ -13,19 +13,19 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.crafting.IIngredientSerializer;
-import net.minecraftforge.common.crafting.NBTIngredient;
+import net.minecraftforge.common.crafting.IngredientNBT;
 
-public class IngredientNBT extends NBTIngredient{
+public class CIngredientNBT extends IngredientNBT{
 
 	protected ItemStack stack;
 	
-	protected IngredientNBT(ItemStack stack) {
+	protected CIngredientNBT(ItemStack stack) {
 		super(stack);
 		this.stack = stack;
 	}
 
-	public static IngredientNBT fromNBTStack(ItemStack stack) {
-		return new IngredientNBT(stack);
+	public static CIngredientNBT fromNBTStack(ItemStack stack) {
+		return new CIngredientNBT(stack);
 	}
 	
     @Override
@@ -68,22 +68,22 @@ public class IngredientNBT extends NBTIngredient{
         return json;
     }
 
-    public static class Serializer implements IIngredientSerializer<IngredientNBT>
+    public static class Serializer implements IIngredientSerializer<CIngredientNBT>
     {
         public static final Serializer INSTANCE = new Serializer();
 
         @Override
-        public IngredientNBT parse(PacketBuffer buffer) {
-            return new IngredientNBT(buffer.readItemStack());
+        public CIngredientNBT parse(PacketBuffer buffer) {
+            return new CIngredientNBT(buffer.readItemStack());
         }
 
         @Override
-        public IngredientNBT parse(JsonObject json) {
-            return new IngredientNBT(CraftingHelper.getItemStack(json, true));
+        public CIngredientNBT parse(JsonObject json) {
+            return new CIngredientNBT(CraftingHelper.getItemStack(json, true));
         }
 
         @Override
-        public void write(PacketBuffer buffer, IngredientNBT ingredient) {
+        public void write(PacketBuffer buffer, CIngredientNBT ingredient) {
             buffer.writeItemStack(ingredient.stack);
         }
     }

@@ -16,7 +16,7 @@ public class ClientHelper {
 	public static void spawnJetParticals(Minecraft mc, PlayerEntity player, boolean flying) {
 		Pos3D playerPos = new Pos3D(player).translate(0, 1, 0);
 		float random = (rand.nextFloat() - 0.5F) * 0.1F;
-		double[] sneakBonus = player.isShiftKeyDown() ? new double[]{-0.30, -0.15} : new double[]{0, 0};
+		double[] sneakBonus = player.isSneaking() ? new double[]{-0.30, -0.15} : new double[]{0, 0};
 		if(flying) {
 			Pos3D vLeft = new Pos3D(-0.1, -1.15 + sneakBonus[1], 0 + sneakBonus[0]).rotatePitch(0).rotateYaw(player.renderYawOffset);
 			Pos3D vRight = new Pos3D(0.1, -1.15 + sneakBonus[1], 0 + sneakBonus[0]).rotatePitch(0).rotateYaw(player.renderYawOffset);

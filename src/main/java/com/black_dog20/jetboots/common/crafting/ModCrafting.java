@@ -20,7 +20,7 @@ public class ModCrafting {
     public static void registerRecipeSerialziers(RegistryEvent.Register<IRecipeSerializer<?>> event)
     {
         CraftingHelper.register(BatteryOnCondition.Serializer.INSTANCE);
-        CraftingHelper.register(new ResourceLocation(Jetboots.MOD_ID, "nbt"), IngredientNBT.Serializer.INSTANCE);
+        CraftingHelper.register(new ResourceLocation(Jetboots.MOD_ID, "nbt"), CIngredientNBT.Serializer.INSTANCE);
     }
     
 	

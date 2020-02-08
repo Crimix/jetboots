@@ -88,9 +88,16 @@ public class JetBootsItem extends BaseArmorItem {
 		super.addInformation(stack, world, tooltip, flag);
 
 		Minecraft mc = Minecraft.getInstance();
+		
+		if(Config.USE_POWER.get()) {
+			stack.getCapability(CapabilityEnergy.ENERGY, null)
+			.ifPresent(energy -> tooltip.add(
+					new TranslationTextComponent("jetboots.tooltip.item.stored_energy",
+							Utils.format(energy.getEnergyStored()),
+							Utils.format(energy.getMaxEnergyStored())).applyTextStyles(TextFormatting.GREEN)));
+		}
 
 		if(JetBootsProperties.getEngineUpgrade(stack) || JetBootsProperties.getThrusterUpgrade(stack)) {
-
 			if(JetBootsProperties.getEngineUpgrade(stack)) {
 				tooltip.add(new TranslationTextComponent("jetboots.tooltip.item.change_flight",
 						Keybinds.keyMode.getLocalizedName().toUpperCase())
@@ -109,18 +116,10 @@ public class JetBootsItem extends BaseArmorItem {
 			if(JetBootsProperties.getThrusterUpgrade(stack)) {
 				tooltip.add(JetbootsUtil.getFlightSpeedText(stack));
 			}
-			if(Config.USE_POWER.get()) {
-				stack.getCapability(CapabilityEnergy.ENERGY, null)
-				.ifPresent(energy -> tooltip.add(
-						new TranslationTextComponent("jetboots.tooltip.item.stored_energy",
-								Utils.format(energy.getEnergyStored()),
-								Utils.format(energy.getMaxEnergyStored())).applyTextStyles(TextFormatting.GREEN)));
-			}
-
 			tooltip.add(new TranslationTextComponent(""));
 		}
 
-		if (!InputMappings.isKeyDown(mc.getMainWindow().getHandle(), mc.gameSettings.keyBindSneak.getKey().getKeyCode())) {
+		if (!InputMappings.isKeyDown(mc.mainWindow.getHandle(), mc.gameSettings.keyBindSneak.getKey().getKeyCode())) {
 			tooltip.add(new TranslationTextComponent("jetboots.tooltip.item.show_upgrades",
 					mc.gameSettings.keyBindSneak.getLocalizedName().toLowerCase())
 					.applyTextStyle(TextFormatting.GRAY));

@@ -46,7 +46,7 @@ public class FlyingHandler {
 							player.getPersistentData().putBoolean(NBTTags.WAS_FLYING_BEFORE, true);
 							player.abilities.isFlying = false;
 						}
-						player.func_226567_ej_();
+					    player.setFlag(7, true);
 						Vec3d vec3d = player.getLookVec();
 						double d0 = 1.5D;
 						double d1 = 0.1D;
@@ -61,7 +61,7 @@ public class FlyingHandler {
 							player.setMotion(vec3d1.add(vec3d.x * d1 + (vec3d.x * speed - vec3d1.x) * d2, vec3d.y * d1 + (vec3d.y * speed - vec3d1.y) * d2, vec3d.z * d1 + (vec3d.z * speed - vec3d1.z) * d2));
 						}
 					} else if(player.isElytraFlying()) {
-						player.func_226568_ek_();
+					      player.setFlag(7, false);
 						if(player.getPersistentData().getBoolean(NBTTags.WAS_FLYING_BEFORE)) {
 							player.abilities.isFlying = true;
 							player.sendPlayerAbilities();
@@ -96,7 +96,7 @@ public class FlyingHandler {
 			blockPos = blockPos.down();
 		}
 		// calculate the entity's current altitude above the ground
-		return blockPos.distanceSq(player.getPosX(), player.getPosY(), player.getPosZ(), false);
+		return blockPos.distanceSq(player.posX, player.posY, player.posZ, false);
 	}
 
 	@SubscribeEvent
@@ -118,9 +118,9 @@ public class FlyingHandler {
 
 	private static void playFallSound(PlayerEntity player) {
 		if (!player.isSilent()) {
-			int i = MathHelper.floor(player.getPosX());
-			int j = MathHelper.floor(player.getPosY() - (double)0.2F);
-			int k = MathHelper.floor(player.getPosZ());
+			int i = MathHelper.floor(player.posX);
+			int j = MathHelper.floor(player.posY - (double)0.2F);
+			int k = MathHelper.floor(player.posZ);
 			BlockPos pos = new BlockPos(i, j, k);
 			BlockState blockstate = player.world.getBlockState(pos);
 			if (!blockstate.isAir(player.world, pos)) {
