@@ -9,7 +9,6 @@ import com.black_dog20.jetboots.common.network.packets.PacketSyncStopSound;
 import com.black_dog20.jetboots.common.util.JetBootsProperties;
 import com.black_dog20.jetboots.common.util.JetbootsUtil;
 import com.black_dog20.jetboots.common.util.NBTTags;
-
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.entity.player.PlayerEntity;
@@ -51,7 +50,7 @@ public class FlyingHandler {
 					player.getPersistentData().putBoolean(NBTTags.WAS_FLYING_BEFORE, true);
 					player.abilities.isFlying = false;
 				}
-				player.func_226567_ej_(7, true);
+				player.func_226567_ej_();
 				Vec3d vec3d = player.getLookVec();
 				double d0 = 1.5D;
 				double d1 = 0.1D;
@@ -66,7 +65,7 @@ public class FlyingHandler {
 					player.setMotion(vec3d1.add(vec3d.x * d1 + (vec3d.x * speed - vec3d1.x) * d2, vec3d.y * d1 + (vec3d.y * speed - vec3d1.y) * d2, vec3d.z * d1 + (vec3d.z * speed - vec3d1.z) * d2));
 				}
 			} else if(player.isElytraFlying()) {
-				player.func_226567_ej_(7, false);
+				player.func_226568_ek_();
 				if(player.getPersistentData().getBoolean(NBTTags.WAS_FLYING_BEFORE)) {
 					player.abilities.isFlying = true;
 					player.sendPlayerAbilities();
