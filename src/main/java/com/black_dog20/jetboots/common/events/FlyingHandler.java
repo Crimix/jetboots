@@ -45,7 +45,7 @@ public class FlyingHandler {
 				player.getPersistentData().putBoolean(NBTTags.HAD_BOOTS_BEFORE, true);
 			}		
 
-			if(JetBootsProperties.getEngineUpgrade(jetboots) && JetBootsProperties.getMode(jetboots) && (getAltitudeAboveGround(player) > 1.9 || player.isInWater())) {
+			if(JetBootsProperties.getEngineUpgrade(jetboots) && JetBootsProperties.getMode(jetboots) && (getAltitudeAboveGround(player) > 1.9 || (player.isInWater() && JetBootsProperties.getUnderWaterUpgrade(jetboots)))) {
 				drawpower(jetboots);
 				if(player.abilities.isFlying) {
 					player.getPersistentData().putBoolean(NBTTags.WAS_FLYING_BEFORE, true);
@@ -87,7 +87,8 @@ public class FlyingHandler {
 					}
 				} else {
 					PacketHandler.NETWORK.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(()-> player), new PacketSyncStopSound(player.getUniqueID()));
-				}}
+				}
+			}
 		} else {
 			if(player.getPersistentData().getBoolean(NBTTags.HAD_BOOTS_BEFORE)) {
 				player.abilities.allowFlying = false;
@@ -107,6 +108,9 @@ public class FlyingHandler {
 
 	public static double getAltitudeAboveGround(PlayerEntity player)
 	{
+		if(player.isInWater()) {
+			return 0;
+		}
 		BlockPos blockPos = new BlockPos(player);
 		while (player.world.isAirBlock(blockPos.down())) {
 			blockPos = blockPos.down();

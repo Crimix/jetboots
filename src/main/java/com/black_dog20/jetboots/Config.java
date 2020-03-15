@@ -16,11 +16,9 @@ public class Config {
 
     public static final String CATEGORY_GENERAL = "general";
 
-    private static final ForgeConfigSpec.Builder COMMON_BUILDER = new ForgeConfigSpec.Builder();
-    private static final ForgeConfigSpec.Builder CLIENT_BUILDER = new ForgeConfigSpec.Builder();
+    private static final ForgeConfigSpec.Builder SERVER_BUILDER = new ForgeConfigSpec.Builder();
 
-    public static ForgeConfigSpec COMMON_CONFIG;
-    public static ForgeConfigSpec CLIENT_CONFIG;
+    public static ForgeConfigSpec SERVER_CONFIG;
     
     public static ForgeConfigSpec.BooleanValue USE_POWER;
     public static ForgeConfigSpec.IntValue DEFAULT_MAX_POWER;
@@ -28,18 +26,18 @@ public class Config {
 
     static {
 
-        COMMON_BUILDER.comment("General settings").push(CATEGORY_GENERAL);
-        USE_POWER = COMMON_BUILDER.comment("Does jetboots use power?")
+        SERVER_BUILDER.comment("General settings").push(CATEGORY_GENERAL);
+        USE_POWER = SERVER_BUILDER.comment("Does jetboots use power?")
         		.define("usePower", true);
-        DEFAULT_MAX_POWER = COMMON_BUILDER.comment("Default maximum power for jetboots")
+        DEFAULT_MAX_POWER = SERVER_BUILDER.comment("Default maximum power for jetboots")
                 .defineInRange("defaultMaxPower", 1000000, 0, Integer.MAX_VALUE);
-        POWER_COST = COMMON_BUILDER.comment("Cost per tick to use jetboots")
+        POWER_COST = SERVER_BUILDER.comment("Cost per tick to use jetboots")
                 .defineInRange("powerCost", 50, 0, Integer.MAX_VALUE);
-        COMMON_BUILDER.pop();
+        SERVER_BUILDER.pop();
 
 
-        COMMON_CONFIG = COMMON_BUILDER.build();
-        CLIENT_CONFIG = CLIENT_BUILDER.build();
+        SERVER_CONFIG = SERVER_BUILDER.build();
+        //CLIENT_CONFIG = CLIENT_BUILDER.build();
     }
 
     public static void loadConfig(ForgeConfigSpec spec, Path path) {
