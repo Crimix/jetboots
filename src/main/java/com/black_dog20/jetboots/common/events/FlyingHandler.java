@@ -40,60 +40,86 @@ public class FlyingHandler {
 		if(JetbootsUtil.canFlyWithBoots(player)) {
 			player.abilities.allowFlying = true;
 			ItemStack jetboots = JetbootsUtil.getJetBoots(player);
-			if(!player.getPersistentData().getBoolean(NBTTags.HAD_BOOTS_BEFORE)) {
-				player.getPersistentData().putBoolean(NBTTags.HAD_BOOTS_BEFORE, true);
-			}
+			setNbtHasBoots(player);
 
-			if(JetBootsProperties.getEngineUpgrade(jetboots) && JetBootsProperties.getMode(jetboots) && (getAltitudeAboveGround(player) > 1.9 || (player.isInWater() && JetBootsProperties.getUnderWaterUpgrade(jetboots)))) {
-				drawpower(jetboots);
-				if(player.abilities.isFlying) {
-					player.getPersistentData().putBoolean(NBTTags.WAS_FLYING_BEFORE, true);
-					player.abilities.isFlying = false;
-				}
-				player.func_226567_ej_();
-				Vec3d vec3d = player.getLookVec();
-				double d0 = 1.5D;
-				double d1 = 0.1D;
-				double d2 = 0.5D;
-				double d3 = 3D;
-				Vec3d vec3d1 = player.getMotion();
-				if(!player.isInWater()) {
-					double speed = JetBootsProperties.getSpeed(jetboots) ? d3 : d0;
-					player.setMotion(vec3d1.add(vec3d.x * d1 + (vec3d.x * speed - vec3d1.x) * d2, vec3d.y * d1 + (vec3d.y * speed - vec3d1.y) * d2, vec3d.z * d1 + (vec3d.z * speed - vec3d1.z) * d2));
-				} else {
-					double speed = JetBootsProperties.getSpeed(jetboots) ? d0 : d2;
-					player.setMotion(vec3d1.add(vec3d.x * d1 + (vec3d.x * speed - vec3d1.x) * d2, vec3d.y * d1 + (vec3d.y * speed - vec3d1.y) * d2, vec3d.z * d1 + (vec3d.z * speed - vec3d1.z) * d2));
-				}
+			if(useElytraFlight(player, jetboots)) {
+				startElytraFlight(player, jetboots);
 			} else if(player.isElytraFlying()) {
-				player.func_226568_ek_();
-				if(player.getPersistentData().getBoolean(NBTTags.WAS_FLYING_BEFORE)) {
-					player.abilities.isFlying = true;
-					player.sendPlayerAbilities();
-					player.getPersistentData().remove(NBTTags.WAS_FLYING_BEFORE);
-				}
+				stopElytraFlight(player);
 			} else if(player.abilities.isFlying) {
 				drawpower(jetboots);
 			}
-			if(event.side == LogicalSide.SERVER) {
-				if (JetbootsUtil.isFlying(player)) {
-					PacketHandler.NETWORK.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(()-> player), new PacketSyncPartical(player.getUniqueID(), player.abilities.isFlying));
-					if(!JetBootsProperties.getMuffledUpgrade(jetboots)) {
-						if (!player.isInWater()) {
-							PacketHandler.NETWORK.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(()-> player), new PacketSyncSound(player.getUniqueID()));
-						} else {
-							PacketHandler.NETWORK.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(()-> player), new PacketSyncStopSound(player.getUniqueID()));
-						}
-					}
-				} else {
-					PacketHandler.NETWORK.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(()-> player), new PacketSyncStopSound(player.getUniqueID()));
-				}
-			}
+			sendSoundAndPartical(event, player, jetboots);
 		} else {
-			if(player.getPersistentData().getBoolean(NBTTags.HAD_BOOTS_BEFORE)) {
-				player.abilities.allowFlying = false;
-				player.abilities.isFlying = false;
+			stopFlightIfHadBoots(player);
+		}
+	}
+
+	private static boolean useElytraFlight(PlayerEntity player, ItemStack jetboots) {
+		return JetBootsProperties.getEngineUpgrade(jetboots) && JetBootsProperties.getMode(jetboots) && (getAltitudeAboveGround(player) > 1.9 || (player.isInWater() && JetBootsProperties.getUnderWaterUpgrade(jetboots)));
+	}
+
+	private static void stopFlightIfHadBoots(PlayerEntity player) {
+		if(player.getPersistentData().getBoolean(NBTTags.HAD_BOOTS_BEFORE)) {
+			player.abilities.allowFlying = false;
+			player.abilities.isFlying = false;
+			if(JetbootsUtil.getJetBoots(player).isEmpty()) {
 				player.getPersistentData().remove(NBTTags.HAD_BOOTS_BEFORE);
 			}
+		}
+	}
+
+	private static void setNbtHasBoots(PlayerEntity player) {
+		if(!player.getPersistentData().getBoolean(NBTTags.HAD_BOOTS_BEFORE)) {
+			player.getPersistentData().putBoolean(NBTTags.HAD_BOOTS_BEFORE, true);
+		}
+	}
+
+	private static void sendSoundAndPartical(TickEvent.PlayerTickEvent event, PlayerEntity player, ItemStack jetboots) {
+		if(event.side == LogicalSide.SERVER) {
+			if (JetbootsUtil.isFlying(player)) {
+				PacketHandler.NETWORK.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(()-> player), new PacketSyncPartical(player.getUniqueID(), player.abilities.isFlying));
+				if(!JetBootsProperties.getMuffledUpgrade(jetboots)) {
+					if (!player.isInWater()) {
+						PacketHandler.NETWORK.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(()-> player), new PacketSyncSound(player.getUniqueID()));
+					} else {
+						PacketHandler.NETWORK.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(()-> player), new PacketSyncStopSound(player.getUniqueID()));
+					}
+				}
+			} else {
+				PacketHandler.NETWORK.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(()-> player), new PacketSyncStopSound(player.getUniqueID()));
+			}
+		}
+	}
+
+	private static void stopElytraFlight(PlayerEntity player) {
+		player.func_226568_ek_();
+		if(player.getPersistentData().getBoolean(NBTTags.WAS_FLYING_BEFORE)) {
+			player.abilities.isFlying = true;
+			player.sendPlayerAbilities();
+			player.getPersistentData().remove(NBTTags.WAS_FLYING_BEFORE);
+		}
+	}
+
+	private static void startElytraFlight(PlayerEntity player, ItemStack jetboots) {
+		drawpower(jetboots);
+		if(player.abilities.isFlying) {
+			player.getPersistentData().putBoolean(NBTTags.WAS_FLYING_BEFORE, true);
+			player.abilities.isFlying = false;
+		}
+		player.func_226567_ej_();
+		Vec3d vec3d = player.getLookVec();
+		double d0 = 1.5D;
+		double d1 = 0.1D;
+		double d2 = 0.5D;
+		double d3 = 3D;
+		Vec3d vec3d1 = player.getMotion();
+		if(!player.isInWater()) {
+			double speed = JetBootsProperties.getSpeed(jetboots) ? d3 : d0;
+			player.setMotion(vec3d1.add(vec3d.x * d1 + (vec3d.x * speed - vec3d1.x) * d2, vec3d.y * d1 + (vec3d.y * speed - vec3d1.y) * d2, vec3d.z * d1 + (vec3d.z * speed - vec3d1.z) * d2));
+		} else {
+			double speed = JetBootsProperties.getSpeed(jetboots) ? d0 : d2;
+			player.setMotion(vec3d1.add(vec3d.x * d1 + (vec3d.x * speed - vec3d1.x) * d2, vec3d.y * d1 + (vec3d.y * speed - vec3d1.y) * d2, vec3d.z * d1 + (vec3d.z * speed - vec3d1.z) * d2));
 		}
 	}
 

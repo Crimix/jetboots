@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "oeo",
+    "oio",
+    "bgb"
+  ],
+  "key": {
+    "o": {
+      "tag": "forge:obsidian"
+    },
+    "e": {
+      "tag": "forge:gems/emerald"
+    },
+    "i": {
+      "item": "minecraft:iron_boots"
+    },
+    "b": {
+      "tag": "forge:rods/blaze"
+    },
+    "g": {
+      "tag": "forge:ingots/gold"
+    }
+  },
+  "result": {
+    "item": "jetboots:jetboots"
+  }
+}

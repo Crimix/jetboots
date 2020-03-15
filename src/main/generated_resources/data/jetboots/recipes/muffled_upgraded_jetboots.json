@@ -1,0 +1,20 @@
+{
+  "type": "jetboots:shaped_nbt",
+  "pattern": [
+    "iii",
+    "iji",
+    "iii"
+  ],
+  "key": {
+    "i": {
+      "tag": "minecraft:wool"
+    },
+    "j": {
+      "item": "jetboots:jetboots"
+    }
+  },
+  "result": {
+    "item": "jetboots:jetboots",
+    "nbt": "{jetboots-upgrade-muffled:1b}"
+  }
+}

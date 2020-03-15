@@ -1,0 +1,43 @@
+{
+  "advancements": [
+    {
+      "conditions": [
+        {
+          "type": "jetboots:battery_on"
+        }
+      ],
+      "advancement": {
+        "parent": "minecraft:recipes/root",
+        "rewards": {
+          "recipes": [
+            "jetboots:super_battery_upgraded_jetboots"
+          ]
+        },
+        "criteria": {
+          "has_jetboots": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+              "items": [
+                {
+                  "item": "jetboots:jetboots"
+                }
+              ]
+            }
+          },
+          "has_the_recipe": {
+            "trigger": "minecraft:recipe_unlocked",
+            "conditions": {
+              "recipe": "jetboots:super_battery_upgraded_jetboots"
+            }
+          }
+        },
+        "requirements": [
+          [
+            "has_jetboots",
+            "has_the_recipe"
+          ]
+        ]
+      }
+    }
+  ]
+}
