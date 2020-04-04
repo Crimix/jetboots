@@ -1,14 +1,15 @@
 package com.black_dog20.jetboots.common.events;
 
+import com.black_dog20.bml.event.ArmorEvent;
 import com.black_dog20.jetboots.Config;
 import com.black_dog20.jetboots.Jetboots;
+import com.black_dog20.jetboots.common.items.JetBootsItem;
 import com.black_dog20.jetboots.common.network.PacketHandler;
 import com.black_dog20.jetboots.common.network.packets.PacketSyncPartical;
 import com.black_dog20.jetboots.common.network.packets.PacketSyncSound;
 import com.black_dog20.jetboots.common.network.packets.PacketSyncStopSound;
 import com.black_dog20.jetboots.common.util.JetBootsProperties;
 import com.black_dog20.jetboots.common.util.JetbootsUtil;
-import com.black_dog20.jetboots.common.util.NBTTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.entity.player.PlayerEntity;
@@ -23,9 +24,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerFlyableFallEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
@@ -34,24 +33,55 @@ import net.minecraftforge.fml.network.PacketDistributor;
 @Mod.EventBusSubscriber(modid = Jetboots.MOD_ID)
 public class FlyingHandler {
 
-	@SubscribeEvent(priority = EventPriority.LOWEST)
-	public static void onPlayerUpdate(TickEvent.PlayerTickEvent event) {
+	@SubscribeEvent
+	public static void onEquipJetboots(ArmorEvent.Equip event) {
 		PlayerEntity player = event.player;
-		if(JetbootsUtil.canFlyWithBoots(player)) {
-			player.abilities.allowFlying = true;
-			ItemStack jetboots = JetbootsUtil.getJetBoots(player);
-			setNbtHasBoots(player);
-
-			if(useElytraFlight(player, jetboots)) {
-				startElytraFlight(player, jetboots);
-			} else if(player.isElytraFlying()) {
-				stopElytraFlight(player);
-			} else if(player.abilities.isFlying) {
-				drawpower(jetboots);
+		ItemStack armor = event.armor;
+		if(!armor.isEmpty() && armor.getItem() instanceof JetBootsItem) {
+			if(JetbootsUtil.canFlyWithBoots(player)) {
+				player.abilities.allowFlying = true;
+				player.sendPlayerAbilities();
 			}
-			sendSoundAndPartical(event, player, jetboots);
-		} else {
-			stopFlightIfHadBoots(player);
+		}
+	}
+
+	@SubscribeEvent
+	public static void onJetbootsTick(ArmorEvent.Tick event) {
+		PlayerEntity player = event.player;
+		ItemStack jetboots = event.armor;
+		if (!jetboots.isEmpty() && jetboots.getItem() instanceof JetBootsItem) {
+			if (JetbootsUtil.canFlyWithBoots(player)) {
+				player.abilities.allowFlying = true;
+				player.sendPlayerAbilities();
+
+				if (useElytraFlight(player, jetboots)) {
+					startElytraFlight(player, jetboots);
+				} else if (player.isElytraFlying()) {
+					stopElytraFlight(player);
+				} else if (player.abilities.isFlying) {
+					drawpower(jetboots);
+				}
+				sendSoundAndPartical(event, player, jetboots);
+			} else {
+				player.abilities.allowFlying = false;
+				player.abilities.isFlying = false;
+				player.sendPlayerAbilities();
+				PacketHandler.NETWORK.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(()-> player), new PacketSyncStopSound(player.getUniqueID()));
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public static void onUnequipJetboots(ArmorEvent.Unequip event) {
+		PlayerEntity player = event.player;
+		ItemStack armor = event.armor;
+		if(!armor.isEmpty() && armor.getItem() instanceof JetBootsItem) {
+			stopElytraFlight(player);
+			PacketHandler.NETWORK.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(()-> player), new PacketSyncStopSound(player.getUniqueID()));
+			player.abilities.allowFlying = false;
+			player.abilities.isFlying = false;
+			player.sendPlayerAbilities();
+
 		}
 	}
 
@@ -59,23 +89,7 @@ public class FlyingHandler {
 		return JetBootsProperties.getEngineUpgrade(jetboots) && JetBootsProperties.getMode(jetboots) && (getAltitudeAboveGround(player) > 1.9 || (player.isInWater() && JetBootsProperties.getUnderWaterUpgrade(jetboots)));
 	}
 
-	private static void stopFlightIfHadBoots(PlayerEntity player) {
-		if(player.getPersistentData().getBoolean(NBTTags.HAD_BOOTS_BEFORE)) {
-			player.abilities.allowFlying = false;
-			player.abilities.isFlying = false;
-			if(JetbootsUtil.getJetBoots(player).isEmpty()) {
-				player.getPersistentData().remove(NBTTags.HAD_BOOTS_BEFORE);
-			}
-		}
-	}
-
-	private static void setNbtHasBoots(PlayerEntity player) {
-		if(!player.getPersistentData().getBoolean(NBTTags.HAD_BOOTS_BEFORE)) {
-			player.getPersistentData().putBoolean(NBTTags.HAD_BOOTS_BEFORE, true);
-		}
-	}
-
-	private static void sendSoundAndPartical(TickEvent.PlayerTickEvent event, PlayerEntity player, ItemStack jetboots) {
+	private static void sendSoundAndPartical(ArmorEvent.Tick event, PlayerEntity player, ItemStack jetboots) {
 		if(event.side == LogicalSide.SERVER) {
 			if (JetbootsUtil.isFlying(player)) {
 				PacketHandler.NETWORK.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(()-> player), new PacketSyncPartical(player.getUniqueID(), player.abilities.isFlying));
@@ -94,19 +108,19 @@ public class FlyingHandler {
 
 	private static void stopElytraFlight(PlayerEntity player) {
 		player.func_226568_ek_();
-		if(player.getPersistentData().getBoolean(NBTTags.WAS_FLYING_BEFORE)) {
+		if(getAltitudeAboveGround(player) > 10 && !player.isInWater()) {
+			player.abilities.allowFlying = true;
 			player.abilities.isFlying = true;
 			player.sendPlayerAbilities();
-			player.getPersistentData().remove(NBTTags.WAS_FLYING_BEFORE);
+		} else {
+			player.abilities.allowFlying = true;
+			player.abilities.isFlying = false;
+			player.sendPlayerAbilities();
 		}
 	}
 
 	private static void startElytraFlight(PlayerEntity player, ItemStack jetboots) {
 		drawpower(jetboots);
-		if(player.abilities.isFlying) {
-			player.getPersistentData().putBoolean(NBTTags.WAS_FLYING_BEFORE, true);
-			player.abilities.isFlying = false;
-		}
 		player.func_226567_ej_();
 		Vec3d vec3d = player.getLookVec();
 		double d0 = 1.5D;

@@ -8,7 +8,7 @@
         }
       ],
       "recipe": {
-        "type": "jetboots:shaped_nbt",
+        "type": "jetboots:jetboots_shaped_nbt",
         "pattern": [
           "iii",
           "iji",

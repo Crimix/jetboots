@@ -1,13 +1,12 @@
 package com.black_dog20.jetboots.common.data;
 
+import com.black_dog20.bml.datagen.BaseItemModelProvider;
 import com.black_dog20.jetboots.Jetboots;
 import com.black_dog20.jetboots.common.items.ModItems;
-
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.client.model.generators.ExistingFileHelper;
-import net.minecraftforge.client.model.generators.ItemModelProvider;
 
-public class GeneratorItemModels extends ItemModelProvider {
+public class GeneratorItemModels extends BaseItemModelProvider {
     public GeneratorItemModels(DataGenerator generator, ExistingFileHelper existingFileHelper) {
         super(generator, Jetboots.MOD_ID, existingFileHelper);
     }

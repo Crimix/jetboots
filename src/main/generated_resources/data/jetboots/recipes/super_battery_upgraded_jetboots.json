@@ -8,7 +8,7 @@
         }
       ],
       "recipe": {
-        "type": "jetboots:shaped_nbt",
+        "type": "jetboots:jetboots_shaped_nbt",
         "pattern": [
           "idi",
           "iji",
@@ -19,7 +19,7 @@
             "tag": "forge:storage_blocks/lapis"
           },
           "j": {
-            "type": "jetboots:nbt",
+            "type": "blackdogsmoddinglibrary:nbt",
             "item": "jetboots:jetboots",
             "count": 1,
             "nbt": "{jetboots-upgrade-advanced-battery:1b}"

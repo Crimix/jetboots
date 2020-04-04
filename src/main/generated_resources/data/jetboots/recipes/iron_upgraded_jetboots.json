@@ -1,5 +1,5 @@
 {
-  "type": "jetboots:shaped_nbt",
+  "type": "jetboots:jetboots_shaped_nbt",
   "pattern": [
     "idi",
     "iji",
@@ -10,7 +10,7 @@
       "tag": "forge:ingots/iron"
     },
     "j": {
-      "type": "jetboots:nbt",
+      "type": "blackdogsmoddinglibrary:nbt",
       "item": "jetboots:jetboots",
       "count": 1,
       "nbt": "{jetboots-upgrade-leather:1b}"

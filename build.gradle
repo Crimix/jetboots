@@ -2,16 +2,16 @@ buildscript {
     repositories {
         jcenter()
         maven {
-			name = "forge"
-			url = "http://files.minecraftforge.net/maven"
-		}
-		maven {
+            name = "forge"
+            url = "http://files.minecraftforge.net/maven"
+        }
+        maven {
             name = "sonatype"
             url = "https://oss.sonatype.org/content/repositories/snapshots/"
         }
         maven {
-      		url "https://plugins.gradle.org/m2/"
-    	}
+            url "https://plugins.gradle.org/m2/"
+        }
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
@@ -41,14 +41,14 @@ sourceSets {
 minecraft {
     mappings channel: 'snapshot', version: "${mcp_mappings}"
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
-    
-     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+
+    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
     // Default run configurations.
     // These can be tweaked, removed, or duplicated as needed.
     runs {
         client = {
-        	workingDirectory project.file("run/client")
+            workingDirectory project.file("run/client")
             // recommended logging data for a userdev environment
             properties 'forge.logging.markers': 'SCAN,REGISTRIES,REGISTRYDUMP'
             // recommended logging level for the console
@@ -88,75 +88,85 @@ minecraft {
 }
 
 repositories {
-  jcenter()
-  mavenCentral()
-  maven {
-    // location of the maven that hosts JEI files
-    name = "Progwml6 maven"
-    url = "https://dvs1.progwml6.com/files/maven/"
-  }
-  maven {
-    // location of a maven mirror for JEI files, as a fallback
-    name = "ModMaven"
-    url = "https://modmaven.k-4u.nl/"
-  }
-  maven {
-	name = "forge"
-	url = "https://files.minecraftforge.net/maven/"
-  }
-  maven {
-  	name = "theillusivec4"
-    url = "https://maven.theillusivec4.top/"
-  }
-  maven {
-	name = "Curse"
-	url = "https://minecraft.curseforge.com/api/maven/"
-  }  
+    jcenter()
+    mavenCentral()
+    maven {
+        // location of the maven that hosts JEI files
+        name = "Progwml6 maven"
+        url = "https://dvs1.progwml6.com/files/maven/"
+    }
+    maven {
+        // location of a maven mirror for JEI files, as a fallback
+        name = "ModMaven"
+        url = "https://modmaven.k-4u.nl/"
+    }
+    maven {
+        name = "forge"
+        url = "https://files.minecraftforge.net/maven/"
+    }
+    maven {
+        name = "theillusivec4"
+        url = "https://maven.theillusivec4.top/"
+    }
+    maven {
+        name = "Curse"
+        url = "https://minecraft.curseforge.com/api/maven/"
+    }
+    maven {
+        name = "GitHubPackages"
+        url = uri("https://maven.pkg.github.com/crimix/bml")
+        credentials {
+            username = priv.githubUser
+            password = priv.githubToken
+        }
+    }
 }
 
 dependencies {
-	minecraft([
-		group  : "${project.forge_group}",
-		name   : "forge",
-		version: "${project.mc_version}-${project.forge_version}"
-	])
-	
-	compileOnly fg.deobf("mezz.jei:jei-${jei_version}:api")
+    minecraft([
+            group  : "${project.forge_group}",
+            name   : "forge",
+            version: "${project.mc_version}-${project.forge_version}"
+    ])
+
+    compileOnly fg.deobf("mezz.jei:jei-${jei_version}:api")
     runtimeOnly fg.deobf("mezz.jei:jei-${jei_version}")
     //compileOnly fg.deobf("curse.maven:angelring:${angelring_version}")
     //runtimeOnly fg.deobf("curse.maven:angelring:${angelring_version}")
     //compileOnly fg.deobf("top.theillusivec4.caelus:caelus:${caelus_version}")
-	//runtimeOnly fg.deobf("top.theillusivec4.caelus:caelus:${caelus_version}") 
-}
-
-processResources {
-    exclude '**/*.xcf'
-    from(sourceSets.main.resources.srcDirs) {
-        include 'META-INF/mods.toml'
-
-        expand 'version': project.version, 'mc_version': mc_version, 'forge_version': forge_version_toml
-    }
-    
-    from(sourceSets.main.resources.srcDirs) {
-        exclude 'META-INF/mods.toml'
-    }
+    //runtimeOnly fg.deobf("top.theillusivec4.caelus:caelus:${caelus_version}")
+    compileOnly fg.deobf("com.black_dog20.bml:BML:${bml_version}")
+    runtimeOnly fg.deobf("com.black_dog20.bml:BML:${bml_version}")
 }
 
 jar {
     manifest {
-        attributes(["Specification-Title": "jetboots",
-                    "Specification-Vendor": "black_dog20",
-                    "Specification-Version": "1",  // We are version 1 of ourselves
-                    "Implementation-Title": "Jet Boots",
-                    "Implementation-Version": "${version}",
-                    "Implementation-Vendor" :"black_dog20",
+        attributes(["Specification-Title"     : "jetboots",
+                    "Specification-Vendor"    : "black_dog20",
+                    "Specification-Version"   : "1",  // We are version 1 of ourselves
+                    "Implementation-Title"    : "Jet Boots",
+                    "Implementation-Version"  : "${version}",
+                    "Implementation-Vendor"   : "black_dog20",
                     "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")],)
     }
 }
 
+curseforge {
+    apiKey = priv.apiKey
+    project {
+        id = '373208'
+        changelogType = 'markdown'
+        changelog = file('changelog.txt')
+        releaseType = 'release'
+        addGameVersion 'Forge'
+        addGameVersion 'Java 8'
+        addGameVersion '1.15.2'
+    }
+}
+
 def clearFile(File f) {
-    f.withWriter  {
-    	writer -> writer.write('')
+    f.withWriter {
+        writer -> writer.write('')
     }
 }
 

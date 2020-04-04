@@ -1,23 +1,20 @@
 package com.black_dog20.jetboots.common.data;
 
-import static com.black_dog20.jetboots.common.items.ModItems.JET_BOOTS;
-
-import java.util.function.Consumer;
-
+import com.black_dog20.bml.crafting.IngredientNBT;
+import com.black_dog20.bml.datagen.BaseRecipeProvider;
+import com.black_dog20.bml.datagen.crafting.ShapedNBTRecipeBuilder;
+import com.black_dog20.bml.utils.nbt.NBTItemBuilder;
+import com.black_dog20.bml.utils.nbt.NBTUtil;
 import com.black_dog20.jetboots.Jetboots;
 import com.black_dog20.jetboots.common.crafting.BatteryOnCondition;
-import com.black_dog20.jetboots.common.crafting.IngredientNBT;
-import com.black_dog20.jetboots.common.data.crafting.ShapedNBTRecipeBuilder;
-import com.black_dog20.jetboots.common.util.NBTItemBuilder;
+import com.black_dog20.jetboots.common.crafting.ModCrafting;
 import com.black_dog20.jetboots.common.util.NBTTags;
-
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.IRequirementsStrategy;
 import net.minecraft.advancements.criterion.RecipeUnlockedTrigger;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.IFinishedRecipe;
-import net.minecraft.data.RecipeProvider;
 import net.minecraft.data.ShapedRecipeBuilder;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -27,10 +24,14 @@ import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.crafting.ConditionalAdvancement;
 import net.minecraftforge.common.crafting.ConditionalRecipe;
 
-public class GeneratorRecipes extends RecipeProvider {
+import java.util.function.Consumer;
+
+import static com.black_dog20.jetboots.common.items.ModItems.*;
+
+public class GeneratorRecipes extends BaseRecipeProvider {
 
 	public GeneratorRecipes(DataGenerator generator) {
-		super(generator);
+		super(generator, Jetboots.MOD_ID);
 	}
 
 	@Override
@@ -47,7 +48,7 @@ public class GeneratorRecipes extends RecipeProvider {
 		.addCriterion("has_diamonds", hasItem(Tags.Items.GEMS_DIAMOND))
 		.build(consumer);
 
-		ShapedNBTRecipeBuilder.shapedNBTRecipe(getJetBootWithTag(NBTTags.UPGRAE_ARMOR_LEATHER))
+		ShapedNBTRecipeBuilder.customShapedNBTRecipe(ModCrafting.JETBOOTS_SHAPED_NBT.get(), getJetBootWithTag(NBTTags.UPGRAE_ARMOR_LEATHER))
 		.key('i', Tags.Items.LEATHER)
 		.key('j', JET_BOOTS.get())
 		.key('d', Tags.Items.GEMS_DIAMOND)
@@ -57,7 +58,7 @@ public class GeneratorRecipes extends RecipeProvider {
 		.addCriterion("has_jetboots", hasItem(JET_BOOTS.get()))
 		.build(consumer, new ResourceLocation(Jetboots.MOD_ID, "leather_upgraded_jetboots"));
 
-		ShapedNBTRecipeBuilder.shapedNBTRecipe(getJetBootWithTag(NBTTags.UPGRAE_ARMOR_IRON))
+		ShapedNBTRecipeBuilder.customShapedNBTRecipe(ModCrafting.JETBOOTS_SHAPED_NBT.get(), getJetBootWithTag(NBTTags.UPGRAE_ARMOR_IRON))
 		.key('i', Tags.Items.INGOTS_IRON)
 		.key('j', IngredientNBT.fromNBTStack(getJetBootWithTag(NBTTags.UPGRAE_ARMOR_LEATHER)))
 		.key('d', Tags.Items.GEMS_DIAMOND)
@@ -67,7 +68,7 @@ public class GeneratorRecipes extends RecipeProvider {
 		.addCriterion("has_jetboots", hasItem(JET_BOOTS.get()))
 		.build(consumer, new ResourceLocation(Jetboots.MOD_ID, "iron_upgraded_jetboots"));
 
-		ShapedNBTRecipeBuilder.shapedNBTRecipe(getJetBootWithTag(NBTTags.UPGRAE_ARMOR_DIAMOND))
+		ShapedNBTRecipeBuilder.customShapedNBTRecipe(ModCrafting.JETBOOTS_SHAPED_NBT.get(), getJetBootWithTag(NBTTags.UPGRAE_ARMOR_DIAMOND))
 		.key('i', Tags.Items.GEMS_DIAMOND)
 		.key('j', IngredientNBT.fromNBTStack(getJetBootWithTag(NBTTags.UPGRAE_ARMOR_IRON)))
 		.key('d', Tags.Items.GEMS_EMERALD)
@@ -77,7 +78,7 @@ public class GeneratorRecipes extends RecipeProvider {
 		.addCriterion("has_jetboots", hasItem(JET_BOOTS.get()))
 		.build(consumer, new ResourceLocation(Jetboots.MOD_ID, "diamond_upgraded_jetboots"));
 
-		ShapedNBTRecipeBuilder.shapedNBTRecipe(getJetBootWithTag(NBTTags.UPGRAE_ENGINE))
+		ShapedNBTRecipeBuilder.customShapedNBTRecipe(ModCrafting.JETBOOTS_SHAPED_NBT.get(), getJetBootWithTag(NBTTags.UPGRAE_ENGINE))
 		.key('p', Items.PISTON)
 		.key('j', JET_BOOTS.get())
 		.key('o', Tags.Items.OBSIDIAN)
@@ -88,7 +89,7 @@ public class GeneratorRecipes extends RecipeProvider {
 		.addCriterion("has_jetboots", hasItem(JET_BOOTS.get()))
 		.build(consumer, new ResourceLocation(Jetboots.MOD_ID, "engine_upgraded_jetboots"));
 
-		ShapedNBTRecipeBuilder.shapedNBTRecipe(getJetBootWithTag(NBTTags.UPGRAE_THRUSTER))
+		ShapedNBTRecipeBuilder.customShapedNBTRecipe(ModCrafting.JETBOOTS_SHAPED_NBT.get(), getJetBootWithTag(NBTTags.UPGRAE_THRUSTER))
 		.key('h', Items.HOPPER)
 		.key('j', IngredientNBT.fromNBTStack(getJetBootWithTag(NBTTags.UPGRAE_ENGINE)))
 		.key('o', Tags.Items.OBSIDIAN)
@@ -100,7 +101,7 @@ public class GeneratorRecipes extends RecipeProvider {
 		.addCriterion("has_jetboots", hasItem(JET_BOOTS.get()))
 		.build(consumer, new ResourceLocation(Jetboots.MOD_ID, "thruster_upgraded_jetboots"));
 
-		ShapedNBTRecipeBuilder.shapedNBTRecipe(getJetBootWithTag(NBTTags.UPGRAE_SHOCK_ABSORBER))
+		ShapedNBTRecipeBuilder.customShapedNBTRecipe(ModCrafting.JETBOOTS_SHAPED_NBT.get(), getJetBootWithTag(NBTTags.UPGRAE_SHOCK_ABSORBER))
 		.key('w', ItemTags.WOOL)
 		.key('j', JET_BOOTS.get())
 		.key('o', Tags.Items.OBSIDIAN)
@@ -111,7 +112,7 @@ public class GeneratorRecipes extends RecipeProvider {
 		.addCriterion("has_jetboots", hasItem(JET_BOOTS.get()))
 		.build(consumer, new ResourceLocation(Jetboots.MOD_ID, "shock_upgraded_jetboots"));
 
-		ShapedNBTRecipeBuilder.shapedNBTRecipe(getJetBootWithTag(NBTTags.UPGRAE_UNDERWATER))
+		ShapedNBTRecipeBuilder.customShapedNBTRecipe(ModCrafting.JETBOOTS_SHAPED_NBT.get(), getJetBootWithTag(NBTTags.UPGRAE_UNDERWATER))
 		.key('l', Tags.Items.GEMS_LAPIS)
 		.key('j', JET_BOOTS.get())
 		.key('i', Items.IRON_BARS)
@@ -122,7 +123,7 @@ public class GeneratorRecipes extends RecipeProvider {
 		.addCriterion("has_jetboots", hasItem(JET_BOOTS.get()))
 		.build(consumer, new ResourceLocation(Jetboots.MOD_ID, "underwater_upgraded_jetboots"));
 
-		ShapedNBTRecipeBuilder.shapedNBTRecipe(getJetBootWithTag(NBTTags.UPGRAE_SOULBOUND))
+		ShapedNBTRecipeBuilder.customShapedNBTRecipe(ModCrafting.JETBOOTS_SHAPED_NBT.get(), getJetBootWithTag(NBTUtil.getSoulboundTag()))
 		.key('i', Tags.Items.NETHER_STARS)
 		.key('j', JET_BOOTS.get())
 		.patternLine("iii")
@@ -131,7 +132,7 @@ public class GeneratorRecipes extends RecipeProvider {
 		.addCriterion("has_jetboots", hasItem(JET_BOOTS.get()))
 		.build(consumer, new ResourceLocation(Jetboots.MOD_ID, "soulbound_upgraded_jetboots"));
 		
-		ShapedNBTRecipeBuilder.shapedNBTRecipe(getJetBootWithTag(NBTTags.UPGRAE_MUFFLED))
+		ShapedNBTRecipeBuilder.customShapedNBTRecipe(ModCrafting.JETBOOTS_SHAPED_NBT.get(), getJetBootWithTag(NBTTags.UPGRAE_MUFFLED))
 		.key('i', ItemTags.WOOL)
 		.key('j', JET_BOOTS.get())
 		.patternLine("iii")
@@ -144,7 +145,7 @@ public class GeneratorRecipes extends RecipeProvider {
 		ConditionalRecipe.builder()
 		.addCondition(new BatteryOnCondition())
 		.addRecipe(
-				ShapedNBTRecipeBuilder.shapedNBTRecipe(
+				ShapedNBTRecipeBuilder.customShapedNBTRecipe(ModCrafting.JETBOOTS_SHAPED_NBT.get(),
 						NBTItemBuilder.init(JET_BOOTS.get())
 						.addTag(NBTTags.UPGRAE_ADVANCED_BATTERY, true)
 						.build())
@@ -173,7 +174,7 @@ public class GeneratorRecipes extends RecipeProvider {
 		ConditionalRecipe.builder()
 		.addCondition(new BatteryOnCondition())
 		.addRecipe(
-				ShapedNBTRecipeBuilder.shapedNBTRecipe(
+				ShapedNBTRecipeBuilder.customShapedNBTRecipe(ModCrafting.JETBOOTS_SHAPED_NBT.get(),
 						NBTItemBuilder.init(JET_BOOTS.get())
 						.addTag(NBTTags.UPGRAE_SUPER_BATTERY, true)
 						.build())

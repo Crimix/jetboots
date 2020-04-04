@@ -1,5 +1,5 @@
 {
-  "type": "jetboots:shaped_nbt",
+  "type": "jetboots:jetboots_shaped_nbt",
   "pattern": [
     "iii",
     "iji",
@@ -15,6 +15,6 @@
   },
   "result": {
     "item": "jetboots:jetboots",
-    "nbt": "{jetboots-upgrade-soulbound:1b}"
+    "nbt": "{bml-soulbound:1b}"
   }
 }

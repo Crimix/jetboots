@@ -1,13 +1,12 @@
 package com.black_dog20.jetboots.client;
 
-import java.util.Random;
-
+import com.black_dog20.bml.utils.math.Pos3D;
 import com.black_dog20.jetboots.client.sound.JetbootSound;
-import com.black_dog20.jetboots.common.util.Pos3D;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particles.ParticleTypes;
+
+import java.util.Random;
 
 public class ClientHelper {
 

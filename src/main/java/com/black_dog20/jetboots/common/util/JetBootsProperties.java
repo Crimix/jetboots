@@ -1,5 +1,6 @@
 package com.black_dog20.jetboots.common.util;
 
+import com.black_dog20.bml.utils.nbt.NBTUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 
@@ -88,7 +89,7 @@ public class JetBootsProperties {
     
     public static boolean getSoulboundUpgrade(ItemStack jetboots) {
         CompoundNBT compound = jetboots.getOrCreateTag();
-        return compound.getBoolean(UPGRAE_SOULBOUND);
+        return compound.getBoolean(NBTUtil.getSoulboundTag());
     }
     
     public static boolean getMuffledUpgrade(ItemStack jetboots) {
