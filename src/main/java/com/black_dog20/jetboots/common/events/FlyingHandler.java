@@ -3,7 +3,7 @@ package com.black_dog20.jetboots.common.events;
 import com.black_dog20.bml.event.ArmorEvent;
 import com.black_dog20.jetboots.Config;
 import com.black_dog20.jetboots.Jetboots;
-import com.black_dog20.jetboots.common.items.JetBootsItem;
+import com.black_dog20.jetboots.common.items.ModItems;
 import com.black_dog20.jetboots.common.network.PacketHandler;
 import com.black_dog20.jetboots.common.network.packets.PacketSyncPartical;
 import com.black_dog20.jetboots.common.network.packets.PacketSyncSound;
@@ -36,8 +36,7 @@ public class FlyingHandler {
 	@SubscribeEvent
 	public static void onEquipJetboots(ArmorEvent.Equip event) {
 		PlayerEntity player = event.player;
-		ItemStack armor = event.armor;
-		if(!armor.isEmpty() && armor.getItem() instanceof JetBootsItem) {
+		if(event.isArmorEqualTo(ModItems.JET_BOOTS.get())) {
 			if(JetbootsUtil.canFlyWithBoots(player)) {
 				player.abilities.allowFlying = true;
 				player.sendPlayerAbilities();
@@ -49,13 +48,16 @@ public class FlyingHandler {
 	public static void onJetbootsTick(ArmorEvent.Tick event) {
 		PlayerEntity player = event.player;
 		ItemStack jetboots = event.armor;
-		if (!jetboots.isEmpty() && jetboots.getItem() instanceof JetBootsItem) {
+		if(event.isArmorEqualTo(ModItems.JET_BOOTS.get())) {
 			if (JetbootsUtil.canFlyWithBoots(player)) {
-				player.abilities.allowFlying = true;
-				player.sendPlayerAbilities();
+				// Enable allow flying if not using elytra flight
+				if(!player.abilities.allowFlying && !useElytraFlight(player, jetboots)) {
+					player.abilities.allowFlying = true;
+					player.sendPlayerAbilities();
+				}
 
 				if (useElytraFlight(player, jetboots)) {
-					startElytraFlight(player, jetboots);
+					doElytraFlight(player, jetboots);
 				} else if (player.isElytraFlying()) {
 					stopElytraFlight(player);
 				} else if (player.abilities.isFlying) {
@@ -74,8 +76,7 @@ public class FlyingHandler {
 	@SubscribeEvent
 	public static void onUnequipJetboots(ArmorEvent.Unequip event) {
 		PlayerEntity player = event.player;
-		ItemStack armor = event.armor;
-		if(!armor.isEmpty() && armor.getItem() instanceof JetBootsItem) {
+		if(event.isArmorEqualTo(ModItems.JET_BOOTS.get())) {
 			stopElytraFlight(player);
 			PacketHandler.NETWORK.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(()-> player), new PacketSyncStopSound(player.getUniqueID()));
 			player.abilities.allowFlying = false;
@@ -107,7 +108,7 @@ public class FlyingHandler {
 	}
 
 	private static void stopElytraFlight(PlayerEntity player) {
-		player.func_226568_ek_();
+		player.func_226568_ek_(); // Stop elytra flight pose
 		if(getAltitudeAboveGround(player) > 10 && !player.isInWater()) {
 			player.abilities.allowFlying = true;
 			player.abilities.isFlying = true;
@@ -119,9 +120,15 @@ public class FlyingHandler {
 		}
 	}
 
-	private static void startElytraFlight(PlayerEntity player, ItemStack jetboots) {
+	private static void doElytraFlight(PlayerEntity player, ItemStack jetboots) {
 		drawpower(jetboots);
-		player.func_226567_ej_();
+		// Disable flying
+		if(player.abilities.allowFlying || player.abilities.isFlying) {
+			player.abilities.allowFlying = false;
+			player.abilities.isFlying = false;
+			player.sendPlayerAbilities();
+		}
+		player.func_226567_ej_(); // Start elytra flight pose
 		Vec3d vec3d = player.getLookVec();
 		double d0 = 1.5D;
 		double d1 = 0.1D;
