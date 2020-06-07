@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "iii",
+    "iji",
+    "iii"
+  ],
+  "key": {
+    "i": {
+      "tag": "minecraft:wool"
+    },
+    "j": {
+      "item": "jetboots:base_upgrade"
+    }
+  },
+  "result": {
+    "item": "jetboots:muffled_upgrade"
+  }
+}

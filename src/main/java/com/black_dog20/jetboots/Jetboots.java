@@ -1,33 +1,19 @@
 package com.black_dog20.jetboots;
 
-import java.util.List;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
+import com.black_dog20.jetboots.client.containers.ModContainers;
 import com.black_dog20.jetboots.client.keybinds.Keybinds;
+import com.black_dog20.jetboots.client.screens.JetBootsScreen;
 import com.black_dog20.jetboots.client.sound.ModSounds;
+import com.black_dog20.jetboots.common.compat.ModCompat;
 import com.black_dog20.jetboots.common.crafting.ModCrafting;
 import com.black_dog20.jetboots.common.items.ModItems;
 import com.black_dog20.jetboots.common.network.PacketHandler;
-
-import net.minecraft.block.Block;
+import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.gen.GenerationStage.Decoration;
-import net.minecraft.world.gen.feature.ConfiguredFeature;
-import net.minecraft.world.gen.feature.DecoratedFeatureConfig;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.OreFeatureConfig;
-import net.minecraft.world.gen.feature.ReplaceBlockConfig;
-import net.minecraft.world.gen.placement.CountRangeConfig;
-import net.minecraft.world.gen.placement.DepthAverageConfig;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
@@ -36,7 +22,8 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
-import net.minecraftforge.registries.ForgeRegistries;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 @Mod(Jetboots.MOD_ID)
 public class Jetboots
@@ -57,9 +44,10 @@ public class Jetboots
 		Config.loadConfig(Config.SERVER_CONFIG, FMLPaths.CONFIGDIR.get().resolve(MOD_ID + "-server.toml"));
 
 		ModItems.ITEMS.register(event);
+		ModCompat.register(event);
+		ModContainers.CONTAINERS.register(event);
 		ModSounds.SOUNDS.register(event);
 		event.addGenericListener(IRecipeSerializer.class, ModCrafting::registerRecipeSerialziers);
-		ModCrafting.RECIPE_SERIALIZERS.register(event);
 
 		event.addListener(this::setup);
 		event.addListener(this::setupClient);
@@ -73,6 +61,7 @@ public class Jetboots
 	private void setupClient(final FMLClientSetupEvent event) {
 		ClientRegistry.registerKeyBinding(Keybinds.keyMode);
 		ClientRegistry.registerKeyBinding(Keybinds.keySpeed);
+		ScreenManager.registerFactory(ModContainers.JETBOOTS_CONTAINER.get(), JetBootsScreen::new);
 	}
 
 	public static Logger getLogger() {

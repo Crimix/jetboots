@@ -1,14 +1,13 @@
 package com.black_dog20.jetboots.common.network.packets;
 
-import java.util.function.Supplier;
-
 import com.black_dog20.jetboots.common.util.JetBootsProperties;
 import com.black_dog20.jetboots.common.util.JetbootsUtil;
-
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
+
+import java.util.function.Supplier;
 
 public class PacketUpdateFlightSpeed {
 	public PacketUpdateFlightSpeed() {
@@ -32,7 +31,7 @@ public class PacketUpdateFlightSpeed {
                 ItemStack stack = JetbootsUtil.getJetBoots(player);
                 
                 if(!stack.isEmpty())
-                	if(JetBootsProperties.getThrusterUpgrade(stack)) {
+                	if(JetBootsProperties.hasThrusterUpgrade(stack)) {
                 		JetBootsProperties.setSpeed(stack, !JetBootsProperties.getSpeed(stack));
                 		player.sendStatusMessage(JetbootsUtil.getFlightSpeedText(player), true);
                 	}

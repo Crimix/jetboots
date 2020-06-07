@@ -1,6 +1,7 @@
 package com.black_dog20.jetboots.client;
 
 import com.black_dog20.bml.utils.math.Pos3D;
+import com.black_dog20.jetboots.Config;
 import com.black_dog20.jetboots.client.sound.JetbootSound;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
@@ -51,7 +52,7 @@ public class ClientHelper {
 	}
 	
 	public static void play(PlayerEntity player) {
-   		if(!JetbootSound.playing(player)) {
+   		if(!JetbootSound.playing(player) && !Config.MUFFLED_BOOTS.get()) {
 			Minecraft.getInstance().getSoundHandler().play(new JetbootSound(player));
 		}
 	}

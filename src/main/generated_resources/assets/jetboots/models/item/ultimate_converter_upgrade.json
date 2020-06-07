@@ -1,0 +1,6 @@
+{
+  "parent": "item/handheld",
+  "textures": {
+    "layer0": "jetboots:item/ultimate_converter_upgrade"
+  }
+}

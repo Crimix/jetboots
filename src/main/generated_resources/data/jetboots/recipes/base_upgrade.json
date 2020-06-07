@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ogo",
+    "gdg",
+    "bob"
+  ],
+  "key": {
+    "o": {
+      "tag": "forge:obsidian"
+    },
+    "d": {
+      "tag": "forge:gems/diamond"
+    },
+    "b": {
+      "tag": "forge:rods/blaze"
+    },
+    "g": {
+      "tag": "forge:ingots/gold"
+    }
+  },
+  "result": {
+    "item": "jetboots:base_upgrade"
+  }
+}

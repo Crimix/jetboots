@@ -1,0 +1,31 @@
+{
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "jetboots:battery_on"
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:crafting_shaped",
+        "pattern": [
+          "iii",
+          "iji",
+          "iii"
+        ],
+        "key": {
+          "i": {
+            "tag": "forge:gunpowder"
+          },
+          "j": {
+            "item": "jetboots:base_upgrade"
+          }
+        },
+        "result": {
+          "item": "jetboots:basic_converter_upgrade"
+        }
+      }
+    }
+  ]
+}

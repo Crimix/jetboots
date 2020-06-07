@@ -1,0 +1,34 @@
+{
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "jetboots:battery_on"
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:crafting_shaped",
+        "pattern": [
+          "idi",
+          "iji",
+          "idi"
+        ],
+        "key": {
+          "i": {
+            "tag": "forge:storage_blocks/lapis"
+          },
+          "j": {
+            "item": "jetboots:advanced_battery_upgrade"
+          },
+          "d": {
+            "tag": "forge:storage_blocks/diamond"
+          }
+        },
+        "result": {
+          "item": "jetboots:elite_battery_upgrade"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "idi",
+    "iji",
+    "iii"
+  ],
+  "key": {
+    "i": {
+      "tag": "forge:leather"
+    },
+    "j": {
+      "item": "jetboots:base_upgrade"
+    },
+    "d": {
+      "tag": "forge:gems/diamond"
+    }
+  },
+  "result": {
+    "item": "jetboots:leather_armor_upgrade"
+  }
+}

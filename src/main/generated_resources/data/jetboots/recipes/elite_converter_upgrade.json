@@ -1,0 +1,34 @@
+{
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "jetboots:battery_on"
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:crafting_shaped",
+        "pattern": [
+          "idi",
+          "iji",
+          "idi"
+        ],
+        "key": {
+          "i": {
+            "tag": "forge:gems/lapis"
+          },
+          "j": {
+            "item": "jetboots:advanced_converter_upgrade"
+          },
+          "d": {
+            "tag": "forge:gems/diamond"
+          }
+        },
+        "result": {
+          "item": "jetboots:elite_converter_upgrade"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "odo",
+    "wjw",
+    "www"
+  ],
+  "key": {
+    "w": {
+      "tag": "minecraft:wool"
+    },
+    "j": {
+      "item": "jetboots:base_upgrade"
+    },
+    "o": {
+      "tag": "forge:obsidian"
+    },
+    "d": {
+      "tag": "forge:gems/diamond"
+    }
+  },
+  "result": {
+    "item": "jetboots:shock_absorber_upgrade"
+  }
+}

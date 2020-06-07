@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "jetboots:base_upgrade"
+    ]
+  },
+  "criteria": {
+    "has_diamonds": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:gems/diamond"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "jetboots:base_upgrade"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_diamonds",
+      "has_the_recipe"
+    ]
+  ]
+}

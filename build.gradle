@@ -120,6 +120,7 @@ repositories {
             password = priv.githubToken
         }
     }
+    mavenLocal()
 }
 
 dependencies {
@@ -137,6 +138,14 @@ dependencies {
     //runtimeOnly fg.deobf("top.theillusivec4.caelus:caelus:${caelus_version}")
     compileOnly fg.deobf("com.black_dog20.bml:BML:${bml_version}")
     runtimeOnly fg.deobf("com.black_dog20.bml:BML:${bml_version}")
+    compileOnly fg.deobf("curse.maven:cyclic:2934819")
+    runtimeOnly fg.deobf("curse.maven:cyclic:2934819")
+    compileOnly fg.deobf("curse.maven:mekanism:2938498")
+    runtimeOnly fg.deobf("curse.maven:mekanism:2938498")
+    compileOnly fg.deobf("curse.maven:mekanism-tools:2938501")
+    runtimeOnly fg.deobf("curse.maven:mekanism-tools:2938501")
+    compileOnly fg.deobf("curse.maven:mekanism-generators:2938500")
+    runtimeOnly fg.deobf("curse.maven:mekanism-generators:2938500")
 }
 
 jar {

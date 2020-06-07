@@ -4,8 +4,11 @@ import com.black_dog20.bml.api.ISoulbindable;
 import com.black_dog20.bml.utils.math.MathUtil;
 import com.black_dog20.bml.utils.translate.TranslationUtil;
 import com.black_dog20.jetboots.Config;
+import com.black_dog20.jetboots.client.containers.JetBootsContainer;
 import com.black_dog20.jetboots.client.keybinds.Keybinds;
-import com.black_dog20.jetboots.common.capabilities.CapabilityEnergyProvider;
+import com.black_dog20.jetboots.common.items.upgrades.api.IArmorUpgrade;
+import com.black_dog20.jetboots.common.util.EnergyItem;
+import com.black_dog20.jetboots.common.util.JetBootsItemHandler;
 import com.black_dog20.jetboots.common.util.JetBootsProperties;
 import com.black_dog20.jetboots.common.util.JetbootsUtil;
 import com.black_dog20.jetboots.common.util.TranslationHelper;
@@ -16,11 +19,18 @@ import net.minecraft.client.util.InputMappings;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.IArmorMaterial;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.MathHelper;
@@ -28,10 +38,15 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.UUID;
@@ -59,26 +74,19 @@ public class JetBootsItem extends BaseArmorItem implements ISoulbindable {
     }
 
     private double getJetBootsDamageReduceAmount(ItemStack stack) {
-
-        if (JetBootsProperties.getCustomArmorUpgrade(stack) >= 0)
-            return JetBootsProperties.getCustomArmorUpgrade(stack);
-        else if (JetBootsProperties.getDiamondArmorUpgrade(stack))
-            return 6;
-        else if (JetBootsProperties.getIronArmorUpgrade(stack))
-            return 5;
-        else if (JetBootsProperties.getLeatherArmorUpgrade(stack))
-            return 2;
-        else
-            return 0;
+        return JetBootsProperties.getArmorUpgrade(stack)
+                .filter(upgrade -> upgrade.getArmorUpgradeType() == IArmorUpgrade.ArmorType.NORMAL)
+                .filter(upgrade -> upgrade.providesProtection(stack))
+                .map(IArmorUpgrade::getArmor)
+                .orElse(0.0);
     }
 
     private double getJetBootsToughness(ItemStack stack) {
-        if (JetBootsProperties.getCustomToughnessUpgrade(stack) >= 0)
-            return JetBootsProperties.getCustomToughnessUpgrade(stack);
-        else if (JetBootsProperties.getDiamondArmorUpgrade(stack))
-            return 4;
-        else
-            return 0;
+        return JetBootsProperties.getArmorUpgrade(stack)
+                .filter(upgrade -> upgrade.getArmorUpgradeType() == IArmorUpgrade.ArmorType.NORMAL)
+                .filter(upgrade -> upgrade.providesProtection(stack))
+                .map(IArmorUpgrade::getToughness)
+                .orElse(0.0);
     }
 
     @Override
@@ -100,19 +108,19 @@ public class JetBootsItem extends BaseArmorItem implements ISoulbindable {
                                     MathUtil.formatThousands(energy.getMaxEnergyStored()))));
         }
 
-        if (JetBootsProperties.getEngineUpgrade(stack) || JetBootsProperties.getThrusterUpgrade(stack)) {
-            if (JetBootsProperties.getEngineUpgrade(stack)) {
+        if (JetBootsProperties.hasEngineUpgrade(stack) || JetBootsProperties.hasThrusterUpgrade(stack)) {
+            if (JetBootsProperties.hasEngineUpgrade(stack)) {
                 tooltip.add(TranslationUtil.translate(CHANGE_FLIGHT_MODE, TextFormatting.GRAY, Keybinds.keyMode.getLocalizedName().toUpperCase()));
             }
-            if (JetBootsProperties.getThrusterUpgrade(stack)) {
+            if (JetBootsProperties.hasThrusterUpgrade(stack)) {
                 tooltip.add(TranslationUtil.translate(CHANGE_SPEED_MODE, TextFormatting.GRAY, Keybinds.keySpeed.getLocalizedName().toUpperCase()));
             }
 
-            if (JetBootsProperties.getEngineUpgrade(stack)) {
+            if (JetBootsProperties.hasEngineUpgrade(stack)) {
                 tooltip.add(JetbootsUtil.getFlightModeText(stack));
             }
 
-            if (JetBootsProperties.getThrusterUpgrade(stack)) {
+            if (JetBootsProperties.hasThrusterUpgrade(stack)) {
                 tooltip.add(JetbootsUtil.getFlightSpeedText(stack));
             }
 
@@ -120,51 +128,41 @@ public class JetBootsItem extends BaseArmorItem implements ISoulbindable {
         }
 
         if (!InputMappings.isKeyDown(mc.getMainWindow().getHandle(), mc.gameSettings.keyBindSneak.getKey().getKeyCode())) {
+            tooltip.add(TranslationUtil.translate(OPEN_UPGRADES, TextFormatting.GRAY));
             tooltip.add(TranslationUtil.translate(SHOW_UPGRADES, TextFormatting.GRAY, mc.gameSettings.keyBindSneak.getLocalizedName().toLowerCase()));
         } else {
             tooltip.add(TranslationUtil.translate(UPGRADES, TextFormatting.WHITE));
 
-            if (JetBootsProperties.getCustomArmorUpgrade(stack) >= 0) {
-                String name = new TranslationTextComponent(JetBootsProperties.getCustomArmorUpgradeName(stack)).getFormattedText();
-                tooltip.add(TranslationUtil.translate(CUSTOM_ARMOR, TextFormatting.LIGHT_PURPLE, name));
-            } else if (JetBootsProperties.getDiamondArmorUpgrade(stack))
-                tooltip.add(TranslationUtil.translate(DIAMOND_ARMOR, TextFormatting.BLUE));
-            else if (JetBootsProperties.getIronArmorUpgrade(stack))
-                tooltip.add(TranslationUtil.translate(IRON_ARMOR, TextFormatting.GREEN));
-            else if (JetBootsProperties.getLeatherArmorUpgrade(stack))
-                tooltip.add(TranslationUtil.translate(LEATHER_ARMOR, TextFormatting.GREEN));
+            JetBootsProperties.getArmorUpgrade(stack)
+                    .ifPresent(armor -> tooltip.add(armor.getTooltip()));
 
             if (Config.USE_POWER.get()) {
-                String mode = "";
-                if (JetBootsProperties.getSuperBattery(stack)) {
-                    mode = TranslationHelper.translateToString(SUPER, TextFormatting.LIGHT_PURPLE);
-                } else if (JetBootsProperties.getAdvancedBattery(stack)) {
-                    mode = TranslationHelper.translateToString(ADVANCED, TextFormatting.RED);
-                } else {
-                    mode = TranslationHelper.translateToString(BASIC, TextFormatting.GREEN);
-                }
-                tooltip.add(TranslationUtil.translate(BATTERY_UPGRADE, TextFormatting.WHITE, mode));
+                JetBootsProperties.getBatteryUpgrade(stack)
+                        .ifPresent(battert -> tooltip.add(battert.getTooltip()));
+                JetBootsProperties.getConverterUpgrade(stack)
+                        .ifPresent(converter -> tooltip.add(converter.getTooltip()));
             }
 
-            if (JetBootsProperties.getEngineUpgrade(stack))
-                tooltip.add(TranslationUtil.translate(ENGINE_UPGRADE, TextFormatting.GREEN));
-            if (JetBootsProperties.getThrusterUpgrade(stack))
-                tooltip.add(TranslationUtil.translate(THRUSTER_UPGRADE, TextFormatting.GREEN));
-            if (JetBootsProperties.getShockUpgrade(stack))
-                tooltip.add(TranslationUtil.translate(SHOCK_ABSORBER_UPGRADE, TextFormatting.GREEN));
-            if (JetBootsProperties.getMuffledUpgrade(stack))
-                tooltip.add(TranslationUtil.translate(MUFFLED_UPGRADE, TextFormatting.GREEN));
-            if (JetBootsProperties.getUnderWaterUpgrade(stack))
-                tooltip.add(TranslationUtil.translate(UNDERWATER_UPGRADE, TextFormatting.AQUA));
-            if (JetBootsProperties.getSoulboundUpgrade(stack))
-                tooltip.add(TranslationUtil.translate(SOULBOUND_UPGRADE, TextFormatting.LIGHT_PURPLE));
+            JetBootsProperties.getEngineUpgrade(stack)
+                    .ifPresent(upgrade -> tooltip.add(upgrade.getTooltip()));
+            JetBootsProperties.getThrusterUpgrade(stack)
+                    .ifPresent(upgrade -> tooltip.add(upgrade.getTooltip()));
+            JetBootsProperties.getShockUpgrade(stack)
+                    .ifPresent(upgrade -> tooltip.add(upgrade.getTooltip()));
+            JetBootsProperties.getMuffledUpgrade(stack)
+                    .ifPresent(upgrade -> tooltip.add(upgrade.getTooltip()));
+            JetBootsProperties.getUnderWaterUpgrade(stack)
+                    .ifPresent(upgrade -> tooltip.add(upgrade.getTooltip()));
+            JetBootsProperties.getSoulboundUpgrade(stack)
+                    .ifPresent(upgrade -> tooltip.add(upgrade.getTooltip()));
         }
     }
 
     @Override
     public boolean showDurabilityBar(ItemStack stack) {
         if (Config.USE_POWER.get()) {
-            IEnergyStorage energy = stack.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
+            IEnergyStorage energy = stack.getCapability(CapabilityEnergy.ENERGY, null)
+                    .orElse(null);
             return (energy.getEnergyStored() < energy.getMaxEnergyStored());
         } else
             return false;
@@ -173,14 +171,15 @@ public class JetBootsItem extends BaseArmorItem implements ISoulbindable {
     @Nullable
     @Override
     public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundNBT nbt) {
-        return new CapabilityEnergyProvider(stack, Config.DEFAULT_MAX_POWER.get());
+        return new JetbootsCapabilities(stack, Config.DEFAULT_MAX_POWER.get());
     }
 
 
     @Override
     public double getDurabilityForDisplay(ItemStack stack) {
         if (Config.USE_POWER.get()) {
-            IEnergyStorage energy = stack.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
+            IEnergyStorage energy = stack.getCapability(CapabilityEnergy.ENERGY, null)
+                    .orElse(null);
             if (energy == null)
                 return 0;
 
@@ -192,7 +191,8 @@ public class JetBootsItem extends BaseArmorItem implements ISoulbindable {
     @Override
     public int getRGBDurabilityForDisplay(ItemStack stack) {
         if (Config.USE_POWER.get()) {
-            IEnergyStorage energy = stack.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
+            IEnergyStorage energy = stack.getCapability(CapabilityEnergy.ENERGY, null)
+                    .orElse(null);
             if (energy == null)
                 return super.getRGBDurabilityForDisplay(stack);
 
@@ -200,6 +200,29 @@ public class JetBootsItem extends BaseArmorItem implements ISoulbindable {
         } else
             return super.getRGBDurabilityForDisplay(stack);
     }
+
+    @Override
+    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
+        if (player.isCrouching()) {
+            if(!world.isRemote) {
+                player.openContainer(new INamedContainerProvider() {
+                    @Override
+                    public ITextComponent getDisplayName() {
+                        return TranslationHelper.translate(JETBOOTS_UPGRADES);
+                    }
+
+                    @Nullable
+                    @Override
+                    public Container createMenu(int windowId, PlayerInventory playerInventory, PlayerEntity player) {
+                        return new JetBootsContainer(windowId, playerInventory, player);
+                    }
+                });
+            }
+            return ActionResult.func_226248_a_(player.getHeldItem(hand));
+        }
+        return super.onItemRightClick(world, player, hand);
+    }
+
 
     private static class JetBootsMaterial implements IArmorMaterial {
 
@@ -238,5 +261,36 @@ public class JetBootsItem extends BaseArmorItem implements ISoulbindable {
             return 0;
         }
 
+    }
+
+    class JetbootsCapabilities implements ICapabilityProvider {
+        private ItemStack jetboots;
+        private int energyCapacity;
+        private LazyOptional<IEnergyStorage> capability = LazyOptional.of(() -> new EnergyItem(jetboots, energyCapacity));
+        private LazyOptional<IItemHandler> optional = LazyOptional.of(() -> new JetBootsItemHandler(jetboots));
+
+        public JetbootsCapabilities(ItemStack stack, int energyCapacity) {
+            jetboots = stack;
+            this.energyCapacity = energyCapacity;
+        }
+
+        @Nonnull
+        @Override
+        public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
+            if (cap == null)
+                return LazyOptional.empty();
+
+            if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+                return optional.cast();
+            else if (cap == CapabilityEnergy.ENERGY)
+                return capability.cast();
+            else
+                return LazyOptional.empty();
+        }
+    }
+
+    @Override
+    public boolean isSoulbound(ItemStack stack) {
+        return JetBootsProperties.hasSoulboundUpgrade(stack);
     }
 }

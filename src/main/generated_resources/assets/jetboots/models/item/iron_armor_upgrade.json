@@ -1,0 +1,6 @@
+{
+  "parent": "item/handheld",
+  "textures": {
+    "layer0": "jetboots:item/iron_armor_upgrade"
+  }
+}

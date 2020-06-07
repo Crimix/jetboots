@@ -1,9 +1,5 @@
 package com.black_dog20.jetboots.common.items;
 
-import java.util.List;
-
-import javax.annotation.Nullable;
-
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -13,10 +9,13 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import javax.annotation.Nullable;
+import java.util.List;
+
 public class BaseItem extends Item {
 	
-	public BaseItem() {
-		super(ModItems.ITEM_GROUP.maxStackSize(1));
+	public BaseItem(Properties builder) {
+		super(builder);
 	}
 
 	@OnlyIn(Dist.CLIENT)

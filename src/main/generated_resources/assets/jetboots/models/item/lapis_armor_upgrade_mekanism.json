@@ -1,0 +1,6 @@
+{
+  "parent": "item/handheld",
+  "textures": {
+    "layer0": "jetboots:item/lapis_armor_upgrade_mekanism"
+  }
+}

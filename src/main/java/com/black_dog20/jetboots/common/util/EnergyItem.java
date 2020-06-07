@@ -1,7 +1,7 @@
 package com.black_dog20.jetboots.common.util;
 
 import com.black_dog20.jetboots.Config;
-
+import com.black_dog20.jetboots.common.items.upgrades.api.IBatteryUpgrade;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.energy.EnergyStorage;
 
@@ -20,12 +20,10 @@ public class EnergyItem extends EnergyStorage {
     }
 
     private static int getMaxCapacity(ItemStack stack, int capacity) {
-    	int mult = 1;
-        if(JetBootsProperties.getAdvancedBattery(stack)) 
-        	mult = 3;
-        if(JetBootsProperties.getSuperBattery(stack)) 
-        	mult = 6;
-        if( !stack.hasTag() || !stack.getTag().contains("max_energy") ) {
+        int mult = JetBootsProperties.getBatteryUpgrade(stack)
+                .map(IBatteryUpgrade::getCapacityMultiplier)
+                .orElse(1);
+        if(!stack.hasTag() || !stack.getTag().contains("max_energy")) {
             stack.getOrCreateTag().putInt("max_energy", capacity);
             return capacity*mult;
         }

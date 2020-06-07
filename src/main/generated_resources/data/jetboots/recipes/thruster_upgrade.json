@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ogo",
+    "djd",
+    "hhh"
+  ],
+  "key": {
+    "h": {
+      "item": "minecraft:hopper"
+    },
+    "j": {
+      "item": "jetboots:base_upgrade"
+    },
+    "o": {
+      "tag": "forge:obsidian"
+    },
+    "g": {
+      "tag": "forge:ingots/gold"
+    },
+    "d": {
+      "tag": "forge:gems/diamond"
+    }
+  },
+  "result": {
+    "item": "jetboots:thruster_upgrade"
+  }
+}

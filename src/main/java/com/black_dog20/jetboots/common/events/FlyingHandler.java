@@ -1,9 +1,12 @@
 package com.black_dog20.jetboots.common.events;
 
 import com.black_dog20.bml.event.ArmorEvent;
+import com.black_dog20.bml.utils.math.MathUtil;
 import com.black_dog20.jetboots.Config;
 import com.black_dog20.jetboots.Jetboots;
 import com.black_dog20.jetboots.common.items.ModItems;
+import com.black_dog20.jetboots.common.items.upgrades.api.IEnergyCostModifier;
+import com.black_dog20.jetboots.common.items.upgrades.api.IThrusterUpgrade;
 import com.black_dog20.jetboots.common.network.PacketHandler;
 import com.black_dog20.jetboots.common.network.packets.PacketSyncPartical;
 import com.black_dog20.jetboots.common.network.packets.PacketSyncSound;
@@ -22,6 +25,7 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.event.entity.player.PlayerFlyableFallEvent;
@@ -51,7 +55,7 @@ public class FlyingHandler {
 		if(event.isArmorEqualTo(ModItems.JET_BOOTS.get())) {
 			if (JetbootsUtil.canFlyWithBoots(player)) {
 				// Enable allow flying if not using elytra flight
-				if(!player.abilities.allowFlying && !useElytraFlight(player, jetboots)) {
+				if(!player.abilities.allowFlying && !useElytraFlight(player, jetboots) && !(player.isInWater() && !JetBootsProperties.hasUnderWaterUpgrade(jetboots))) {
 					player.abilities.allowFlying = true;
 					player.sendPlayerAbilities();
 				}
@@ -68,7 +72,8 @@ public class FlyingHandler {
 				player.abilities.allowFlying = false;
 				player.abilities.isFlying = false;
 				player.sendPlayerAbilities();
-				PacketHandler.NETWORK.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(()-> player), new PacketSyncStopSound(player.getUniqueID()));
+				if(event.side == LogicalSide.SERVER)
+					PacketHandler.NETWORK.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> player), new PacketSyncStopSound(player.getUniqueID()));
 			}
 		}
 	}
@@ -87,14 +92,14 @@ public class FlyingHandler {
 	}
 
 	private static boolean useElytraFlight(PlayerEntity player, ItemStack jetboots) {
-		return JetBootsProperties.getEngineUpgrade(jetboots) && JetBootsProperties.getMode(jetboots) && (getAltitudeAboveGround(player) > 1.9 || (player.isInWater() && JetBootsProperties.getUnderWaterUpgrade(jetboots)));
+		return JetBootsProperties.hasEngineUpgrade(jetboots) && JetBootsProperties.getMode(jetboots) && (getAltitudeAboveGround(player) > 1.9 || (player.isInWater() && JetBootsProperties.hasUnderWaterUpgrade(jetboots)));
 	}
 
 	private static void sendSoundAndPartical(ArmorEvent.Tick event, PlayerEntity player, ItemStack jetboots) {
 		if(event.side == LogicalSide.SERVER) {
 			if (JetbootsUtil.isFlying(player)) {
 				PacketHandler.NETWORK.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(()-> player), new PacketSyncPartical(player.getUniqueID(), player.abilities.isFlying));
-				if(!JetBootsProperties.getMuffledUpgrade(jetboots)) {
+				if(!JetBootsProperties.hasMuffledUpgrade(jetboots)) {
 					if (!player.isInWater()) {
 						PacketHandler.NETWORK.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(()-> player), new PacketSyncSound(player.getUniqueID()));
 					} else {
@@ -135,20 +140,22 @@ public class FlyingHandler {
 		double d2 = 0.5D;
 		double d3 = 3D;
 		Vec3d vec3d1 = player.getMotion();
-		if(!player.isInWater()) {
-			double speed = JetBootsProperties.getSpeed(jetboots) ? d3 : d0;
-			player.setMotion(vec3d1.add(vec3d.x * d1 + (vec3d.x * speed - vec3d1.x) * d2, vec3d.y * d1 + (vec3d.y * speed - vec3d1.y) * d2, vec3d.z * d1 + (vec3d.z * speed - vec3d1.z) * d2));
-		} else {
-			double speed = JetBootsProperties.getSpeed(jetboots) ? d0 : d2;
-			player.setMotion(vec3d1.add(vec3d.x * d1 + (vec3d.x * speed - vec3d1.x) * d2, vec3d.y * d1 + (vec3d.y * speed - vec3d1.y) * d2, vec3d.z * d1 + (vec3d.z * speed - vec3d1.z) * d2));
-		}
+		double speed = getSpeed(player, jetboots, d0, d2);
+		player.setMotion(vec3d1.add(vec3d.x * d1 + (vec3d.x * speed - vec3d1.x) * d2, vec3d.y * d1 + (vec3d.y * speed - vec3d1.y) * d2, vec3d.z * d1 + (vec3d.z * speed - vec3d1.z) * d2));
 	}
 
 	private static void drawpower(ItemStack jetboots) {
 		if(Config.USE_POWER.get()) {
 			IEnergyStorage energy = jetboots.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
-			if(energy != null)
-				energy.extractEnergy(Config.POWER_COST.get(), false);
+			if(energy != null) {
+				double modifier = JetBootsProperties.getEnergyModifiers(jetboots).stream()
+						.filter(e -> e.getType() == IEnergyCostModifier.ModifierType.ON_USE)
+						.map(IEnergyCostModifier::getEnergyCostModifier)
+						.reduce(1.0, (a,b) -> a * b);
+				modifier = MathUtil.clamp(modifier, 0.0, 5.0);
+				int cost = (int) Math.ceil(Config.POWER_COST.get() * modifier);
+				energy.extractEnergy(cost, false);
+			}
 		}
 	}
 
@@ -170,7 +177,7 @@ public class FlyingHandler {
 		PlayerEntity player = event.getPlayer();
 		if(JetbootsUtil.hasJetBoots(player)) {
 			ItemStack jetboots = JetbootsUtil.getJetBoots(player);
-			if(!JetBootsProperties.getShockUpgrade(jetboots)) {
+			if(!JetBootsProperties.hasShockUpgrade(jetboots)) {
 				int i = calc(player, event.getDistance(), event.getMultiplier());
 				if (i > 0) {
 					player.playSound(getFallSound(i), 1.0F, 1.0F);
@@ -207,5 +214,14 @@ public class FlyingHandler {
 		return heightIn > 4 ? SoundEvents.ENTITY_PLAYER_BIG_FALL : SoundEvents.ENTITY_PLAYER_SMALL_FALL;
 	}
 
+	private static double getSpeed(PlayerEntity player, ItemStack jetboots, double defaultSpeedAir, double defaultSpeedUnderWater) {
+		boolean inWater = player.isInWater();
+		LazyOptional<IThrusterUpgrade> upgrade = JetBootsProperties.getThrusterUpgrade(jetboots);
+		IThrusterUpgrade thrusterUpgrade = upgrade.orElse(null);
 
+		if (thrusterUpgrade != null && JetBootsProperties.getSpeed(jetboots))
+			return inWater ? thrusterUpgrade.getSpeedUnderWater() : thrusterUpgrade.getSpeed();
+		else
+			return inWater ? defaultSpeedUnderWater : defaultSpeedAir;
+	}
 }
