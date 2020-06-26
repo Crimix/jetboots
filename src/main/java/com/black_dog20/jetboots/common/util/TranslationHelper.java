@@ -7,6 +7,7 @@ import com.black_dog20.jetboots.Jetboots;
 public class TranslationHelper extends TranslationUtil {
     public enum Tooltips implements ITranslation {
         SHOW_UPGRADES("tooltip.item.show_upgrades"),
+        SHOW_ENERGY("tooltip.item.show_energy"),
         OPEN_UPGRADES("tooltip.item.open_upgrades"),
         UPGRADES("tooltip.item.upgrades"),
         ARMOR_INFO("tooltip.item.armor_upgrade_info"),
@@ -38,8 +39,8 @@ public class TranslationHelper extends TranslationUtil {
         ELITE_CONVERTER_UPGRADE("tooltip.item.elite_converter_upgrade"),
         ULTIMATE_CONVERTER_UPGRADE("tooltip.item.ultimate_converter_upgrade"),
 
-        CHANGE_FLIGHT_MODE("tooltip.item.change_flight"),
-        CHANGE_SPEED_MODE("tooltip.item.change_speed"),
+        CHANGE_FLIGHT_MODE("tooltip.item.change_flight_mode"),
+        CHANGE_SPEED_MODE("tooltip.item.change_speed_mode"),
         FLIGHT_MODE("tooltip.item.flight_mode"),
         STORED_ENERGY("tooltip.item.stored_energy"),
         SPEED_MODE("tooltip.item.speed_mode"),
@@ -48,12 +49,29 @@ public class TranslationHelper extends TranslationUtil {
         ADVANCED("tooltip.item.advanced"),
         SUPER("tooltip.item.super"),
         ELYTRA("tooltip.item.elytra"),
-        ENERGY_COST_USE("tooltip.item.energy_cost_use_info"),
-        ENERGY_COST_HIT("tooltip.item.energy_cost_hit_info"),
-        ENERGY_COST_HURT("tooltip.item.energy_cost_hurt_info"),
-        ENERGY_COST_TIC("tooltip.item.energy_cost_tick_info"),
+        ENERGY_USE_MORE("tooltip.item.energy_use_more"),
+        ENERGY_USE_LESS("tooltip.item.energy_use_less"),
+        ENERGY_USE_DRAW("tooltip.item.energy_use_draw"),
+        ENERGY_USE_GENERATE("tooltip.item.energy_use_generate"),
+        ENERGY_HIT_DRAW("tooltip.item.energy_hit_draw"),
+        ENERGY_HIT_GENERATE("tooltip.item.energy_hit_generate"),
+        ENERGY_HURT_DRAW("tooltip.item.energy_hurt_draw"),
+        ENERGY_HURT_GENERATE("tooltip.item.energy_hurt_generate"),
+        ENERGY_WALK_DRAW("tooltip.item.energy_walk_draw"),
+        ENERGY_WALK_GENERATE("tooltip.item.energy_walk_generate"),
+        FLYING_ENERGY("tooltip.item.energy_flying"),
+        HIT_ENERGY("tooltip.item.energy_hit"),
+        HURT_ENERGY("tooltip.item.energy_hurt"),
+        WALKING_ENERGY("tooltip.item.energy_walking"),
         FORCEFIELD_ARMOR_INFO_2("tooltip.item.forcefield_protection_info"),
-        JETBOOTS_UPGRADES("tooltip.item.jetboots_upgrade_screen");
+        JETBOOTS_UPGRADES("tooltip.item.jetboots_upgrade_screen"),
+        CHANGE_HELMET_MODE("tooltip.item.change_helmet_mode"),
+        HELMET_MODE("tooltip.item.helmet_mode"),
+        HELMET_INFO("tooltip.item.helmet_info"),
+        MATERIALIZED("tooltip.item.materialized"),
+        DEMATERIALIZED("tooltip.item.dematerialized"),
+        CANNOT_EAT_WHILE_MATERIALIZED("tooltip.item.cannot_eat_materialized"),
+        ;
 
         Tooltips(String key) {
             this.modId = Jetboots.MOD_ID;
@@ -86,6 +104,31 @@ public class TranslationHelper extends TranslationUtil {
         STEEL_ARMOR_MEKANISM("tooltip.item.steel_armor_upgrade_mekanism");
 
         Compat(String key) {
+            this.modId = Jetboots.MOD_ID;
+            this.key = key;
+        }
+
+        private final String modId;
+        private final String key;
+
+        @Override
+        public String getKey() {
+            return key;
+        }
+
+        @Override
+        public String getModId() {
+            return modId;
+        }
+    }
+
+    public enum JeiInfo implements ITranslation {
+        FORCEFIELD_GENERATOR("jei.info.item.forcefield_generator"),
+        FORCEFIELD_PROJECTOR("jei.info.item.forcefield_projector"),
+        GUARDING_HELMET("jei.info.item.guarding_helmet"),
+        ;
+
+        JeiInfo(String key) {
             this.modId = Jetboots.MOD_ID;
             this.key = key;
         }

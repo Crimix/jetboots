@@ -1,31 +1,19 @@
 {
-  "type": "forge:conditional",
-  "recipes": [
-    {
-      "conditions": [
-        {
-          "type": "jetboots:battery_on"
-        }
-      ],
-      "recipe": {
-        "type": "minecraft:crafting_shaped",
-        "pattern": [
-          "iii",
-          "iji",
-          "iii"
-        ],
-        "key": {
-          "i": {
-            "tag": "forge:storage_blocks/diamond"
-          },
-          "j": {
-            "item": "jetboots:elite_battery_upgrade"
-          }
-        },
-        "result": {
-          "item": "jetboots:ultimate_battery_upgrade"
-        }
-      }
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "iii",
+    "iji",
+    "iii"
+  ],
+  "key": {
+    "i": {
+      "tag": "forge:storage_blocks/diamond"
+    },
+    "j": {
+      "item": "jetboots:elite_battery_upgrade"
     }
-  ]
+  },
+  "result": {
+    "item": "jetboots:ultimate_battery_upgrade"
+  }
 }

@@ -5,13 +5,11 @@ import com.black_dog20.jetboots.client.keybinds.Keybinds;
 import com.black_dog20.jetboots.client.screens.JetBootsScreen;
 import com.black_dog20.jetboots.client.sound.ModSounds;
 import com.black_dog20.jetboots.common.compat.ModCompat;
-import com.black_dog20.jetboots.common.crafting.ModCrafting;
 import com.black_dog20.jetboots.common.items.ModItems;
 import com.black_dog20.jetboots.common.network.PacketHandler;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -47,7 +45,6 @@ public class Jetboots
 		ModCompat.register(event);
 		ModContainers.CONTAINERS.register(event);
 		ModSounds.SOUNDS.register(event);
-		event.addGenericListener(IRecipeSerializer.class, ModCrafting::registerRecipeSerialziers);
 
 		event.addListener(this::setup);
 		event.addListener(this::setupClient);

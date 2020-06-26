@@ -1,16 +1,12 @@
 package com.black_dog20.jetboots.common.network;
 
-import java.util.function.BiConsumer;
-import java.util.function.Function;
-import java.util.function.Supplier;
-
 import com.black_dog20.jetboots.Jetboots;
 import com.black_dog20.jetboots.common.network.packets.PacketSyncPartical;
 import com.black_dog20.jetboots.common.network.packets.PacketSyncSound;
 import com.black_dog20.jetboots.common.network.packets.PacketSyncStopSound;
 import com.black_dog20.jetboots.common.network.packets.PacketUpdateFlightMode;
 import com.black_dog20.jetboots.common.network.packets.PacketUpdateFlightSpeed;
-
+import com.black_dog20.jetboots.common.network.packets.PacketUpdateHelmetMode;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
@@ -21,6 +17,10 @@ import net.minecraftforge.fml.network.NetworkDirection;
 import net.minecraftforge.fml.network.NetworkEvent;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
+
+import java.util.function.BiConsumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 public class PacketHandler {
 	 private static final String PROTOCOL_VERSION = Integer.toString(1);
@@ -39,6 +39,7 @@ public class PacketHandler {
 	        registerMessage(PacketSyncPartical.class, PacketSyncPartical::encode, PacketSyncPartical::decode, PacketSyncPartical.Handler::handle);
 	        registerMessage(PacketSyncSound.class, PacketSyncSound::encode, PacketSyncSound::decode, PacketSyncSound.Handler::handle);
 	        registerMessage(PacketSyncStopSound.class, PacketSyncStopSound::encode, PacketSyncStopSound::decode, PacketSyncStopSound.Handler::handle);
+			registerMessage(PacketUpdateHelmetMode.class, PacketUpdateHelmetMode::encode, PacketUpdateHelmetMode::decode, PacketUpdateHelmetMode.Handler::handle);
 	    }
 
 	    public static void sendTo(Object msg, ServerPlayerEntity player) {

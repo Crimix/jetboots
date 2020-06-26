@@ -20,15 +20,12 @@ public class ConverterUpgradeItem extends UpgradeItem implements IConverterUpgra
     }
 
     @Override
-    public double getEnergyCostModifier() {
-        if(energyModifier < 1.0)
-            return 1.0-energyModifier;
-        else
-            return energyModifier;
+    public double getPercentageEnergyModifier() {
+        return energyModifier;
     }
 
     @Override
-    public ModifierType getType() {
-        return ModifierType.ON_USE;
+    public PercentageModifierType getPercentageModifierType() {
+        return PercentageModifierType.ON_USE;
     }
 }

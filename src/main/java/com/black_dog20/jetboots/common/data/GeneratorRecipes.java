@@ -4,7 +4,6 @@ import com.black_dog20.bml.datagen.BaseRecipeProvider;
 import com.black_dog20.jetboots.Jetboots;
 import com.black_dog20.jetboots.common.compat.Cyclic;
 import com.black_dog20.jetboots.common.compat.MekanismTools;
-import com.black_dog20.jetboots.common.crafting.BatteryOnCondition;
 import mekanism.tools.common.registries.ToolsItems;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRewards;
@@ -154,189 +153,82 @@ public class GeneratorRecipes extends BaseRecipeProvider {
                 .addCriterion("has_jetboots", hasItem(JET_BOOTS.get()))
                 .build(consumer);
 
-        ResourceLocation adv_battery_recipe = location("advanced_battery_upgrade");
-        ConditionalRecipe.builder()
-                .addCondition(new BatteryOnCondition())
-                .addRecipe(
-                        ShapedRecipeBuilder.shapedRecipe(ADVANCED_BATTERY_UPGRADE.get())
-                                .key('i', Tags.Items.STORAGE_BLOCKS_REDSTONE)
-                                .key('j', BASE_UPGRADE.get())
-                                .patternLine("iii")
-                                .patternLine("iji")
-                                .patternLine("iii")
-                                .addCriterion("has_jetboots", hasItem(JET_BOOTS.get()))
-                                ::build)
-                .setAdvancement(location("craft_advanced_battery_upgrade"),
-                        ConditionalAdvancement.builder()
-                                .addCondition(new BatteryOnCondition())
-                                .addAdvancement(
-                                        Advancement.Builder.builder()
-                                                .withParentId(new ResourceLocation("minecraft", "recipes/root"))
-                                                .withRewards(AdvancementRewards.Builder.recipe(adv_battery_recipe))
-                                                .withRequirementsStrategy(IRequirementsStrategy.OR)
-                                                .withCriterion("has_jetboots", hasItem(JET_BOOTS.get()))
-                                                .withCriterion("has_the_recipe", new RecipeUnlockedTrigger.Instance(adv_battery_recipe))
-                                )
-                )
-                .build(consumer, adv_battery_recipe);
+        ShapedRecipeBuilder.shapedRecipe(ADVANCED_BATTERY_UPGRADE.get())
+                .key('i', Tags.Items.STORAGE_BLOCKS_REDSTONE)
+                .key('j', BASE_UPGRADE.get())
+                .patternLine("iii")
+                .patternLine("iji")
+                .patternLine("iii")
+                .addCriterion("has_jetboots", hasItem(JET_BOOTS.get()))
+                .build(consumer);
 
-        ResourceLocation elite_battery_recipe = location("elite_battery_upgrade");
-        ConditionalRecipe.builder()
-                .addCondition(new BatteryOnCondition())
-                .addRecipe(
-                        ShapedRecipeBuilder.shapedRecipe(ELITE_BATTERY_UPGRADE.get())
-                                .key('i', Tags.Items.STORAGE_BLOCKS_LAPIS)
-                                .key('j', ADVANCED_BATTERY_UPGRADE.get())
-                                .key('d', Tags.Items.STORAGE_BLOCKS_DIAMOND)
-                                .patternLine("idi")
-                                .patternLine("iji")
-                                .patternLine("idi")
-                                .addCriterion("has_jetboots", hasItem(JET_BOOTS.get()))
-                                ::build)
-                .setAdvancement(location("craft_elite_battery_upgrade"),
-                        ConditionalAdvancement.builder()
-                                .addCondition(new BatteryOnCondition())
-                                .addAdvancement(
-                                        Advancement.Builder.builder()
-                                                .withParentId(new ResourceLocation("minecraft", "recipes/root"))
-                                                .withRewards(AdvancementRewards.Builder.recipe(elite_battery_recipe))
-                                                .withRequirementsStrategy(IRequirementsStrategy.OR)
-                                                .withCriterion("has_jetboots", hasItem(JET_BOOTS.get()))
-                                                .withCriterion("has_the_recipe", new RecipeUnlockedTrigger.Instance(elite_battery_recipe))
-                                )
-                )
-                .build(consumer, elite_battery_recipe);
+        ShapedRecipeBuilder.shapedRecipe(ELITE_BATTERY_UPGRADE.get())
+                .key('i', Tags.Items.STORAGE_BLOCKS_LAPIS)
+                .key('j', ADVANCED_BATTERY_UPGRADE.get())
+                .key('d', Tags.Items.STORAGE_BLOCKS_DIAMOND)
+                .patternLine("idi")
+                .patternLine("iji")
+                .patternLine("idi")
+                .addCriterion("has_jetboots", hasItem(JET_BOOTS.get()))
+                .build(consumer);
 
-        ResourceLocation ultimate_battery_recipe = location("ultimate_battery_upgrade");
-        ConditionalRecipe.builder()
-                .addCondition(new BatteryOnCondition())
-                .addRecipe(
-                        ShapedRecipeBuilder.shapedRecipe(ULTIMATE_BATTERY_UPGRADE.get())
-                                .key('i', Tags.Items.STORAGE_BLOCKS_DIAMOND)
-                                .key('j', ELITE_BATTERY_UPGRADE.get())
-                                .patternLine("iii")
-                                .patternLine("iji")
-                                .patternLine("iii")
-                                .addCriterion("has_jetboots", hasItem(JET_BOOTS.get()))
-                                ::build)
-                .setAdvancement(location("craft_ultimate_battery_upgrade"),
-                        ConditionalAdvancement.builder()
-                                .addCondition(new BatteryOnCondition())
-                                .addAdvancement(
-                                        Advancement.Builder.builder()
-                                                .withParentId(new ResourceLocation("minecraft", "recipes/root"))
-                                                .withRewards(AdvancementRewards.Builder.recipe(ultimate_battery_recipe))
-                                                .withRequirementsStrategy(IRequirementsStrategy.OR)
-                                                .withCriterion("has_jetboots", hasItem(JET_BOOTS.get()))
-                                                .withCriterion("has_the_recipe", new RecipeUnlockedTrigger.Instance(ultimate_battery_recipe))
-                                )
-                )
-                .build(consumer, ultimate_battery_recipe);
+        ShapedRecipeBuilder.shapedRecipe(ULTIMATE_BATTERY_UPGRADE.get())
+                .key('i', Tags.Items.STORAGE_BLOCKS_DIAMOND)
+                .key('j', ELITE_BATTERY_UPGRADE.get())
+                .patternLine("iii")
+                .patternLine("iji")
+                .patternLine("iii")
+                .addCriterion("has_jetboots", hasItem(JET_BOOTS.get()))
+                .build(consumer);
 
-        ResourceLocation basic_converter_recipe = location("basic_converter_upgrade");
-        ConditionalRecipe.builder()
-                .addCondition(new BatteryOnCondition())
-                .addRecipe(
-                        ShapedRecipeBuilder.shapedRecipe(BASIC_CONVERTER_UPGRADE.get())
-                                .key('i', Tags.Items.GUNPOWDER)
-                                .key('j', BASE_UPGRADE.get())
-                                .patternLine("iii")
-                                .patternLine("iji")
-                                .patternLine("iii")
-                                .addCriterion("has_jetboots", hasItem(JET_BOOTS.get()))
-                                ::build)
-                .setAdvancement(location("craft_basic_converter_upgrade"),
-                        ConditionalAdvancement.builder()
-                                .addCondition(new BatteryOnCondition())
-                                .addAdvancement(
-                                        Advancement.Builder.builder()
-                                                .withParentId(new ResourceLocation("minecraft", "recipes/root"))
-                                                .withRewards(AdvancementRewards.Builder.recipe(basic_converter_recipe))
-                                                .withRequirementsStrategy(IRequirementsStrategy.OR)
-                                                .withCriterion("has_jetboots", hasItem(JET_BOOTS.get()))
-                                                .withCriterion("has_the_recipe", new RecipeUnlockedTrigger.Instance(basic_converter_recipe))
-                                )
-                )
-                .build(consumer, basic_converter_recipe);
+        ShapedRecipeBuilder.shapedRecipe(BASIC_CONVERTER_UPGRADE.get())
+                .key('i', Tags.Items.GUNPOWDER)
+                .key('j', BASE_UPGRADE.get())
+                .patternLine("iii")
+                .patternLine("iji")
+                .patternLine("iii")
+                .addCriterion("has_jetboots", hasItem(JET_BOOTS.get()))
+                .build(consumer);
 
-        ResourceLocation adv_converter_recipe = location("advanced_converter_upgrade");
-        ConditionalRecipe.builder()
-                .addCondition(new BatteryOnCondition())
-                .addRecipe(
-                        ShapedRecipeBuilder.shapedRecipe(ADVANCED_BATTERY_UPGRADE.get())
-                                .key('i', Tags.Items.DUSTS_REDSTONE)
-                                .key('j', BASIC_CONVERTER_UPGRADE.get())
-                                .patternLine("iii")
-                                .patternLine("iji")
-                                .patternLine("iii")
-                                .addCriterion("has_jetboots", hasItem(JET_BOOTS.get()))
-                                ::build)
-                .setAdvancement(location("craft_advanced_converter_upgrade"),
-                        ConditionalAdvancement.builder()
-                                .addCondition(new BatteryOnCondition())
-                                .addAdvancement(
-                                        Advancement.Builder.builder()
-                                                .withParentId(new ResourceLocation("minecraft", "recipes/root"))
-                                                .withRewards(AdvancementRewards.Builder.recipe(adv_converter_recipe))
-                                                .withRequirementsStrategy(IRequirementsStrategy.OR)
-                                                .withCriterion("has_jetboots", hasItem(JET_BOOTS.get()))
-                                                .withCriterion("has_the_recipe", new RecipeUnlockedTrigger.Instance(adv_converter_recipe))
-                                )
-                )
-                .build(consumer, adv_converter_recipe);
+        ShapedRecipeBuilder.shapedRecipe(ADVANCED_CONVERTER_UPGRADE.get())
+                .key('i', Tags.Items.DUSTS_REDSTONE)
+                .key('j', BASIC_CONVERTER_UPGRADE.get())
+                .patternLine("iii")
+                .patternLine("iji")
+                .patternLine("iii")
+                .addCriterion("has_jetboots", hasItem(JET_BOOTS.get()))
+                .build(consumer);
 
-        ResourceLocation elite_converter_recipe = location("elite_converter_upgrade");
-        ConditionalRecipe.builder()
-                .addCondition(new BatteryOnCondition())
-                .addRecipe(
-                        ShapedRecipeBuilder.shapedRecipe(ELITE_CONVERTER_UPGRADE.get())
-                                .key('i', Tags.Items.GEMS_LAPIS)
-                                .key('j', ADVANCED_CONVERTER_UPGRADE.get())
-                                .key('d', Tags.Items.GEMS_DIAMOND)
-                                .patternLine("idi")
-                                .patternLine("iji")
-                                .patternLine("idi")
-                                .addCriterion("has_jetboots", hasItem(JET_BOOTS.get()))
-                                ::build)
-                .setAdvancement(location("craft_elite_converter_upgrade"),
-                        ConditionalAdvancement.builder()
-                                .addCondition(new BatteryOnCondition())
-                                .addAdvancement(
-                                        Advancement.Builder.builder()
-                                                .withParentId(new ResourceLocation("minecraft", "recipes/root"))
-                                                .withRewards(AdvancementRewards.Builder.recipe(elite_converter_recipe))
-                                                .withRequirementsStrategy(IRequirementsStrategy.OR)
-                                                .withCriterion("has_jetboots", hasItem(JET_BOOTS.get()))
-                                                .withCriterion("has_the_recipe", new RecipeUnlockedTrigger.Instance(elite_converter_recipe))
-                                )
-                )
-                .build(consumer, elite_converter_recipe);
+        ShapedRecipeBuilder.shapedRecipe(ELITE_CONVERTER_UPGRADE.get())
+                .key('i', Tags.Items.GEMS_LAPIS)
+                .key('j', ADVANCED_CONVERTER_UPGRADE.get())
+                .key('d', Tags.Items.GEMS_DIAMOND)
+                .patternLine("idi")
+                .patternLine("iji")
+                .patternLine("idi")
+                .addCriterion("has_jetboots", hasItem(JET_BOOTS.get()))
+                .build(consumer);
 
-        ResourceLocation ultimate_converter_recipe = location("ultimate_converter_upgrade");
-        ConditionalRecipe.builder()
-                .addCondition(new BatteryOnCondition())
-                .addRecipe(
-                        ShapedRecipeBuilder.shapedRecipe(ULTIMATE_CONVERTER_UPGRADE.get())
-                                .key('i', Tags.Items.GEMS_EMERALD)
-                                .key('j', ELITE_CONVERTER_UPGRADE.get())
-                                .patternLine("iii")
-                                .patternLine("iji")
-                                .patternLine("iii")
-                                .addCriterion("has_jetboots", hasItem(JET_BOOTS.get()))
-                                ::build)
-                .setAdvancement(location("craft_ultimate_converter_upgrade"),
-                        ConditionalAdvancement.builder()
-                                .addCondition(new BatteryOnCondition())
-                                .addAdvancement(
-                                        Advancement.Builder.builder()
-                                                .withParentId(new ResourceLocation("minecraft", "recipes/root"))
-                                                .withRewards(AdvancementRewards.Builder.recipe(ultimate_converter_recipe))
-                                                .withRequirementsStrategy(IRequirementsStrategy.OR)
-                                                .withCriterion("has_jetboots", hasItem(JET_BOOTS.get()))
-                                                .withCriterion("has_the_recipe", new RecipeUnlockedTrigger.Instance(ultimate_converter_recipe))
-                                )
-                )
-                .build(consumer, ultimate_converter_recipe);
+        ShapedRecipeBuilder.shapedRecipe(ULTIMATE_CONVERTER_UPGRADE.get())
+                .key('i', Tags.Items.GEMS_EMERALD)
+                .key('j', ELITE_CONVERTER_UPGRADE.get())
+                .patternLine("iii")
+                .patternLine("iji")
+                .patternLine("iii")
+                .addCriterion("has_jetboots", hasItem(JET_BOOTS.get()))
+                .build(consumer);
+
+        ShapedRecipeBuilder.shapedRecipe(FORCEFIELD_ARMOR_UPGRADE.get())
+                .key('g', Tags.Items.GLASS)
+                .key('f', FORCEFIELD_GENERATOR.get())
+                .key('p', FORCEFIELD_PROJECTOR.get())
+                .key('u', BASE_UPGRADE.get())
+                .key('n', Items.NETHER_STAR)
+                .patternLine("ggg")
+                .patternLine("fup")
+                .patternLine("gng")
+                .addCriterion("has_jetboots", hasItem(JET_BOOTS.get()))
+                .build(consumer);
 
         //Compat
         if (ModList.get().isLoaded(Cyclic.MOD_ID)) {

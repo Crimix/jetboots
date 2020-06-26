@@ -1,6 +1,5 @@
 package com.black_dog20.jetboots.common.util;
 
-import com.black_dog20.jetboots.Config;
 import com.black_dog20.jetboots.common.items.upgrades.api.IBatteryUpgrade;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.energy.EnergyStorage;
@@ -56,19 +55,13 @@ public class EnergyItem extends EnergyStorage {
     @Override
     public boolean canExtract()
     {
-        if(Config.USE_POWER.get()) {
-        	return super.canExtract();
-        }
-        return false;
+        return super.canExtract();
     }
 
     @Override
     public boolean canReceive()
     {
-        if(Config.USE_POWER.get()) {
-        	return super.canReceive();
-        }
-        return false;
+        return super.canReceive();
     }
 }
     

@@ -3,7 +3,8 @@ package com.black_dog20.jetboots.common.util;
 import com.black_dog20.jetboots.common.items.upgrades.api.IArmorUpgrade;
 import com.black_dog20.jetboots.common.items.upgrades.api.IBatteryUpgrade;
 import com.black_dog20.jetboots.common.items.upgrades.api.IConverterUpgrade;
-import com.black_dog20.jetboots.common.items.upgrades.api.IEnergyCostModifier;
+import com.black_dog20.jetboots.common.items.upgrades.api.IFlatValueEnergyModifier;
+import com.black_dog20.jetboots.common.items.upgrades.api.IPercentageValueEnergyModifier;
 import com.black_dog20.jetboots.common.items.upgrades.api.IThrusterUpgrade;
 import com.black_dog20.jetboots.common.items.upgrades.api.IUpgrade;
 import net.minecraft.item.Item;
@@ -186,13 +187,26 @@ public class JetBootsProperties {
         return Items.AIR;
     }
 
-    public static List<IEnergyCostModifier> getEnergyModifiers(ItemStack jetboots){
-        List<IEnergyCostModifier> result = new ArrayList<>();
+    public static List<IFlatValueEnergyModifier> getFlatEnergyModifiers(ItemStack jetboots){
+        List<IFlatValueEnergyModifier> result = new ArrayList<>();
 
         for (IUpgrade.Type type : IUpgrade.Type.values()) {
             Item upgrade = getUpgradeItem(jetboots, type);
-            if (upgrade != Items.AIR && upgrade instanceof IEnergyCostModifier) {
-                result.add((IEnergyCostModifier) upgrade);
+            if (upgrade != Items.AIR && upgrade instanceof IFlatValueEnergyModifier) {
+                result.add((IFlatValueEnergyModifier) upgrade);
+            }
+        }
+
+        return result;
+    }
+
+    public static List<IPercentageValueEnergyModifier> getPercentageEnergyModifiers(ItemStack jetboots){
+        List<IPercentageValueEnergyModifier> result = new ArrayList<>();
+
+        for (IUpgrade.Type type : IUpgrade.Type.values()) {
+            Item upgrade = getUpgradeItem(jetboots, type);
+            if (upgrade != Items.AIR && upgrade instanceof IPercentageValueEnergyModifier) {
+                result.add((IPercentageValueEnergyModifier) upgrade);
             }
         }
 

@@ -23,7 +23,6 @@ public class Config {
 
     public static ForgeConfigSpec.BooleanValue MUFFLED_BOOTS;
 
-    public static ForgeConfigSpec.BooleanValue USE_POWER;
     public static ForgeConfigSpec.IntValue DEFAULT_MAX_POWER;
     public static ForgeConfigSpec.IntValue POWER_COST;
 
@@ -36,8 +35,6 @@ public class Config {
         CLIENT_CONFIG = CLIENT_BUILDER.build();
 
         SERVER_BUILDER.comment("General settings").push(CATEGORY_GENERAL);
-        USE_POWER = SERVER_BUILDER.comment("Does jetboots use power?")
-        		.define("usePower", true);
         DEFAULT_MAX_POWER = SERVER_BUILDER.comment("Default maximum power for jetboots")
                 .defineInRange("defaultMaxPower", 1000000, 0, Integer.MAX_VALUE);
         POWER_COST = SERVER_BUILDER.comment("Cost per tick to use jetboots")

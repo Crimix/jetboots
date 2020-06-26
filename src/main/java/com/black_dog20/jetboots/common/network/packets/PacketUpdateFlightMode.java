@@ -1,7 +1,7 @@
 package com.black_dog20.jetboots.common.network.packets;
 
 import com.black_dog20.jetboots.common.util.JetBootsProperties;
-import com.black_dog20.jetboots.common.util.JetbootsUtil;
+import com.black_dog20.jetboots.common.util.ModUtils;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
@@ -28,12 +28,12 @@ public class PacketUpdateFlightMode {
                 if (player == null)
                     return;
 
-                ItemStack stack = JetbootsUtil.getJetBoots(player);
+                ItemStack stack = ModUtils.getJetBoots(player);
                 
                 if(!stack.isEmpty())
                 	if(JetBootsProperties.hasEngineUpgrade(stack)) {
                 		JetBootsProperties.setMode(stack, !JetBootsProperties.getMode(stack));
-                		player.sendStatusMessage(JetbootsUtil.getFlightModeText(player), true);
+                		player.sendStatusMessage(ModUtils.getFlightModeText(player), true);
                 	}
             });
 

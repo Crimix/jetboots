@@ -1,18 +1,16 @@
 package com.black_dog20.jetboots.common.events;
 
 import com.black_dog20.bml.event.ArmorEvent;
-import com.black_dog20.bml.utils.math.MathUtil;
-import com.black_dog20.jetboots.Config;
 import com.black_dog20.jetboots.Jetboots;
 import com.black_dog20.jetboots.common.items.ModItems;
-import com.black_dog20.jetboots.common.items.upgrades.api.IEnergyCostModifier;
 import com.black_dog20.jetboots.common.items.upgrades.api.IThrusterUpgrade;
 import com.black_dog20.jetboots.common.network.PacketHandler;
 import com.black_dog20.jetboots.common.network.packets.PacketSyncPartical;
 import com.black_dog20.jetboots.common.network.packets.PacketSyncSound;
 import com.black_dog20.jetboots.common.network.packets.PacketSyncStopSound;
+import com.black_dog20.jetboots.common.util.EnergyUtil;
 import com.black_dog20.jetboots.common.util.JetBootsProperties;
-import com.black_dog20.jetboots.common.util.JetbootsUtil;
+import com.black_dog20.jetboots.common.util.ModUtils;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.entity.player.PlayerEntity;
@@ -27,7 +25,6 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
-import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.event.entity.player.PlayerFlyableFallEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
@@ -41,7 +38,7 @@ public class FlyingHandler {
 	public static void onEquipJetboots(ArmorEvent.Equip event) {
 		PlayerEntity player = event.player;
 		if(event.isArmorEqualTo(ModItems.JET_BOOTS.get())) {
-			if(JetbootsUtil.canFlyWithBoots(player)) {
+			if(ModUtils.canFlyWithBoots(player)) {
 				player.abilities.allowFlying = true;
 				player.sendPlayerAbilities();
 			}
@@ -53,9 +50,9 @@ public class FlyingHandler {
 		PlayerEntity player = event.player;
 		ItemStack jetboots = event.armor;
 		if(event.isArmorEqualTo(ModItems.JET_BOOTS.get())) {
-			if (JetbootsUtil.canFlyWithBoots(player)) {
+			if (ModUtils.canFlyWithBoots(player)) {
 				// Enable allow flying if not using elytra flight
-				if(!player.abilities.allowFlying && !useElytraFlight(player, jetboots) && !(player.isInWater() && !JetBootsProperties.hasUnderWaterUpgrade(jetboots))) {
+				if(!player.abilities.allowFlying && !useElytraFlight(player, jetboots)) {
 					player.abilities.allowFlying = true;
 					player.sendPlayerAbilities();
 				}
@@ -72,6 +69,8 @@ public class FlyingHandler {
 				player.abilities.allowFlying = false;
 				player.abilities.isFlying = false;
 				player.sendPlayerAbilities();
+				if (player.isElytraFlying())
+					stopElytraFlight(player);
 				if(event.side == LogicalSide.SERVER)
 					PacketHandler.NETWORK.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> player), new PacketSyncStopSound(player.getUniqueID()));
 			}
@@ -97,7 +96,7 @@ public class FlyingHandler {
 
 	private static void sendSoundAndPartical(ArmorEvent.Tick event, PlayerEntity player, ItemStack jetboots) {
 		if(event.side == LogicalSide.SERVER) {
-			if (JetbootsUtil.isFlying(player)) {
+			if (ModUtils.isFlying(player)) {
 				PacketHandler.NETWORK.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(()-> player), new PacketSyncPartical(player.getUniqueID(), player.abilities.isFlying));
 				if(!JetBootsProperties.hasMuffledUpgrade(jetboots)) {
 					if (!player.isInWater()) {
@@ -145,18 +144,8 @@ public class FlyingHandler {
 	}
 
 	private static void drawpower(ItemStack jetboots) {
-		if(Config.USE_POWER.get()) {
-			IEnergyStorage energy = jetboots.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
-			if(energy != null) {
-				double modifier = JetBootsProperties.getEnergyModifiers(jetboots).stream()
-						.filter(e -> e.getType() == IEnergyCostModifier.ModifierType.ON_USE)
-						.map(IEnergyCostModifier::getEnergyCostModifier)
-						.reduce(1.0, (a,b) -> a * b);
-				modifier = MathUtil.clamp(modifier, 0.0, 5.0);
-				int cost = (int) Math.ceil(Config.POWER_COST.get() * modifier);
-				energy.extractEnergy(cost, false);
-			}
-		}
+			jetboots.getCapability(CapabilityEnergy.ENERGY, null)
+					.ifPresent(e -> EnergyUtil.extractOrReceive(e, EnergyUtil.getEnergyWhileFlying(jetboots)));
 	}
 
 	public static double getAltitudeAboveGround(PlayerEntity player)
@@ -175,8 +164,8 @@ public class FlyingHandler {
 	@SubscribeEvent
 	public static void onPlayerFlyFall(PlayerFlyableFallEvent event) {
 		PlayerEntity player = event.getPlayer();
-		if(JetbootsUtil.hasJetBoots(player)) {
-			ItemStack jetboots = JetbootsUtil.getJetBoots(player);
+		if(ModUtils.hasJetBoots(player)) {
+			ItemStack jetboots = ModUtils.getJetBoots(player);
 			if(!JetBootsProperties.hasShockUpgrade(jetboots)) {
 				int i = calc(player, event.getDistance(), event.getMultiplier());
 				if (i > 0) {

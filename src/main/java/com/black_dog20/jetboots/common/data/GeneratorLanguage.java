@@ -22,6 +22,9 @@ public class GeneratorLanguage extends BaseLanguageProvider {
     protected void addTranslations() {
         add("itemGroup.jetboots", "Jet Boots");
         add("itemGroup.jetboots_compat", "Jet Boots Extras");
+        add("key.jetboots.engine", "Toggle Jetboots engine mode");
+        add("key.jetboots.speed", "Toggle Jetboots speed mode");
+        add("ikey.jetboots.helmet", "Toggle Guardian Helmet mode");
         addItem(ModItems.JET_BOOTS, "Jet Boots");
         addItem(ModItems.BASE_UPGRADE, "Base Upgrade");
         addItem(ModItems.LEATHER_ARMOR_UPGRADE, "Leather Armor Upgrade");
@@ -41,6 +44,9 @@ public class GeneratorLanguage extends BaseLanguageProvider {
         addItem(ModItems.MUFFLED_UPGRADE, "Muffled Upgrade");
         addItem(ModItems.UNDERWATER_UPGRADE, "Underwater Upgrade");
         addItem(ModItems.SOULBOUND_UPGRADE, "Soulbound Upgrade");
+        addItem(ModItems.FORCEFIELD_GENERATOR, "Forcefield Generator");
+        addItem(ModItems.FORCEFIELD_PROJECTOR, "Forcefield Projector");
+        addItem(ModItems.GUARDIAN_HELMET, "Guardian Helmet");
 
         // Blocks
         //addBlock(ModBlocks., "");
@@ -48,6 +54,7 @@ public class GeneratorLanguage extends BaseLanguageProvider {
         // Tooltips
         addPrefixed(SHOW_UPGRADES,"Hold %s to show upgrades");
         addPrefixed(OPEN_UPGRADES,"Sneak + Right click to apply upgrades");
+        addPrefixed(SHOW_ENERGY,"Hold %s + %s to show energy stats");
         addPrefixed(UPGRADES,"Upgrades");
         addPrefixed(LEATHER_ARMOR,"Armored: Leather", TextFormatting.GRAY);
         addPrefixed(IRON_ARMOR,"Armored: Iron", TextFormatting.GRAY);
@@ -90,12 +97,32 @@ public class GeneratorLanguage extends BaseLanguageProvider {
         addPrefixed(ADVANCED,"Advanced");
         addPrefixed(SUPER,"Super");
         addPrefixed(ELYTRA,"Elytra");
-        addPrefixed(ENERGY_COST_USE, "Makes the boots draw %d%% power while flying", TextFormatting.GRAY);
-        addPrefixed(ENERGY_COST_HIT, "Every hit draws %d power",TextFormatting.GRAY);
-        addPrefixed(ENERGY_COST_HURT, "Every time the wearer is hurt draws %d power",TextFormatting.GRAY);
-        addPrefixed(ENERGY_COST_TIC, "Draws %d power every tick while wearing", TextFormatting.GRAY);
+        addPrefixed(ENERGY_USE_MORE, "Makes the boots draw %.2f%% more FE while flying", TextFormatting.GRAY);
+        addPrefixed(ENERGY_USE_LESS, "Makes the boots draw %.2f%% less FE while flying", TextFormatting.GRAY);
+        addPrefixed(ENERGY_USE_DRAW, "While flying draws %d FE",TextFormatting.GRAY);
+        addPrefixed(ENERGY_USE_GENERATE, "While flying generate %d FE",TextFormatting.GRAY);
+        addPrefixed(ENERGY_HIT_DRAW, "Every hit draws %d FE",TextFormatting.GRAY);
+        addPrefixed(ENERGY_HIT_GENERATE, "Every hit generate %d FE",TextFormatting.GRAY);
+        addPrefixed(ENERGY_HURT_DRAW, "Every time the wearer is hurt draws %d FE",TextFormatting.GRAY);
+        addPrefixed(ENERGY_HURT_GENERATE, "Every time the wearer is hurt generate %d FE",TextFormatting.GRAY);
+        addPrefixed(ENERGY_WALK_DRAW, "Draws %d FE while walking on ground", TextFormatting.GRAY);
+        addPrefixed(ENERGY_WALK_GENERATE, "Generate %d FE while walking on ground", TextFormatting.GRAY);
+        addPrefixed(FLYING_ENERGY, "%s while flying", TextFormatting.GRAY);
+        addPrefixed(HIT_ENERGY, "%s on hit", TextFormatting.GRAY);
+        addPrefixed(HURT_ENERGY, "%s on being hurt", TextFormatting.GRAY);
+        addPrefixed(WALKING_ENERGY, "%s while walking", TextFormatting.GRAY);
         addPrefixed(JETBOOTS_UPGRADES, "Jet Boots Upgrades");
+        addPrefixed(CHANGE_HELMET_MODE,"Use %s to change helmet mode");
+        addPrefixed(HELMET_INFO,"Protects against air loss and other ill effects when materialized, but you cannot eat");
+        addPrefixed(HELMET_MODE,"Guardian Helmet: %s");
+        addPrefixed(MATERIALIZED,"Materialized");
+        addPrefixed(DEMATERIALIZED,"Dematerialized");
+        addPrefixed(CANNOT_EAT_WHILE_MATERIALIZED,"You cannot eat and drink while the helmet is materialized");
 
+        //JEI
+        addPrefixed(JeiInfo.FORCEFIELD_GENERATOR, "The Forcefield Generator was last seen in the hands of a Wither Skeleton, perhaps it is now hidden in a Nether Fortress");
+        addPrefixed(JeiInfo.FORCEFIELD_PROJECTOR, "The Forcefield Project was last seen in the hands of an Enderman, perhaps it is now hidden in The End");
+        addPrefixed(JeiInfo.GUARDING_HELMET, "The Guarding went missing in The End, did he take his helmet with him?");
 
         //Compat
         if(ModList.get().isLoaded(Cyclic.MOD_ID)) {

@@ -1,9 +1,8 @@
 package com.black_dog20.jetboots.common.items.upgrades;
 
 import com.black_dog20.bml.utils.math.MathUtil;
-import com.black_dog20.jetboots.Config;
 import com.black_dog20.jetboots.common.items.upgrades.api.IArmorUpgrade;
-import com.black_dog20.jetboots.common.items.upgrades.api.IEnergyCostModifier;
+import com.black_dog20.jetboots.common.items.upgrades.api.IFlatValueEnergyModifier;
 import com.black_dog20.jetboots.common.util.TranslationHelper;
 import com.google.common.collect.ImmutableSet;
 import net.minecraft.client.util.ITooltipFlag;
@@ -20,26 +19,26 @@ import java.util.Set;
 
 import static com.black_dog20.jetboots.common.util.TranslationHelper.*;
 
-public class ForcefieldArmorUpgradeItem extends UpgradeItem implements IArmorUpgrade, IEnergyCostModifier {
+public class ForcefieldArmorUpgradeItem extends UpgradeItem implements IArmorUpgrade, IFlatValueEnergyModifier {
 
-    private final double energyCost;
+    private final int energyCost;
     private final double damageReduction;
     private final Set<DamageSource> sources = ImmutableSet.of(DamageSource.DRAGON_BREATH, DamageSource.ON_FIRE, DamageSource.GENERIC);
 
-    public ForcefieldArmorUpgradeItem(double damageReduction, double energyCost) {
+    public ForcefieldArmorUpgradeItem(double damageReduction, int energyCost) {
         super(Type.ARMOR, Tooltips.FORCEFIELD_ARMOR, Tooltips.FORCEFIELD_ARMOR_INFO);
         this.energyCost = energyCost;
         this.damageReduction = damageReduction;
     }
 
     @Override
-    public double getEnergyCostModifier() {
+    public int getFlatEnergyModifier() {
         return energyCost;
     }
 
     @Override
-    public ModifierType getType() {
-        return ModifierType.ON_HURT;
+    public FlatModifierType getFlatModifierType() {
+        return FlatModifierType.ON_HIT;
     }
 
     @Override
@@ -59,14 +58,11 @@ public class ForcefieldArmorUpgradeItem extends UpgradeItem implements IArmorUpg
 
     @Override
     public boolean providesProtection(ItemStack boots) {
-        if(getEnergyCostModifier() == 0)
+        if(getFlatEnergyModifier() == 0)
             return true;
 
-        if(Config.USE_POWER.get()) {
             IEnergyStorage energy = boots.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
-            return energy != null && energy.extractEnergy((int) getEnergyCostModifier(), true) != 0;
-        }
-        return true;
+            return energy != null && energy.extractEnergy((int) getFlatEnergyModifier(), true) != 0;
     }
 
     @Override
