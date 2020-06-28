@@ -44,7 +44,7 @@ public class JetBootsScreen extends ContainerScreen<JetBootsContainer> {
                             String energyText = TranslationUtil.translate(STORED_ENERGY, TextFormatting.GREEN,
                                     MathUtil.formatThousands(energy.getEnergyStored()),
                                     MathUtil.formatThousands(energy.getMaxEnergyStored())).getFormattedText();
-                            this.font.drawString(energyText, 8, 6 + fontHight+2, 0xffffff);
+                            this.font.drawString(energyText, 8, 6 + fontHight + 2, 0xffffff);
                         }));
     }
 

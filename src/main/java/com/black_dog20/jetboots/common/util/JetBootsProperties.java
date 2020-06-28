@@ -22,15 +22,16 @@ import static com.black_dog20.jetboots.common.items.upgrades.api.IUpgrade.*;
 import static com.black_dog20.jetboots.common.util.NBTTags.*;
 
 public class JetBootsProperties {
-    private JetBootsProperties() {}
+    private JetBootsProperties() {
+    }
 
     public static boolean setMode(ItemStack jetboots, boolean mode) {
-    	if(jetboots.isEmpty()) {
-    		return false;
-    	} else {
-    		jetboots.getOrCreateTag().putBoolean(KEY_MODE, mode);
-    		return true;
-    	}
+        if (jetboots.isEmpty()) {
+            return false;
+        } else {
+            jetboots.getOrCreateTag().putBoolean(KEY_MODE, mode);
+            return true;
+        }
     }
 
     public static boolean getMode(ItemStack jetboots) {
@@ -39,12 +40,12 @@ public class JetBootsProperties {
     }
 
     public static boolean setSpeed(ItemStack jetboots, boolean speed) {
-    	if(jetboots.isEmpty()) {
-    		return false;
-    	} else {
-    		jetboots.getOrCreateTag().putBoolean(KEY_SPEED, speed);
-    		return true;
-    	}
+        if (jetboots.isEmpty()) {
+            return false;
+        } else {
+            jetboots.getOrCreateTag().putBoolean(KEY_SPEED, speed);
+            return true;
+        }
     }
 
     public static boolean getSpeed(ItemStack jetboots) {
@@ -62,7 +63,7 @@ public class JetBootsProperties {
         return LazyOptional.empty();
     }
 
-    public static boolean hasEngineUpgrade(ItemStack jetboots){
+    public static boolean hasEngineUpgrade(ItemStack jetboots) {
         return getEngineUpgrade(jetboots).isPresent();
     }
 
@@ -76,7 +77,7 @@ public class JetBootsProperties {
         return LazyOptional.empty();
     }
 
-    public static boolean hasThrusterUpgrade(ItemStack jetboots){
+    public static boolean hasThrusterUpgrade(ItemStack jetboots) {
         return getThrusterUpgrade(jetboots).isPresent();
     }
 
@@ -90,7 +91,7 @@ public class JetBootsProperties {
         return LazyOptional.empty();
     }
 
-    public static boolean hasShockUpgrade(ItemStack jetboots){
+    public static boolean hasShockUpgrade(ItemStack jetboots) {
         return getShockUpgrade(jetboots).isPresent();
     }
 
@@ -104,7 +105,7 @@ public class JetBootsProperties {
         return LazyOptional.empty();
     }
 
-    public static boolean hasUnderWaterUpgrade(ItemStack jetboots){
+    public static boolean hasUnderWaterUpgrade(ItemStack jetboots) {
         return getUnderWaterUpgrade(jetboots).isPresent();
     }
 
@@ -118,7 +119,7 @@ public class JetBootsProperties {
         return LazyOptional.empty();
     }
 
-    public static boolean hasSoulboundUpgrade(ItemStack jetboots){
+    public static boolean hasSoulboundUpgrade(ItemStack jetboots) {
         return getSoulboundUpgrade(jetboots).isPresent();
     }
 
@@ -132,12 +133,12 @@ public class JetBootsProperties {
         return LazyOptional.empty();
     }
 
-    public static boolean hasMuffledUpgrade(ItemStack jetboots){
+    public static boolean hasMuffledUpgrade(ItemStack jetboots) {
         return getMuffledUpgrade(jetboots).isPresent();
     }
 
     public static LazyOptional<IUpgrade> getMuffledUpgrade(ItemStack jetboots) {
-         Item item = getUpgradeItem(jetboots, Type.MUFFLED);
+        Item item = getUpgradeItem(jetboots, Type.MUFFLED);
 
         if (item != Items.AIR) {
             IUpgrade upgrade = (IUpgrade) item;
@@ -146,7 +147,7 @@ public class JetBootsProperties {
         return LazyOptional.empty();
     }
 
-    public static boolean hasBatteryUpgrade(ItemStack jetboots){
+    public static boolean hasBatteryUpgrade(ItemStack jetboots) {
         return getBatteryUpgrade(jetboots).isPresent();
     }
 
@@ -162,7 +163,7 @@ public class JetBootsProperties {
         return LazyOptional.empty();
     }
 
-    public static boolean hasConverterUpgrade(ItemStack jetboots){
+    public static boolean hasConverterUpgrade(ItemStack jetboots) {
         return getConverterUpgrade(jetboots).isPresent();
     }
 
@@ -187,7 +188,7 @@ public class JetBootsProperties {
         return Items.AIR;
     }
 
-    public static List<IFlatValueEnergyModifier> getFlatEnergyModifiers(ItemStack jetboots){
+    public static List<IFlatValueEnergyModifier> getFlatEnergyModifiers(ItemStack jetboots) {
         List<IFlatValueEnergyModifier> result = new ArrayList<>();
 
         for (IUpgrade.Type type : IUpgrade.Type.values()) {
@@ -200,7 +201,7 @@ public class JetBootsProperties {
         return result;
     }
 
-    public static List<IPercentageValueEnergyModifier> getPercentageEnergyModifiers(ItemStack jetboots){
+    public static List<IPercentageValueEnergyModifier> getPercentageEnergyModifiers(ItemStack jetboots) {
         List<IPercentageValueEnergyModifier> result = new ArrayList<>();
 
         for (IUpgrade.Type type : IUpgrade.Type.values()) {

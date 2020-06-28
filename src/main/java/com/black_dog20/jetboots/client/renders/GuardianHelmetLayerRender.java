@@ -32,7 +32,7 @@ public class GuardianHelmetLayerRender<T extends LivingEntity, M extends EntityM
     public void render(MatrixStack matrixStack, IRenderTypeBuffer buffer, int packedLight, T entitylivingbase, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         ItemStack itemstack = entitylivingbase.getItemStackFromSlot(EquipmentSlotType.HEAD);
         if (itemstack.getItem() == ModItems.GUARDIAN_HELMET.get()) {
-            if(GuardinanHelmetProperties.getMode(itemstack)) {
+            if (GuardinanHelmetProperties.getMode(itemstack)) {
                 matrixStack.push();
                 this.getEntityModel().setModelAttributes(this.model);
                 this.model.render(entitylivingbase, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);

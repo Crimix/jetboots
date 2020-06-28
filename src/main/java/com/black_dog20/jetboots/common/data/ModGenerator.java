@@ -1,7 +1,6 @@
 package com.black_dog20.jetboots.common.data;
 
 import com.black_dog20.jetboots.Jetboots;
-
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.client.model.generators.ExistingFileHelper;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -13,10 +12,10 @@ public class ModGenerator {
 
     @SubscribeEvent
     public static void gatherData(GatherDataEvent event) {
-         if( event.includeServer() )
+        if (event.includeServer())
             registerServerProviders(event.getGenerator());
 
-        if( event.includeClient() )
+        if (event.includeClient())
             registerClientProviders(event.getGenerator(), event);
     }
 

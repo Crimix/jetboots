@@ -23,12 +23,14 @@ public interface IUpgrade {
 
     /**
      * Gets this upgrade's type.
+     *
      * @return the upgrade type.
      */
     Type getUpgradeType();
 
     /**
      * Gets this upgrade's tooltip.
+     *
      * @return the tooltip.
      */
     ITextComponent getTooltip();

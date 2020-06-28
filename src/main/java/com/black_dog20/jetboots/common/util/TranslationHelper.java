@@ -68,6 +68,7 @@ public class TranslationHelper extends TranslationUtil {
         CHANGE_HELMET_MODE("tooltip.item.change_helmet_mode"),
         HELMET_MODE("tooltip.item.helmet_mode"),
         HELMET_INFO("tooltip.item.helmet_info"),
+        HELMET_INFO2("tooltip.item.helmet_info2"),
         MATERIALIZED("tooltip.item.materialized"),
         DEMATERIALIZED("tooltip.item.dematerialized"),
         CANNOT_EAT_WHILE_MATERIALIZED("tooltip.item.cannot_eat_materialized"),

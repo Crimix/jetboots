@@ -26,7 +26,7 @@ public class ClientEventHandler {
     @SubscribeEvent
     public static void overlayEvent(RenderGameOverlayEvent.Pre event) {
         PlayerEntity player = Minecraft.getInstance().player;
-        if(player != null && ModUtils.hasGuardianHelmet(player)) {
+        if (player != null && ModUtils.hasGuardianHelmet(player)) {
             if (GuardinanHelmetProperties.getMode(ModUtils.getGuardianHelmet(player))) {
                 if (event.getType() == RenderGameOverlayEvent.ElementType.AIR)
                     event.setCanceled(true);
@@ -73,7 +73,7 @@ public class ClientEventHandler {
 
     private static ITextComponent getFlatModifierText(Tooltips draw, Tooltips generate, IFlatValueEnergyModifier modifier) {
         int value = modifier.getFlatEnergyModifier();
-        if(value <0)
+        if (value < 0)
             return TranslationHelper.translate(draw, Math.abs(modifier.getFlatEnergyModifier()));
         else
             return TranslationHelper.translate(generate, modifier.getFlatEnergyModifier());
@@ -81,7 +81,7 @@ public class ClientEventHandler {
 
     private static ITextComponent getPercentageModifierText(Tooltips more, Tooltips less, IPercentageValueEnergyModifier modifier) {
         double value = Math.max(modifier.getPercentageEnergyModifier(), 0);
-        if(value < 1.0)
+        if (value < 1.0)
             return TranslationHelper.translate(less, getPercentageEnergyModifierDisplayValue(modifier));
         else
             return TranslationHelper.translate(more, getPercentageEnergyModifierDisplayValue(modifier));
@@ -89,9 +89,9 @@ public class ClientEventHandler {
 
     private static double getPercentageEnergyModifierDisplayValue(IPercentageValueEnergyModifier modifier) {
         double value = Math.max(modifier.getPercentageEnergyModifier(), 0);
-        if(value < 1.0)
-            return (1.0-value)*100;
+        if (value < 1.0)
+            return (1.0 - value) * 100;
         else
-            return value*100;
+            return value * 100;
     }
 }

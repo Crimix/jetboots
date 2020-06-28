@@ -17,17 +17,16 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = Jetboots.MOD_ID, value = Dist.CLIENT)
 public class KeyEventHandler {
 
-	@SubscribeEvent
-	public static void onEvent(KeyInputEvent event)
-	{
-		if(Minecraft.getInstance().currentScreen == null) {
-			if(Keybinds.keyMode.isPressed()) {
-				PacketHandler.sendToServer(new PacketUpdateFlightMode());
-			} else if(Keybinds.keySpeed.isPressed()) {
-				PacketHandler.sendToServer(new PacketUpdateFlightSpeed());
-			} else if(Keybinds.keyHelmet.isPressed()) {
-				PacketHandler.sendToServer(new PacketUpdateHelmetMode());
-			}
-		}
-	}
+    @SubscribeEvent
+    public static void onEvent(KeyInputEvent event) {
+        if (Minecraft.getInstance().currentScreen == null) {
+            if (Keybinds.keyMode.isPressed()) {
+                PacketHandler.sendToServer(new PacketUpdateFlightMode());
+            } else if (Keybinds.keySpeed.isPressed()) {
+                PacketHandler.sendToServer(new PacketUpdateFlightSpeed());
+            } else if (Keybinds.keyHelmet.isPressed()) {
+                PacketHandler.sendToServer(new PacketUpdateHelmetMode());
+            }
+        }
+    }
 }

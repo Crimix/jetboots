@@ -19,7 +19,7 @@ import static com.black_dog20.jetboots.common.items.upgrades.api.IPercentageValu
 public class EnergyUtil {
 
     public static int getSumFlatValueEnergyModifier(ItemStack jetboots, FlatModifierType type) {
-        if(jetboots.isEmpty() || !(jetboots.getItem() instanceof JetBootsItem))
+        if (jetboots.isEmpty() || !(jetboots.getItem() instanceof JetBootsItem))
             return 0;
         return JetBootsProperties.getFlatEnergyModifiers(jetboots).stream()
                 .filter(e -> e.getFlatModifierType() == type)
@@ -28,31 +28,31 @@ public class EnergyUtil {
     }
 
     public static double getPercentageValueEnergyModifier(ItemStack jetboots, PercentageModifierType type) {
-        if(jetboots.isEmpty() || !(jetboots.getItem() instanceof JetBootsItem))
+        if (jetboots.isEmpty() || !(jetboots.getItem() instanceof JetBootsItem))
             return 1;
 
         return JetBootsProperties.getPercentageEnergyModifiers(jetboots).stream()
                 .filter(e -> e.getPercentageModifierType() == type)
                 .map(IPercentageValueEnergyModifier::getPercentageEnergyModifier)
-                .reduce(1.0, (a,b) -> a * b);
+                .reduce(1.0, (a, b) -> a * b);
     }
 
     public static Optional<String> getFormattedEnergyValue(int value) {
-        if(value == 0)
+        if (value == 0)
             return Optional.empty();
         else if (value > 0) {
             ITextComponent textComponent = new StringTextComponent(String.format("+%d FE", Math.abs(value)));
             textComponent.getStyle().setColor(TextFormatting.GREEN);
             return Optional.of(textComponent.getFormattedText());
         } else {
-            ITextComponent textComponent = new StringTextComponent(String.format("-%d FE",Math.abs(value)));
+            ITextComponent textComponent = new StringTextComponent(String.format("-%d FE", Math.abs(value)));
             textComponent.getStyle().setColor(TextFormatting.RED);
             return Optional.of(textComponent.getFormattedText());
         }
     }
 
     public static int getEnergyWhileFlying(ItemStack jetboots) {
-        if(jetboots.isEmpty() || !(jetboots.getItem() instanceof JetBootsItem))
+        if (jetboots.isEmpty() || !(jetboots.getItem() instanceof JetBootsItem))
             return 0;
         double modifier = EnergyUtil.getPercentageValueEnergyModifier(jetboots, PercentageModifierType.ON_USE);
         modifier = MathUtil.clamp(modifier, 0.0, 5.0);
@@ -61,25 +61,25 @@ public class EnergyUtil {
     }
 
     public static int getEnergyOnHit(ItemStack jetboots) {
-        if(jetboots.isEmpty() || !(jetboots.getItem() instanceof JetBootsItem))
+        if (jetboots.isEmpty() || !(jetboots.getItem() instanceof JetBootsItem))
             return 0;
         return EnergyUtil.getSumFlatValueEnergyModifier(jetboots, FlatModifierType.ON_HIT);
     }
 
     public static int getEnergyOnHurt(ItemStack jetboots) {
-        if(jetboots.isEmpty() || !(jetboots.getItem() instanceof JetBootsItem))
+        if (jetboots.isEmpty() || !(jetboots.getItem() instanceof JetBootsItem))
             return 0;
         return EnergyUtil.getSumFlatValueEnergyModifier(jetboots, FlatModifierType.ON_HURT);
     }
 
     public static int getEnergyWhileWalking(ItemStack jetboots) {
-        if(jetboots.isEmpty() || !(jetboots.getItem() instanceof JetBootsItem))
+        if (jetboots.isEmpty() || !(jetboots.getItem() instanceof JetBootsItem))
             return 0;
         return EnergyUtil.getSumFlatValueEnergyModifier(jetboots, FlatModifierType.ON_WALK);
     }
 
     public static void extractOrReceive(IEnergyStorage energyStorage, int value) {
-        if(value < 0)
+        if (value < 0)
             energyStorage.extractEnergy(Math.abs(value), false);
         else
             energyStorage.receiveEnergy(value, false);

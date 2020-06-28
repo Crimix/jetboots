@@ -10,7 +10,7 @@ import net.minecraftforge.fml.network.NetworkEvent;
 import java.util.function.Supplier;
 
 public class PacketUpdateHelmetMode {
-	public PacketUpdateHelmetMode() {
+    public PacketUpdateHelmetMode() {
     }
 
     public static void encode(PacketUpdateHelmetMode msg, PacketBuffer buffer) {
@@ -29,8 +29,8 @@ public class PacketUpdateHelmetMode {
                     return;
 
                 ItemStack stack = ModUtils.getGuardianHelmet(player);
-                
-                if(!stack.isEmpty()) {
+
+                if (!stack.isEmpty()) {
                     GuardinanHelmetProperties.setMode(stack, !GuardinanHelmetProperties.getMode(stack));
                     player.sendStatusMessage(ModUtils.getHelmetModeText(player), true);
                 }

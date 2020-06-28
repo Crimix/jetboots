@@ -47,6 +47,6 @@ description='''
 [[dependencies.jetboots]]
     modId="blackdogsmoddinglibrary"
     mandatory=true
-    versionRange="[1.0.4,)"
+    versionRange="[1.0.10,)"
     ordering="BEFORE"
     side="BOTH"

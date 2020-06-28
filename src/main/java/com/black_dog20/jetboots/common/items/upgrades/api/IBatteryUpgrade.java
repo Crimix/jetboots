@@ -4,6 +4,7 @@ public interface IBatteryUpgrade extends IUpgrade {
 
     /**
      * The power capacity multiplier of this upgrade.
+     *
      * @return the multiplier.
      */
     int getCapacityMultiplier();

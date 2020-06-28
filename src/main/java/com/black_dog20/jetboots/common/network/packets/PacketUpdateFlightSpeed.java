@@ -10,7 +10,7 @@ import net.minecraftforge.fml.network.NetworkEvent;
 import java.util.function.Supplier;
 
 public class PacketUpdateFlightSpeed {
-	public PacketUpdateFlightSpeed() {
+    public PacketUpdateFlightSpeed() {
     }
 
     public static void encode(PacketUpdateFlightSpeed msg, PacketBuffer buffer) {
@@ -29,12 +29,12 @@ public class PacketUpdateFlightSpeed {
                     return;
 
                 ItemStack stack = ModUtils.getJetBoots(player);
-                
-                if(!stack.isEmpty())
-                	if(JetBootsProperties.hasThrusterUpgrade(stack)) {
-                		JetBootsProperties.setSpeed(stack, !JetBootsProperties.getSpeed(stack));
-                		player.sendStatusMessage(ModUtils.getFlightSpeedText(player), true);
-                	}
+
+                if (!stack.isEmpty())
+                    if (JetBootsProperties.hasThrusterUpgrade(stack)) {
+                        JetBootsProperties.setSpeed(stack, !JetBootsProperties.getSpeed(stack));
+                        player.sendStatusMessage(ModUtils.getFlightSpeedText(player), true);
+                    }
             });
 
             ctx.get().setPacketHandled(true);

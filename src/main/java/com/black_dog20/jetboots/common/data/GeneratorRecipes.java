@@ -261,7 +261,7 @@ public class GeneratorRecipes extends BaseRecipeProvider {
                                 .addCriterion("has_jetboots", hasItem(JET_BOOTS.get()))
                                 .addCriterion("has_armor_boots", hasItem(compatBoots))
                                 ::build)
-                .setAdvancement(location("craft_"+recipeId.getPath()),
+                .setAdvancement(location("craft_" + recipeId.getPath()),
                         ConditionalAdvancement.builder()
                                 .addCondition(new ModLoadedCondition(modId))
                                 .addAdvancement(

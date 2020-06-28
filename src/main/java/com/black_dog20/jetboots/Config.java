@@ -25,6 +25,9 @@ public class Config {
 
     public static ForgeConfigSpec.IntValue DEFAULT_MAX_POWER;
     public static ForgeConfigSpec.IntValue POWER_COST;
+    public static ForgeConfigSpec.IntValue HELMET_LOOT_WEIGHT;
+    public static ForgeConfigSpec.IntValue FORCEFIELD_PARTS_LOOT_WEIGHT;
+    public static ForgeConfigSpec.BooleanValue EAT_WITH_HELMET;
 
     static {
         CLIENT_BUILDER.comment("Client settings").push(CLIENT_SETTINGS);
@@ -39,6 +42,12 @@ public class Config {
                 .defineInRange("defaultMaxPower", 1000000, 0, Integer.MAX_VALUE);
         POWER_COST = SERVER_BUILDER.comment("Cost per tick to use jetboots")
                 .defineInRange("powerCost", 50, 0, Integer.MAX_VALUE);
+        EAT_WITH_HELMET = SERVER_BUILDER.comment("Can a player eat and drink while having a materialized helmet")
+                .define("eatWithHelmet", false);
+        HELMET_LOOT_WEIGHT = SERVER_BUILDER.comment("The weight for the helmet to be in a End City loot chests")
+                .defineInRange("helmetLootWeight", 10, 0, 100);
+        FORCEFIELD_PARTS_LOOT_WEIGHT = SERVER_BUILDER.comment("The weight for the forcefield parts to be in a End City / Nether fort loot chests")
+                .defineInRange("forcefieldPartsLootWeight", 10, 0, 100);
         SERVER_BUILDER.pop();
 
         SERVER_CONFIG = SERVER_BUILDER.build();

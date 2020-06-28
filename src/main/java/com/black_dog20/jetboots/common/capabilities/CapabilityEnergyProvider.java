@@ -1,10 +1,6 @@
 package com.black_dog20.jetboots.common.capabilities;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.black_dog20.jetboots.common.util.EnergyItem;
-
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
@@ -13,8 +9,11 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 /**
- * More or less borrowed from 
+ * More or less borrowed from
  * https://github.com/Direwolf20-MC/MiningGadgets/blob/master/src/main/java/com/direwolf20/mininggadgets/common/capabilities/CapabilityEnergyProvider.java
  */
 public class CapabilityEnergyProvider implements ICapabilityProvider {

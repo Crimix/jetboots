@@ -1,10 +1,8 @@
 package com.black_dog20.jetboots.common.events;
 
-import com.black_dog20.bml.event.ArmorEvent;
+import com.black_dog20.bml.event.PlayerMoveEvent;
 import com.black_dog20.bml.utils.math.MathUtil;
-import com.black_dog20.bml.utils.math.Pos3D;
 import com.black_dog20.jetboots.Jetboots;
-import com.black_dog20.jetboots.common.items.ModItems;
 import com.black_dog20.jetboots.common.items.upgrades.api.IArmorUpgrade;
 import com.black_dog20.jetboots.common.util.EnergyUtil;
 import com.black_dog20.jetboots.common.util.JetBootsProperties;
@@ -18,7 +16,6 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = Jetboots.MOD_ID)
@@ -106,23 +103,15 @@ public class BootHandler {
     }
 
     @SubscribeEvent
-    public static void onTick(ArmorEvent.Tick event) {
-        if (event.side != LogicalSide.SERVER)
+    public static void onPlayerMove(PlayerMoveEvent event) {
+        if (event.getDistance() < 0.18)
             return;
-        if (event.isArmorEqualTo(ModItems.JET_BOOTS.get())) {
-            ItemStack jetboots = event.armor;
-            PlayerEntity playerEntity = event.player;
-            if (isWalking(playerEntity)) {
-                jetboots.getCapability(CapabilityEnergy.ENERGY, null)
-                        .ifPresent(e -> EnergyUtil.extractOrReceive(e, EnergyUtil.getEnergyWhileWalking(jetboots)));
-            }
-        }
-    }
-
-    private static boolean isWalking(PlayerEntity player) {
-        Pos3D prevPos = new Pos3D(player.prevChasingPosX, 0, player.prevChasingPosZ);
-        Pos3D currPos = new Pos3D(player.chasingPosX, 0, player.chasingPosZ);
-        return prevPos.distanceTo(currPos) >= 0.15;
+        if (!ModUtils.hasJetBoots(event.getPlayer()))
+            return;
+        PlayerEntity playerEntity = event.getPlayer();
+        ItemStack jetboots = ModUtils.getJetBoots(playerEntity);
+        jetboots.getCapability(CapabilityEnergy.ENERGY, null)
+                .ifPresent(e -> EnergyUtil.extractOrReceive(e, EnergyUtil.getEnergyWhileWalking(jetboots)));
     }
 
 }

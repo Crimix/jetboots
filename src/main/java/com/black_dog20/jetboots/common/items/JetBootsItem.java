@@ -106,11 +106,11 @@ public class JetBootsItem extends BaseArmorItem implements ISoulbindable {
 
         Minecraft mc = Minecraft.getInstance();
 
-            stack.getCapability(CapabilityEnergy.ENERGY, null)
-                    .ifPresent(energy -> tooltip.add(
-                            TranslationUtil.translate(STORED_ENERGY, TextFormatting.GREEN,
-                                    MathUtil.formatThousands(energy.getEnergyStored()),
-                                    MathUtil.formatThousands(energy.getMaxEnergyStored()))));
+        stack.getCapability(CapabilityEnergy.ENERGY, null)
+                .ifPresent(energy -> tooltip.add(
+                        TranslationUtil.translate(STORED_ENERGY, TextFormatting.GREEN,
+                                MathUtil.formatThousands(energy.getEnergyStored()),
+                                MathUtil.formatThousands(energy.getMaxEnergyStored()))));
 
         if (JetBootsProperties.hasEngineUpgrade(stack) || JetBootsProperties.hasThrusterUpgrade(stack)) {
             if (JetBootsProperties.hasEngineUpgrade(stack)) {
@@ -132,7 +132,7 @@ public class JetBootsItem extends BaseArmorItem implements ISoulbindable {
         }
 
         if (!InputMappings.isKeyDown(mc.getMainWindow().getHandle(), mc.gameSettings.keyBindSneak.getKey().getKeyCode())
-            && !InputMappings.isKeyDown(mc.getMainWindow().getHandle(), GLFW.GLFW_KEY_LEFT_CONTROL)) {
+                && !InputMappings.isKeyDown(mc.getMainWindow().getHandle(), GLFW.GLFW_KEY_LEFT_CONTROL)) {
             tooltip.add(TranslationUtil.translate(OPEN_UPGRADES, TextFormatting.GRAY));
             tooltip.add(TranslationUtil.translate(SHOW_UPGRADES, TextFormatting.GRAY, mc.gameSettings.keyBindSneak.getLocalizedName().toLowerCase()));
             tooltip.add(TranslationUtil.translate(SHOW_ENERGY, TextFormatting.GRAY, mc.gameSettings.keyBindSneak.getLocalizedName().toLowerCase(), I18n.format(InputMappings.getInputByCode(GLFW.GLFW_KEY_LEFT_CONTROL, -1).getTranslationKey()).toLowerCase()));
@@ -156,10 +156,10 @@ public class JetBootsItem extends BaseArmorItem implements ISoulbindable {
             JetBootsProperties.getArmorUpgrade(stack)
                     .ifPresent(armor -> tooltip.add(armor.getTooltip()));
 
-                JetBootsProperties.getBatteryUpgrade(stack)
-                        .ifPresent(battert -> tooltip.add(battert.getTooltip()));
-                JetBootsProperties.getConverterUpgrade(stack)
-                        .ifPresent(converter -> tooltip.add(converter.getTooltip()));
+            JetBootsProperties.getBatteryUpgrade(stack)
+                    .ifPresent(battert -> tooltip.add(battert.getTooltip()));
+            JetBootsProperties.getConverterUpgrade(stack)
+                    .ifPresent(converter -> tooltip.add(converter.getTooltip()));
 
             JetBootsProperties.getEngineUpgrade(stack)
                     .ifPresent(upgrade -> tooltip.add(upgrade.getTooltip()));
@@ -192,29 +192,29 @@ public class JetBootsItem extends BaseArmorItem implements ISoulbindable {
 
     @Override
     public double getDurabilityForDisplay(ItemStack stack) {
-            IEnergyStorage energy = stack.getCapability(CapabilityEnergy.ENERGY, null)
-                    .orElse(null);
-            if (energy == null)
-                return 0;
+        IEnergyStorage energy = stack.getCapability(CapabilityEnergy.ENERGY, null)
+                .orElse(null);
+        if (energy == null)
+            return 0;
 
-            return 1D - (energy.getEnergyStored() / (double) energy.getMaxEnergyStored());
+        return 1D - (energy.getEnergyStored() / (double) energy.getMaxEnergyStored());
     }
 
     @Override
     public int getRGBDurabilityForDisplay(ItemStack stack) {
 
-            IEnergyStorage energy = stack.getCapability(CapabilityEnergy.ENERGY, null)
-                    .orElse(null);
-            if (energy == null)
-                return super.getRGBDurabilityForDisplay(stack);
+        IEnergyStorage energy = stack.getCapability(CapabilityEnergy.ENERGY, null)
+                .orElse(null);
+        if (energy == null)
+            return super.getRGBDurabilityForDisplay(stack);
 
-            return MathHelper.hsvToRGB(Math.max(0.0F, (float) energy.getEnergyStored() / (float) energy.getMaxEnergyStored()) / 3.0F, 1.0F, 1.0F);
+        return MathHelper.hsvToRGB(Math.max(0.0F, (float) energy.getEnergyStored() / (float) energy.getMaxEnergyStored()) / 3.0F, 1.0F, 1.0F);
     }
 
     @Override
     public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
         if (player.isCrouching()) {
-            if(!world.isRemote) {
+            if (!world.isRemote) {
                 player.openContainer(new INamedContainerProvider() {
                     @Override
                     public ITextComponent getDisplayName() {

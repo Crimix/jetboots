@@ -7,9 +7,9 @@ import org.lwjgl.glfw.GLFW;
 
 @OnlyIn(Dist.CLIENT)
 public class Keybinds {
-	private static String CATEGORY = "Jet Boots";
-	
-	public static final KeyBinding keyMode = new KeyBinding("key.jetboots.engine", GLFW.GLFW_KEY_V, CATEGORY);
-	public static final KeyBinding keySpeed = new KeyBinding("key.jetboots.speed", GLFW.GLFW_KEY_G, CATEGORY);
-	public static final KeyBinding keyHelmet = new KeyBinding("key.jetboots.helmet", GLFW.GLFW_KEY_H, CATEGORY);
+    private static String CATEGORY = "Jet Boots";
+
+    public static final KeyBinding keyMode = new KeyBinding("key.jetboots.engine", GLFW.GLFW_KEY_V, CATEGORY);
+    public static final KeyBinding keySpeed = new KeyBinding("key.jetboots.speed", GLFW.GLFW_KEY_G, CATEGORY);
+    public static final KeyBinding keyHelmet = new KeyBinding("key.jetboots.helmet", GLFW.GLFW_KEY_H, CATEGORY);
 }

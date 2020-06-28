@@ -20,9 +20,9 @@ public class Cyclic {
     public static RegistryObject<Item> CRYSTAL_ARMOR_UPGRADE_CYCLIC;
 
     public static void registerItems(DeferredRegister<Item> items) {
-        if(ModList.get().isLoaded(MOD_ID)){
-            EMERALD_ARMOR_UPGRADE_CYCLIC = items.register("emerald_armor_upgrade_cyclic", ()-> new ArmorUpgradeItem(2, 0, TranslationHelper.Compat.EMERALD_ARMOR_CYCLIC, ModCompat.ITEM_GROUP));
-            CRYSTAL_ARMOR_UPGRADE_CYCLIC = items.register("crystal_armor_upgrade_cyclic", ()-> new ArmorUpgradeItem(2, 0, TranslationHelper.Compat.CRYSTAL_ARMOR_CYCLIC, ModCompat.ITEM_GROUP));
+        if (ModList.get().isLoaded(MOD_ID)) {
+            EMERALD_ARMOR_UPGRADE_CYCLIC = items.register("emerald_armor_upgrade_cyclic", () -> new ArmorUpgradeItem(2, 0, TranslationHelper.Compat.EMERALD_ARMOR_CYCLIC, ModCompat.ITEM_GROUP));
+            CRYSTAL_ARMOR_UPGRADE_CYCLIC = items.register("crystal_armor_upgrade_cyclic", () -> new ArmorUpgradeItem(2, 0, TranslationHelper.Compat.CRYSTAL_ARMOR_CYCLIC, ModCompat.ITEM_GROUP));
         }
     }
 }

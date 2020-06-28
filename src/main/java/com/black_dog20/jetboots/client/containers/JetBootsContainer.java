@@ -40,8 +40,7 @@ public class JetBootsContainer extends Container {
     @Override
     public void detectAndSendChanges() {
         super.detectAndSendChanges();
-        if(inventory.isPresent())
-        {
+        if (inventory.isPresent()) {
             IItemHandler handler = inventory
                     .orElseGet(null);
             if (handler instanceof JetBootsItemHandler) {
@@ -70,12 +69,9 @@ public class JetBootsContainer extends Container {
                 return ItemStack.EMPTY;
             }
 
-            if (itemstack1.isEmpty())
-            {
+            if (itemstack1.isEmpty()) {
                 slot.putStack(ItemStack.EMPTY);
-            }
-            else
-            {
+            } else {
                 slot.onSlotChanged();
             }
         }
@@ -117,15 +113,15 @@ public class JetBootsContainer extends Container {
     }
 
     private void addSlots(IItemHandler handler) {
-        this.addSlot(new SlotUpgradeItem(handler, 0,10,35));
-        this.addSlot(new SlotUpgradeItem(handler, 1,28,35));
-        this.addSlot(new SlotUpgradeItem(handler, 2,46,35));
-        this.addSlot(new SlotUpgradeItem(handler, 3,64,35));
-        this.addSlot(new SlotUpgradeItem(handler, 4,82,35));
-        this.addSlot(new SlotUpgradeItem(handler, 5,100,35));
-        this.addSlot(new SlotUpgradeItem(handler, 6,118,35));
-        this.addSlot(new SlotUpgradeItem(handler, 7,136,35));
-        this.addSlot(new SlotUpgradeItem(handler, 8,154,35));
+        this.addSlot(new SlotUpgradeItem(handler, 0, 10, 35));
+        this.addSlot(new SlotUpgradeItem(handler, 1, 28, 35));
+        this.addSlot(new SlotUpgradeItem(handler, 2, 46, 35));
+        this.addSlot(new SlotUpgradeItem(handler, 3, 64, 35));
+        this.addSlot(new SlotUpgradeItem(handler, 4, 82, 35));
+        this.addSlot(new SlotUpgradeItem(handler, 5, 100, 35));
+        this.addSlot(new SlotUpgradeItem(handler, 6, 118, 35));
+        this.addSlot(new SlotUpgradeItem(handler, 7, 136, 35));
+        this.addSlot(new SlotUpgradeItem(handler, 8, 154, 35));
     }
 
 

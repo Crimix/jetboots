@@ -2,6 +2,7 @@ package com.black_dog20.jetboots.common.items;
 
 import com.black_dog20.bml.api.ISoulbindable;
 import com.black_dog20.bml.utils.translate.TranslationUtil;
+import com.black_dog20.jetboots.Config;
 import com.black_dog20.jetboots.client.keybinds.Keybinds;
 import com.black_dog20.jetboots.common.util.TranslationHelper;
 import net.minecraft.client.Minecraft;
@@ -47,6 +48,8 @@ public class GuardianHelmetItem extends BaseArmorItem implements ISoulbindable {
         Minecraft mc = Minecraft.getInstance();
         tooltip.add(TranslationUtil.translate(CHANGE_HELMET_MODE, TextFormatting.GRAY, Keybinds.keyHelmet.getLocalizedName().toUpperCase()));
         tooltip.add(TranslationUtil.translate(HELMET_INFO, TextFormatting.GRAY));
+        if (!Config.EAT_WITH_HELMET.get())
+            tooltip.add(TranslationUtil.translate(HELMET_INFO2));
         tooltip.add(TranslationHelper.translate(SOULBOUND_UPGRADE));
     }
 

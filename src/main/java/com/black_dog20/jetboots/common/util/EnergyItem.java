@@ -5,7 +5,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.energy.EnergyStorage;
 
 /**
- * More or less borrowed from 
+ * More or less borrowed from
  * https://github.com/Direwolf20-MC/MiningGadgets/blob/master/src/main/java/com/direwolf20/mininggadgets/common/util/EnergisedItem.java
  */
 public class EnergyItem extends EnergyStorage {
@@ -22,12 +22,12 @@ public class EnergyItem extends EnergyStorage {
         int mult = JetBootsProperties.getBatteryUpgrade(stack)
                 .map(IBatteryUpgrade::getCapacityMultiplier)
                 .orElse(1);
-        if(!stack.hasTag() || !stack.getTag().contains("max_energy")) {
+        if (!stack.hasTag() || !stack.getTag().contains("max_energy")) {
             stack.getOrCreateTag().putInt("max_energy", capacity);
-            return capacity*mult;
+            return capacity * mult;
         }
 
-        return stack.getTag().getInt("max_energy")*mult;
+        return stack.getTag().getInt("max_energy") * mult;
     }
 
     @Override
@@ -45,22 +45,19 @@ public class EnergyItem extends EnergyStorage {
 
         return amount;
     }
-    
+
     @Override
-    public int getMaxEnergyStored()
-    {
+    public int getMaxEnergyStored() {
         return capacity;
     }
-    
+
     @Override
-    public boolean canExtract()
-    {
+    public boolean canExtract() {
         return super.canExtract();
     }
 
     @Override
-    public boolean canReceive()
-    {
+    public boolean canReceive() {
         return super.canReceive();
     }
 }

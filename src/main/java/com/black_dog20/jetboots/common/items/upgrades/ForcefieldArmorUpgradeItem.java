@@ -11,7 +11,6 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.energy.CapabilityEnergy;
-import net.minecraftforge.energy.IEnergyStorage;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -58,11 +57,13 @@ public class ForcefieldArmorUpgradeItem extends UpgradeItem implements IArmorUpg
 
     @Override
     public boolean providesProtection(ItemStack boots) {
-        if(getFlatEnergyModifier() == 0)
+        if (getFlatEnergyModifier() == 0)
             return true;
 
-            IEnergyStorage energy = boots.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
-            return energy != null && energy.extractEnergy((int) getFlatEnergyModifier(), true) != 0;
+        return boots.getCapability(CapabilityEnergy.ENERGY, null)
+                .map(energy -> energy.extractEnergy(getFlatEnergyModifier(), true))
+                .map(i -> i != 0)
+                .orElse(false);
     }
 
     @Override
@@ -73,7 +74,7 @@ public class ForcefieldArmorUpgradeItem extends UpgradeItem implements IArmorUpg
     @Override
     public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltips, ITooltipFlag flag) {
         double reduction = MathUtil.clamp(damageReduction, 0.0, 1.0);
-        reduction = (1.0-reduction)*100;
+        reduction = (1.0 - reduction) * 100;
         tooltips.add(TranslationHelper.translate(info, reduction));
         tooltips.add(TranslationHelper.translate(Tooltips.FORCEFIELD_ARMOR_INFO_2));
     }
@@ -82,7 +83,7 @@ public class ForcefieldArmorUpgradeItem extends UpgradeItem implements IArmorUpg
     public boolean protectAgainst(DamageSource source) {
         if (sources.contains(source))
             return true;
-        if(!source.isUnblockable() && !source.isMagicDamage())
+        if (!source.isUnblockable() && !source.isMagicDamage())
             return true;
 
         return false;

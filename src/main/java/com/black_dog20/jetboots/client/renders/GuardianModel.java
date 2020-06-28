@@ -54,24 +54,24 @@ public class GuardianModel<T extends LivingEntity> extends AgeableModel<T> imple
 
     public void setLivingAnimations(T entityIn, float limbSwing, float limbSwingAmount, float partialTick) {
         this.swimAnimation = entityIn.getSwimAnimation(partialTick);
-        this.remainingItemUseTime = (float)entityIn.getItemInUseMaxCount();
+        this.remainingItemUseTime = (float) entityIn.getItemInUseMaxCount();
         super.setLivingAnimations(entityIn, limbSwing, limbSwingAmount, partialTick);
     }
 
     public void render(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         boolean flag = entityIn.getTicksElytraFlying() > 4;
         boolean flag1 = entityIn.isActualySwimming();
-        this.bipedHead.rotateAngleY = netHeadYaw * ((float)Math.PI / 180F);
+        this.bipedHead.rotateAngleY = netHeadYaw * ((float) Math.PI / 180F);
         if (flag) {
-            this.bipedHead.rotateAngleX = (-(float)Math.PI / 4F);
+            this.bipedHead.rotateAngleX = (-(float) Math.PI / 4F);
         } else if (this.swimAnimation > 0.0F) {
             if (flag1) {
-                this.bipedHead.rotateAngleX = this.rotLerpRad(this.bipedHead.rotateAngleX, (-(float)Math.PI / 4F), this.swimAnimation);
+                this.bipedHead.rotateAngleX = this.rotLerpRad(this.bipedHead.rotateAngleX, (-(float) Math.PI / 4F), this.swimAnimation);
             } else {
-                this.bipedHead.rotateAngleX = this.rotLerpRad(this.bipedHead.rotateAngleX, headPitch * ((float)Math.PI / 180F), this.swimAnimation);
+                this.bipedHead.rotateAngleX = this.rotLerpRad(this.bipedHead.rotateAngleX, headPitch * ((float) Math.PI / 180F), this.swimAnimation);
             }
         } else {
-            this.bipedHead.rotateAngleX = headPitch * ((float)Math.PI / 180F);
+            this.bipedHead.rotateAngleX = headPitch * ((float) Math.PI / 180F);
         }
 
         if (this.isSneak) {
@@ -84,13 +84,13 @@ public class GuardianModel<T extends LivingEntity> extends AgeableModel<T> imple
     }
 
     protected float rotLerpRad(float angleIn, float maxAngleIn, float mulIn) {
-        float f = (maxAngleIn - angleIn) % ((float)Math.PI * 2F);
-        if (f < -(float)Math.PI) {
-            f += ((float)Math.PI * 2F);
+        float f = (maxAngleIn - angleIn) % ((float) Math.PI * 2F);
+        if (f < -(float) Math.PI) {
+            f += ((float) Math.PI * 2F);
         }
 
-        if (f >= (float)Math.PI) {
-            f -= ((float)Math.PI * 2F);
+        if (f >= (float) Math.PI) {
+            f -= ((float) Math.PI * 2F);
         }
 
         return angleIn + mulIn * f;

@@ -13,15 +13,15 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class BaseItem extends Item {
-	
-	public BaseItem(Properties builder) {
-		super(builder);
-	}
 
-	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn, String text) {
-		super.addInformation(stack, worldIn, tooltip, flagIn);
-		tooltip.add(new StringTextComponent(text));
-	}
+    public BaseItem(Properties builder) {
+        super(builder);
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn, String text) {
+        super.addInformation(stack, worldIn, tooltip, flagIn);
+        tooltip.add(new StringTextComponent(text));
+    }
 
 }

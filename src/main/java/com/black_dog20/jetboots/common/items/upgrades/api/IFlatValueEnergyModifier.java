@@ -4,7 +4,7 @@ public interface IFlatValueEnergyModifier {
 
     /**
      * These control how other upgrades effect power draw.
-     *
+     * <p>
      * {@link IFlatValueEnergyModifier.FlatModifierType#ON_USE} A power value to draw/generate to add to the general flying power draw. Is applied when flying only.
      * {@link IFlatValueEnergyModifier.FlatModifierType#ON_HIT} A power value to draw/generate whenever the wearer is hit.
      * {@link IFlatValueEnergyModifier.FlatModifierType#ON_HURT} A power value to draw/generate whenever the wearer is hurt.
@@ -19,6 +19,7 @@ public interface IFlatValueEnergyModifier {
 
     /**
      * The flat cost modifier.
+     *
      * @return the flat cost modifier.
      */
     int getFlatEnergyModifier();

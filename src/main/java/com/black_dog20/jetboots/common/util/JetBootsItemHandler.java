@@ -17,14 +17,13 @@ public class JetBootsItemHandler extends ItemStackHandler {
     private Type[] VALID_TYPES_SLOTS = {ARMOR, BATTERY, ENGINE, THRUSTER, SHOCK_ABSORBER, MUFFLED, UNDERWATER, CONVERTER, SOULBOUND};
     private final ItemStack jetboots;
 
-    public JetBootsItemHandler(ItemStack stack){
+    public JetBootsItemHandler(ItemStack stack) {
         super(SIZE);
         jetboots = stack;
     }
 
     @Override
-    protected void onContentsChanged(int slot)
-    {
+    protected void onContentsChanged(int slot) {
         this.serializeNBT();
     }
 
@@ -32,7 +31,7 @@ public class JetBootsItemHandler extends ItemStackHandler {
     public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
         Item item = stack.getItem();
         Type type = VALID_TYPES_SLOTS[slot];
-        boolean valid = item instanceof IUpgrade && ((IUpgrade)item).getUpgradeType() == type;
+        boolean valid = item instanceof IUpgrade && ((IUpgrade) item).getUpgradeType() == type;
         return valid && super.isItemValid(slot, stack);
     }
 
@@ -77,7 +76,7 @@ public class JetBootsItemHandler extends ItemStackHandler {
 
     private void load() {
         CompoundNBT compoundNBT = jetboots.getOrCreateTag();
-        if(compoundNBT.contains("JetBootsInventory")) {
+        if (compoundNBT.contains("JetBootsInventory")) {
             super.deserializeNBT(compoundNBT.getCompound("JetBootsInventory"));
         }
     }
@@ -96,7 +95,7 @@ public class JetBootsItemHandler extends ItemStackHandler {
     @Override
     public void deserializeNBT(CompoundNBT nbt) {
         CompoundNBT compoundNBT = jetboots.getOrCreateTag();
-        if(compoundNBT.contains("JetBootsInventory")) {
+        if (compoundNBT.contains("JetBootsInventory")) {
             super.deserializeNBT(compoundNBT.getCompound("JetBootsInventory"));
         }
     }

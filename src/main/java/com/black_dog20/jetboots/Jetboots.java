@@ -24,44 +24,43 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 @Mod(Jetboots.MOD_ID)
-public class Jetboots
-{
-	public static final String MOD_ID = "jetboots";
-	private static final Logger LOGGER = LogManager.getLogger();
+public class Jetboots {
+    public static final String MOD_ID = "jetboots";
+    private static final Logger LOGGER = LogManager.getLogger();
 
-	public static ItemGroup itemGroup = new ItemGroup(Jetboots.MOD_ID) {
-		@Override
-		public ItemStack createIcon() {
-			return new ItemStack(ModItems.JET_BOOTS.get());
-		}
-	};
+    public static ItemGroup itemGroup = new ItemGroup(Jetboots.MOD_ID) {
+        @Override
+        public ItemStack createIcon() {
+            return new ItemStack(ModItems.JET_BOOTS.get());
+        }
+    };
 
-	public Jetboots() {
-		IEventBus event = FMLJavaModLoadingContext.get().getModEventBus();
-		ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.SERVER_CONFIG);
-		Config.loadConfig(Config.SERVER_CONFIG, FMLPaths.CONFIGDIR.get().resolve(MOD_ID + "-server.toml"));
+    public Jetboots() {
+        IEventBus event = FMLJavaModLoadingContext.get().getModEventBus();
+        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.SERVER_CONFIG);
+        Config.loadConfig(Config.SERVER_CONFIG, FMLPaths.CONFIGDIR.get().resolve(MOD_ID + "-server.toml"));
 
-		ModItems.ITEMS.register(event);
-		ModCompat.register(event);
-		ModContainers.CONTAINERS.register(event);
-		ModSounds.SOUNDS.register(event);
+        ModItems.ITEMS.register(event);
+        ModCompat.register(event);
+        ModContainers.CONTAINERS.register(event);
+        ModSounds.SOUNDS.register(event);
 
-		event.addListener(this::setup);
-		event.addListener(this::setupClient);
-		MinecraftForge.EVENT_BUS.register(this);
-	}
+        event.addListener(this::setup);
+        event.addListener(this::setupClient);
+        MinecraftForge.EVENT_BUS.register(this);
+    }
 
-	private void setup(final FMLCommonSetupEvent event){
-		PacketHandler.register();
-	}
+    private void setup(final FMLCommonSetupEvent event) {
+        PacketHandler.register();
+    }
 
-	private void setupClient(final FMLClientSetupEvent event) {
-		ClientRegistry.registerKeyBinding(Keybinds.keyMode);
-		ClientRegistry.registerKeyBinding(Keybinds.keySpeed);
-		ScreenManager.registerFactory(ModContainers.JETBOOTS_CONTAINER.get(), JetBootsScreen::new);
-	}
+    private void setupClient(final FMLClientSetupEvent event) {
+        ClientRegistry.registerKeyBinding(Keybinds.keyMode);
+        ClientRegistry.registerKeyBinding(Keybinds.keySpeed);
+        ScreenManager.registerFactory(ModContainers.JETBOOTS_CONTAINER.get(), JetBootsScreen::new);
+    }
 
-	public static Logger getLogger() {
-		return LOGGER;
-	}
+    public static Logger getLogger() {
+        return LOGGER;
+    }
 }

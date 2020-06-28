@@ -13,8 +13,8 @@ import static com.black_dog20.jetboots.common.util.TranslationHelper.*;
 import static com.black_dog20.jetboots.common.util.TranslationHelper.Tooltips.*;
 
 public class GeneratorLanguage extends BaseLanguageProvider {
-    
-	public GeneratorLanguage(DataGenerator gen) {
+
+    public GeneratorLanguage(DataGenerator gen) {
         super(gen, Jetboots.MOD_ID, "en_us");
     }
 
@@ -52,59 +52,59 @@ public class GeneratorLanguage extends BaseLanguageProvider {
         //addBlock(ModBlocks., "");
 
         // Tooltips
-        addPrefixed(SHOW_UPGRADES,"Hold %s to show upgrades");
-        addPrefixed(OPEN_UPGRADES,"Sneak + Right click to apply upgrades");
-        addPrefixed(SHOW_ENERGY,"Hold %s + %s to show energy stats");
-        addPrefixed(UPGRADES,"Upgrades");
-        addPrefixed(LEATHER_ARMOR,"Armored: Leather", TextFormatting.GRAY);
-        addPrefixed(IRON_ARMOR,"Armored: Iron", TextFormatting.GRAY);
-        addPrefixed(DIAMOND_ARMOR,"Armored: Diamond", TextFormatting.BLUE);
-        addPrefixed(FORCEFIELD_ARMOR,"Armored: Forcefield", TextFormatting.BLUE);
-        addPrefixed(ENGINE_UPGRADE,"Upgraded engine", TextFormatting.GRAY);
-        addPrefixed(THRUSTER_UPGRADE,"Upgraded thruster", TextFormatting.GRAY);
-        addPrefixed(SHOCK_ABSORBER_UPGRADE,"Shock absorber", TextFormatting.GRAY);
-        addPrefixed(UNDERWATER_UPGRADE,"Water proof", TextFormatting.AQUA);
-        addPrefixed(SOULBOUND_UPGRADE,"Soulbound", TextFormatting.LIGHT_PURPLE);
-        addPrefixed(MUFFLED_UPGRADE,"Muffled", TextFormatting.GRAY);
-        addPrefixed(BASIC_BATTERY_UPGRADE,"Basic Battery", TextFormatting.GRAY);
-        addPrefixed(ADVANCED_BATTERY_UPGRADE,"Advanced Battery", TextFormatting.BLUE);
-        addPrefixed(ELITE_BATTERY_UPGRADE,"Elite Battery", TextFormatting.RED);
-        addPrefixed(ULTIMATE_BATTERY_UPGRADE,"Ultimate Battery", TextFormatting.LIGHT_PURPLE);
-        addPrefixed(BASIC_CONVERTER_UPGRADE,"Basic Converter", TextFormatting.GRAY);
-        addPrefixed(ADVANCED_CONVERTER_UPGRADE,"Advanced Converter", TextFormatting.BLUE);
-        addPrefixed(ELITE_CONVERTER_UPGRADE,"Elite Converter", TextFormatting.RED);
-        addPrefixed(ULTIMATE_CONVERTER_UPGRADE,"Ultimate Converter", TextFormatting.LIGHT_PURPLE);
+        addPrefixed(SHOW_UPGRADES, "Hold %s to show upgrades");
+        addPrefixed(OPEN_UPGRADES, "Sneak + Right click to apply upgrades");
+        addPrefixed(SHOW_ENERGY, "Hold %s + %s to show energy stats");
+        addPrefixed(UPGRADES, "Upgrades");
+        addPrefixed(LEATHER_ARMOR, "Armored: Leather", TextFormatting.GRAY);
+        addPrefixed(IRON_ARMOR, "Armored: Iron", TextFormatting.GRAY);
+        addPrefixed(DIAMOND_ARMOR, "Armored: Diamond", TextFormatting.BLUE);
+        addPrefixed(FORCEFIELD_ARMOR, "Armored: Forcefield", TextFormatting.BLUE);
+        addPrefixed(ENGINE_UPGRADE, "Upgraded engine", TextFormatting.GRAY);
+        addPrefixed(THRUSTER_UPGRADE, "Upgraded thruster", TextFormatting.GRAY);
+        addPrefixed(SHOCK_ABSORBER_UPGRADE, "Shock absorber", TextFormatting.GRAY);
+        addPrefixed(UNDERWATER_UPGRADE, "Water proof", TextFormatting.AQUA);
+        addPrefixed(SOULBOUND_UPGRADE, "Soulbound", TextFormatting.LIGHT_PURPLE);
+        addPrefixed(MUFFLED_UPGRADE, "Muffled", TextFormatting.GRAY);
+        addPrefixed(BASIC_BATTERY_UPGRADE, "Basic Battery", TextFormatting.GRAY);
+        addPrefixed(ADVANCED_BATTERY_UPGRADE, "Advanced Battery", TextFormatting.BLUE);
+        addPrefixed(ELITE_BATTERY_UPGRADE, "Elite Battery", TextFormatting.RED);
+        addPrefixed(ULTIMATE_BATTERY_UPGRADE, "Ultimate Battery", TextFormatting.LIGHT_PURPLE);
+        addPrefixed(BASIC_CONVERTER_UPGRADE, "Basic Converter", TextFormatting.GRAY);
+        addPrefixed(ADVANCED_CONVERTER_UPGRADE, "Advanced Converter", TextFormatting.BLUE);
+        addPrefixed(ELITE_CONVERTER_UPGRADE, "Elite Converter", TextFormatting.RED);
+        addPrefixed(ULTIMATE_CONVERTER_UPGRADE, "Ultimate Converter", TextFormatting.LIGHT_PURPLE);
 
-        addPrefixed(ARMOR_INFO,"Provides protection", TextFormatting.GRAY);
-        addPrefixed(FORCEFIELD_ARMOR_INFO,"Negates damage from supported types by %d%%", TextFormatting.GRAY);
+        addPrefixed(ARMOR_INFO, "Provides protection", TextFormatting.GRAY);
+        addPrefixed(FORCEFIELD_ARMOR_INFO, "Negates damage from supported types by %d%%", TextFormatting.GRAY);
         addPrefixed(FORCEFIELD_ARMOR_INFO_2, "Negates knockback", TextFormatting.GRAY);
-        addPrefixed(ENGINE_UPGRADE_INFO,"Unlocks Elytra based flight", TextFormatting.GRAY);
-        addPrefixed(THRUSTER_UPGRADE_INFO,"Unlocks super speed toggle", TextFormatting.GRAY);
-        addPrefixed(SHOCK_ABSORBER_UPGRADE_INFO,"Removes fall damage while wearing jet boots", TextFormatting.GRAY);
-        addPrefixed(UNDERWATER_UPGRADE_INFO,"Makes the jet boots work under water", TextFormatting.GRAY);
-        addPrefixed(SOULBOUND_UPGRADE_INFO,"Death will not part you from these boots", TextFormatting.GRAY);
-        addPrefixed(MUFFLED_UPGRADE_INFO,"Makes the jet boots silent", TextFormatting.GRAY);
-        addPrefixed(BATTERY_UPGRADE_INFO,"Provides %dx more energy storage", TextFormatting.GRAY);
-        addPrefixed(CONVERTER_UPGRADE_INFO,"Increases power efficiency", TextFormatting.GRAY);
-        
-        addPrefixed(CHANGE_FLIGHT_MODE,"Use %s to change flight mode");
-        addPrefixed(CHANGE_SPEED_MODE,"Use %s to change speed");
-        addPrefixed(FLIGHT_MODE,"Flight mode: %s");
-        addPrefixed(STORED_ENERGY,"Energy: %d/%d");
-        addPrefixed(SPEED_MODE,"Speed: %s");
-        addPrefixed(NORMAL,"Normal");
-        addPrefixed(BASIC,"Basic");
-        addPrefixed(ADVANCED,"Advanced");
-        addPrefixed(SUPER,"Super");
-        addPrefixed(ELYTRA,"Elytra");
+        addPrefixed(ENGINE_UPGRADE_INFO, "Unlocks Elytra based flight", TextFormatting.GRAY);
+        addPrefixed(THRUSTER_UPGRADE_INFO, "Unlocks super speed toggle", TextFormatting.GRAY);
+        addPrefixed(SHOCK_ABSORBER_UPGRADE_INFO, "Removes fall damage while wearing jet boots", TextFormatting.GRAY);
+        addPrefixed(UNDERWATER_UPGRADE_INFO, "Makes the jet boots work under water", TextFormatting.GRAY);
+        addPrefixed(SOULBOUND_UPGRADE_INFO, "Death will not part you from these boots", TextFormatting.GRAY);
+        addPrefixed(MUFFLED_UPGRADE_INFO, "Makes the jet boots silent", TextFormatting.GRAY);
+        addPrefixed(BATTERY_UPGRADE_INFO, "Provides %dx more energy storage", TextFormatting.GRAY);
+        addPrefixed(CONVERTER_UPGRADE_INFO, "Increases power efficiency", TextFormatting.GRAY);
+
+        addPrefixed(CHANGE_FLIGHT_MODE, "Use %s to change flight mode");
+        addPrefixed(CHANGE_SPEED_MODE, "Use %s to change speed");
+        addPrefixed(FLIGHT_MODE, "Flight mode: %s");
+        addPrefixed(STORED_ENERGY, "Energy: %d/%d");
+        addPrefixed(SPEED_MODE, "Speed: %s");
+        addPrefixed(NORMAL, "Normal");
+        addPrefixed(BASIC, "Basic");
+        addPrefixed(ADVANCED, "Advanced");
+        addPrefixed(SUPER, "Super");
+        addPrefixed(ELYTRA, "Elytra");
         addPrefixed(ENERGY_USE_MORE, "Makes the boots draw %.2f%% more FE while flying", TextFormatting.GRAY);
         addPrefixed(ENERGY_USE_LESS, "Makes the boots draw %.2f%% less FE while flying", TextFormatting.GRAY);
-        addPrefixed(ENERGY_USE_DRAW, "While flying draws %d FE",TextFormatting.GRAY);
-        addPrefixed(ENERGY_USE_GENERATE, "While flying generate %d FE",TextFormatting.GRAY);
-        addPrefixed(ENERGY_HIT_DRAW, "Every hit draws %d FE",TextFormatting.GRAY);
-        addPrefixed(ENERGY_HIT_GENERATE, "Every hit generate %d FE",TextFormatting.GRAY);
-        addPrefixed(ENERGY_HURT_DRAW, "Every time the wearer is hurt draws %d FE",TextFormatting.GRAY);
-        addPrefixed(ENERGY_HURT_GENERATE, "Every time the wearer is hurt generate %d FE",TextFormatting.GRAY);
+        addPrefixed(ENERGY_USE_DRAW, "While flying draws %d FE", TextFormatting.GRAY);
+        addPrefixed(ENERGY_USE_GENERATE, "While flying generate %d FE", TextFormatting.GRAY);
+        addPrefixed(ENERGY_HIT_DRAW, "Every hit draws %d FE", TextFormatting.GRAY);
+        addPrefixed(ENERGY_HIT_GENERATE, "Every hit generate %d FE", TextFormatting.GRAY);
+        addPrefixed(ENERGY_HURT_DRAW, "Every time the wearer is hurt draws %d FE", TextFormatting.GRAY);
+        addPrefixed(ENERGY_HURT_GENERATE, "Every time the wearer is hurt generate %d FE", TextFormatting.GRAY);
         addPrefixed(ENERGY_WALK_DRAW, "Draws %d FE while walking on ground", TextFormatting.GRAY);
         addPrefixed(ENERGY_WALK_GENERATE, "Generate %d FE while walking on ground", TextFormatting.GRAY);
         addPrefixed(FLYING_ENERGY, "%s while flying", TextFormatting.GRAY);
@@ -112,34 +112,35 @@ public class GeneratorLanguage extends BaseLanguageProvider {
         addPrefixed(HURT_ENERGY, "%s on being hurt", TextFormatting.GRAY);
         addPrefixed(WALKING_ENERGY, "%s while walking", TextFormatting.GRAY);
         addPrefixed(JETBOOTS_UPGRADES, "Jet Boots Upgrades");
-        addPrefixed(CHANGE_HELMET_MODE,"Use %s to change helmet mode");
-        addPrefixed(HELMET_INFO,"Protects against air loss and other ill effects when materialized, but you cannot eat");
-        addPrefixed(HELMET_MODE,"Guardian Helmet: %s");
-        addPrefixed(MATERIALIZED,"Materialized");
-        addPrefixed(DEMATERIALIZED,"Dematerialized");
-        addPrefixed(CANNOT_EAT_WHILE_MATERIALIZED,"You cannot eat and drink while the helmet is materialized");
+        addPrefixed(CHANGE_HELMET_MODE, "Use %s to change helmet mode");
+        addPrefixed(HELMET_INFO, "Protects against air loss and other ill effects when materialized");
+        addPrefixed(HELMET_INFO2, "You cannot eat and drink while it is materialized", TextFormatting.RED);
+        addPrefixed(HELMET_MODE, "Guardian Helmet: %s");
+        addPrefixed(MATERIALIZED, "Materialized");
+        addPrefixed(DEMATERIALIZED, "Dematerialized");
+        addPrefixed(CANNOT_EAT_WHILE_MATERIALIZED, "You cannot eat and drink while the helmet is materialized");
 
         //JEI
-        addPrefixed(JeiInfo.FORCEFIELD_GENERATOR, "The Forcefield Generator was last seen in the hands of a Wither Skeleton, perhaps it is now hidden in a Nether Fortress");
-        addPrefixed(JeiInfo.FORCEFIELD_PROJECTOR, "The Forcefield Project was last seen in the hands of an Enderman, perhaps it is now hidden in The End");
-        addPrefixed(JeiInfo.GUARDING_HELMET, "The Guarding went missing in The End, did he take his helmet with him?");
+        addPrefixed(JeiInfo.FORCEFIELD_GENERATOR, "The Forcefield Generator was last seen in the hands of a Wither Skeleton, perhaps it is now hidden in a Nether Fortress", TextFormatting.DARK_GRAY);
+        addPrefixed(JeiInfo.FORCEFIELD_PROJECTOR, "The Forcefield Project was last seen in the hands of an Enderman, perhaps it is now hidden in The End", TextFormatting.DARK_GRAY);
+        addPrefixed(JeiInfo.GUARDING_HELMET, "The Guarding went missing in The End, did he take his helmet with him?", TextFormatting.DARK_GRAY);
 
         //Compat
-        if(ModList.get().isLoaded(Cyclic.MOD_ID)) {
-            addItem(Cyclic.CRYSTAL_ARMOR_UPGRADE_CYCLIC,"Crystal Armor Upgrade (Cyclic)");
-            addItem(Cyclic.EMERALD_ARMOR_UPGRADE_CYCLIC,"Emerald Armor Upgrade (Cyclic)");
+        if (ModList.get().isLoaded(Cyclic.MOD_ID)) {
+            addItem(Cyclic.CRYSTAL_ARMOR_UPGRADE_CYCLIC, "Crystal Armor Upgrade (Cyclic)");
+            addItem(Cyclic.EMERALD_ARMOR_UPGRADE_CYCLIC, "Emerald Armor Upgrade (Cyclic)");
 
             addPrefixed(Compat.EMERALD_ARMOR_CYCLIC, "Armored: Emerald (Cyclic)", TextFormatting.GREEN);
             addPrefixed(Compat.CRYSTAL_ARMOR_CYCLIC, "Armored: Crystal (Cyclic)", TextFormatting.DARK_PURPLE);
         }
 
-        if(ModList.get().isLoaded(Cyclic.MOD_ID)) {
-            addItem(MekanismTools.BRONZE_ARMOR_UPGRADE_MEKANISM,"Broze Armor Upgrade (Mekanism)");
-            addItem(MekanismTools.LAPIS_ARMOR_UPGRADE_MEKANISM,"Lapis Lazuli Armor Upgrade (Mekanism)");
-            addItem(MekanismTools.OSMIUM_ARMOR_UPGRADE_MEKANISM,"Osmium Armor Upgrade (Mekanism)");
-            addItem(MekanismTools.REFINED_GLOWSTONE_ARMOR_UPGRADE_MEKANISM,"Refined Glowstone Armor Upgrade (Mekanism)");
-            addItem(MekanismTools.REFINED_OBSIDIAN_ARMOR_UPGRADE_MEKANISM,"Refined Obsidian Armor Upgrade (Mekanism)");
-            addItem(MekanismTools.STEEL_ARMOR_UPGRADE_MEKANISM,"Steel Armor Upgrade (Mekanism)");
+        if (ModList.get().isLoaded(Cyclic.MOD_ID)) {
+            addItem(MekanismTools.BRONZE_ARMOR_UPGRADE_MEKANISM, "Broze Armor Upgrade (Mekanism)");
+            addItem(MekanismTools.LAPIS_ARMOR_UPGRADE_MEKANISM, "Lapis Lazuli Armor Upgrade (Mekanism)");
+            addItem(MekanismTools.OSMIUM_ARMOR_UPGRADE_MEKANISM, "Osmium Armor Upgrade (Mekanism)");
+            addItem(MekanismTools.REFINED_GLOWSTONE_ARMOR_UPGRADE_MEKANISM, "Refined Glowstone Armor Upgrade (Mekanism)");
+            addItem(MekanismTools.REFINED_OBSIDIAN_ARMOR_UPGRADE_MEKANISM, "Refined Obsidian Armor Upgrade (Mekanism)");
+            addItem(MekanismTools.STEEL_ARMOR_UPGRADE_MEKANISM, "Steel Armor Upgrade (Mekanism)");
 
 
             addPrefixed(Compat.BRONZE_ARMOR_MEKANISM, "Armored: Bronze (Mekanism)", TextFormatting.GOLD);

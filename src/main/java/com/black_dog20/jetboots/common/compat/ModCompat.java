@@ -11,7 +11,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class ModCompat {
 
-    public static ItemGroup compatItemGroup = new ItemGroup(Jetboots.MOD_ID+"_compat") {
+    public static ItemGroup compatItemGroup = new ItemGroup(Jetboots.MOD_ID + "_compat") {
         @Override
         public ItemStack createIcon() {
             return new ItemStack(ModItems.BASE_UPGRADE.get());

@@ -1,5 +1,6 @@
 package com.black_dog20.jetboots.common.events;
 
+import com.black_dog20.jetboots.Config;
 import com.black_dog20.jetboots.Jetboots;
 import com.black_dog20.jetboots.common.util.GuardinanHelmetProperties;
 import com.black_dog20.jetboots.common.util.ModUtils;
@@ -85,7 +86,7 @@ public class HelmetHandler {
                         event.setNewSpeed(event.getOriginalSpeed() * 5);
                     else
                         event.setNewSpeed(event.getOriginalSpeed() * 25);
-            } else if(ModUtils.isFlying(player) && !player.onGround) {
+            } else if (ModUtils.isFlying(player) && !player.onGround) {
                 if (toolSpeed > event.getOriginalSpeed())
                     event.setNewSpeed(event.getOriginalSpeed() * 5);
             }
@@ -94,10 +95,12 @@ public class HelmetHandler {
 
     @SubscribeEvent
     public static void onEat(PlayerInteractEvent.RightClickItem event) {
-        if(!HELMET_USE_ACTIONS.contains(event.getItemStack().getUseAction()))
+        if (Config.EAT_WITH_HELMET.get())
+            return;
+        if (!HELMET_USE_ACTIONS.contains(event.getItemStack().getUseAction()))
             return;
         PlayerEntity player = event.getPlayer();
-        if(ModUtils.hasGuardianHelmet(player) && GuardinanHelmetProperties.getMode(ModUtils.getGuardianHelmet(player))) {
+        if (ModUtils.hasGuardianHelmet(player) && GuardinanHelmetProperties.getMode(ModUtils.getGuardianHelmet(player))) {
             player.sendStatusMessage(TranslationHelper.translate(Tooltips.CANNOT_EAT_WHILE_MATERIALIZED), true);
             event.setCanceled(true);
         }
