@@ -57,6 +57,7 @@ public class Jetboots {
     private void setupClient(final FMLClientSetupEvent event) {
         ClientRegistry.registerKeyBinding(Keybinds.keyMode);
         ClientRegistry.registerKeyBinding(Keybinds.keySpeed);
+        ClientRegistry.registerKeyBinding(Keybinds.keyHelmet);
         ScreenManager.registerFactory(ModContainers.JETBOOTS_CONTAINER.get(), JetBootsScreen::new);
     }
 
