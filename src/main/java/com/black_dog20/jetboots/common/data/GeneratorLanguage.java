@@ -24,7 +24,7 @@ public class GeneratorLanguage extends BaseLanguageProvider {
         add("itemGroup.jetboots_compat", "Jet Boots Extras");
         add("key.jetboots.engine", "Toggle Jetboots engine mode");
         add("key.jetboots.speed", "Toggle Jetboots speed mode");
-        add("ikey.jetboots.helmet", "Toggle Guardian Helmet mode");
+        add("key.jetboots.helmet", "Toggle Guardian Helmet mode");
         addItem(ModItems.JET_BOOTS, "Jet Boots");
         addItem(ModItems.BASE_UPGRADE, "Base Upgrade");
         addItem(ModItems.LEATHER_ARMOR_UPGRADE, "Leather Armor Upgrade");
@@ -59,7 +59,7 @@ public class GeneratorLanguage extends BaseLanguageProvider {
         addPrefixed(LEATHER_ARMOR, "Armored: Leather", TextFormatting.GRAY);
         addPrefixed(IRON_ARMOR, "Armored: Iron", TextFormatting.GRAY);
         addPrefixed(DIAMOND_ARMOR, "Armored: Diamond", TextFormatting.BLUE);
-        addPrefixed(FORCEFIELD_ARMOR, "Armored: Forcefield", TextFormatting.BLUE);
+        addPrefixed(FORCEFIELD_ARMOR, "Armored: Forcefield", TextFormatting.LIGHT_PURPLE);
         addPrefixed(ENGINE_UPGRADE, "Upgraded engine", TextFormatting.GRAY);
         addPrefixed(THRUSTER_UPGRADE, "Upgraded thruster", TextFormatting.GRAY);
         addPrefixed(SHOCK_ABSORBER_UPGRADE, "Shock absorber", TextFormatting.GRAY);
@@ -119,6 +119,9 @@ public class GeneratorLanguage extends BaseLanguageProvider {
         addPrefixed(MATERIALIZED, "Materialized");
         addPrefixed(DEMATERIALIZED, "Dematerialized");
         addPrefixed(CANNOT_EAT_WHILE_MATERIALIZED, "You cannot eat and drink while the helmet is materialized");
+        addPrefixed(ARMOR_VALUE, "Armor: %d", TextFormatting.BLUE);
+        addPrefixed(TOUGHNESS_VALUE, "Toughness: %d", TextFormatting.BLUE);
+        addPrefixed(NO_CHANCE_TO_FIND, "There are no chance to find this item!", TextFormatting.RED);
 
         //JEI
         addPrefixed(JeiInfo.FORCEFIELD_GENERATOR, "The Forcefield Generator was last seen in the hands of a Wither Skeleton, perhaps it is now hidden in a Nether Fortress", TextFormatting.DARK_GRAY);

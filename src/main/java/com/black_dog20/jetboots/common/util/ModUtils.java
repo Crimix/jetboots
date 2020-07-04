@@ -1,6 +1,5 @@
 package com.black_dog20.jetboots.common.util;
 
-import com.black_dog20.jetboots.Config;
 import com.black_dog20.jetboots.common.items.GuardianHelmetItem;
 import com.black_dog20.jetboots.common.items.JetBootsItem;
 import net.minecraft.entity.player.PlayerEntity;
@@ -40,7 +39,7 @@ public class ModUtils {
             }
             IEnergyStorage energy = jetboots.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
             if (energy != null) {
-                return energy.getEnergyStored() >= Config.POWER_COST.get();
+                return energy.getEnergyStored() >= EnergyUtil.getEnergyWhileFlying(jetboots);
             } else
                 return false;
         }

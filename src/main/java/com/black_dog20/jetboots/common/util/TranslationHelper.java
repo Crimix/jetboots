@@ -72,6 +72,9 @@ public class TranslationHelper extends TranslationUtil {
         MATERIALIZED("tooltip.item.materialized"),
         DEMATERIALIZED("tooltip.item.dematerialized"),
         CANNOT_EAT_WHILE_MATERIALIZED("tooltip.item.cannot_eat_materialized"),
+        ARMOR_VALUE("tooltip.item.armor_upgrade.armor"),
+        TOUGHNESS_VALUE("tooltip.item.armor_upgrade.toughness"),
+        NO_CHANCE_TO_FIND("tooltip.item.no_chance"),
         ;
 
         Tooltips(String key) {

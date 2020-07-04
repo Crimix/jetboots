@@ -8,6 +8,7 @@ import net.minecraft.world.storage.loot.ItemLootEntry;
 import net.minecraft.world.storage.loot.LootPool;
 import net.minecraft.world.storage.loot.LootTable;
 import net.minecraft.world.storage.loot.LootTables;
+import net.minecraft.world.storage.loot.RandomValueRange;
 import net.minecraft.world.storage.loot.functions.SetCount;
 import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -20,20 +21,22 @@ public class LootTableHandler {
     public static void onLootTablesLoaded(LootTableLoadEvent event) {
         if (event.getName().equals(LootTables.CHESTS_NETHER_BRIDGE)) {
             LootTable table = event.getTable();
-            Jetboots.getLogger().debug("[Loot Table] Nether Bridge part added with weight {}", Config.FORCEFIELD_PARTS_LOOT_WEIGHT.get());
-            table.addPool(LootPool.builder().name("jetboots")
-                    .addEntry(ItemLootEntry.builder(ModItems.FORCEFIELD_GENERATOR.get()).weight(Config.FORCEFIELD_PARTS_LOOT_WEIGHT.get()).acceptFunction(SetCount.builder(ConstantRange.of(1))))
+            Jetboots.getLogger().debug("[Loot Table] Nether Bridge part added? {}", Config.FORCEFIELD_PARTS_LOOT.get());
+            table.addPool(LootPool.builder().name("jetboots-nether-forcefield").rolls(RandomValueRange.of(-2F, 1F))
+                    .addEntry(ItemLootEntry.builder(ModItems.FORCEFIELD_GENERATOR.get()).acceptFunction(SetCount.builder(ConstantRange.of(1))))
                     .build());
-            Jetboots.getLogger().debug("[Loot Table] Loot added for nether bridge");
+            Jetboots.getLogger().debug("[Loot Table] Loot added for Nether Bridge");
         } else if (event.getName().equals(LootTables.CHESTS_END_CITY_TREASURE)) {
             LootTable table = event.getTable();
-            Jetboots.getLogger().debug("[Loot Table] End City part added with weight {}", Config.FORCEFIELD_PARTS_LOOT_WEIGHT.get());
-            Jetboots.getLogger().debug("[Loot Table] Guardian Helmet added with weight {}", Config.HELMET_LOOT_WEIGHT.get());
-            table.addPool(LootPool.builder().name("jetboots")
-                    .addEntry(ItemLootEntry.builder(ModItems.FORCEFIELD_PROJECTOR.get()).weight(Config.FORCEFIELD_PARTS_LOOT_WEIGHT.get()).acceptFunction(SetCount.builder(ConstantRange.of(1))))
-                    .addEntry(ItemLootEntry.builder(ModItems.GUARDIAN_HELMET.get()).weight(Config.HELMET_LOOT_WEIGHT.get()).acceptFunction(SetCount.builder(ConstantRange.of(1))))
+            Jetboots.getLogger().debug("[Loot Table] End City part added? {}", Config.FORCEFIELD_PARTS_LOOT.get());
+            Jetboots.getLogger().debug("[Loot Table] End City helmet added? {}", Config.HELMET_LOOT.get());
+            table.addPool(LootPool.builder().name("jetboots-end-forcefield").rolls(RandomValueRange.of(-2F, 1F))
+                    .addEntry(ItemLootEntry.builder(ModItems.FORCEFIELD_PROJECTOR.get()).acceptFunction(SetCount.builder(ConstantRange.of(1))))
                     .build());
-            Jetboots.getLogger().debug("[Loot Table] Loot added for end city");
+            table.addPool(LootPool.builder().name("jetboots-end-helmet").rolls(RandomValueRange.of(-2F, 1F))
+                    .addEntry(ItemLootEntry.builder(ModItems.GUARDIAN_HELMET.get()).acceptFunction(SetCount.builder(ConstantRange.of(1))))
+                    .build());
+            Jetboots.getLogger().debug("[Loot Table] Loot added for End City ");
         }
     }
 }

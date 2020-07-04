@@ -210,7 +210,7 @@ public class GeneratorRecipes extends BaseRecipeProvider {
                 .build(consumer);
 
         ShapedRecipeBuilder.shapedRecipe(ULTIMATE_CONVERTER_UPGRADE.get())
-                .key('i', Tags.Items.GEMS_EMERALD)
+                .key('i', Tags.Items.GEMS_DIAMOND)
                 .key('j', ELITE_CONVERTER_UPGRADE.get())
                 .patternLine("iii")
                 .patternLine("iji")

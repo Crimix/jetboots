@@ -25,7 +25,9 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerFlyableFallEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
@@ -33,6 +35,8 @@ import net.minecraftforge.fml.network.PacketDistributor;
 
 @Mod.EventBusSubscriber(modid = Jetboots.MOD_ID)
 public class FlyingHandler {
+
+    private final static String WAS_FLYING_BEFORE = "jetboots-flying-before-elytra";
 
     @SubscribeEvent
     public static void onEquipJetboots(ArmorEvent.Equip event) {
@@ -45,10 +49,19 @@ public class FlyingHandler {
         }
     }
 
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onJetbootsTick(ArmorEvent.Tick event) {
         PlayerEntity player = event.player;
         ItemStack jetboots = event.armor;
+
+        // To render elytra flight correct
+        if(event.phase == TickEvent.Phase.END) {
+            if (useElytraFlight(player, jetboots)) {
+                player.func_226567_ej_(); // Start elytra flight pose
+            }
+            return;
+        }
+
         if (event.isArmorEqualTo(ModItems.JET_BOOTS.get())) {
             if (ModUtils.canFlyWithBoots(player)) {
                 // Enable allow flying if not using elytra flight
@@ -113,21 +126,19 @@ public class FlyingHandler {
 
     private static void stopElytraFlight(PlayerEntity player) {
         player.func_226568_ek_(); // Stop elytra flight pose
-        if (getAltitudeAboveGround(player) > 10 && !player.isInWater()) {
-            player.abilities.allowFlying = true;
+        player.abilities.allowFlying = true;
+        if(player.getPersistentData().getBoolean(WAS_FLYING_BEFORE)) {
             player.abilities.isFlying = true;
-            player.sendPlayerAbilities();
-        } else {
-            player.abilities.allowFlying = true;
-            player.abilities.isFlying = false;
-            player.sendPlayerAbilities();
+            player.getPersistentData().remove(WAS_FLYING_BEFORE);
         }
+        player.sendPlayerAbilities();
     }
 
     private static void doElytraFlight(PlayerEntity player, ItemStack jetboots) {
         drawpower(jetboots);
         // Disable flying
-        if (player.abilities.allowFlying || player.abilities.isFlying) {
+        if(player.abilities.allowFlying || player.abilities.isFlying) {
+            player.getPersistentData().putBoolean(WAS_FLYING_BEFORE, player.abilities.isFlying);
             player.abilities.allowFlying = false;
             player.abilities.isFlying = false;
             player.sendPlayerAbilities();
