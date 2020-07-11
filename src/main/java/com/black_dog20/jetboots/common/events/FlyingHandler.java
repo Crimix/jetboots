@@ -53,16 +53,15 @@ public class FlyingHandler {
     public static void onJetbootsTick(ArmorEvent.Tick event) {
         PlayerEntity player = event.player;
         ItemStack jetboots = event.armor;
-
-        // To render elytra flight correct
-        if(event.phase == TickEvent.Phase.END) {
-            if (useElytraFlight(player, jetboots)) {
-                player.func_226567_ej_(); // Start elytra flight pose
-            }
-            return;
-        }
-
         if (event.isArmorEqualTo(ModItems.JET_BOOTS.get())) {
+            // To render elytra flight correct
+            if (event.phase == TickEvent.Phase.END) {
+                if (useElytraFlight(player, jetboots)) {
+                    player.func_226567_ej_(); // Start elytra flight pose
+                }
+                return;
+            }
+
             if (ModUtils.canFlyWithBoots(player)) {
                 // Enable allow flying if not using elytra flight
                 if (!player.abilities.allowFlying && !useElytraFlight(player, jetboots)) {
@@ -71,10 +70,12 @@ public class FlyingHandler {
                 }
 
                 if (useElytraFlight(player, jetboots)) {
+                    if (event.side == LogicalSide.SERVER)
+                        drawpower(jetboots);
                     doElytraFlight(player, jetboots);
                 } else if (player.isElytraFlying()) {
                     stopElytraFlight(player);
-                } else if (player.abilities.isFlying) {
+                } else if (player.abilities.isFlying && event.side == LogicalSide.SERVER) {
                     drawpower(jetboots);
                 }
                 sendSoundAndPartical(event, player, jetboots);
@@ -104,7 +105,7 @@ public class FlyingHandler {
     }
 
     private static boolean useElytraFlight(PlayerEntity player, ItemStack jetboots) {
-        return JetBootsProperties.hasEngineUpgrade(jetboots) && JetBootsProperties.getMode(jetboots) && (getAltitudeAboveGround(player) > 1.9 || (player.isInWater() && JetBootsProperties.hasUnderWaterUpgrade(jetboots)));
+        return JetBootsProperties.hasEngineUpgrade(jetboots) && JetBootsProperties.getMode(jetboots) && (isTwoBlocksOverGround(player) || (player.isInWater() && JetBootsProperties.hasUnderWaterUpgrade(jetboots)));
     }
 
     private static void sendSoundAndPartical(ArmorEvent.Tick event, PlayerEntity player, ItemStack jetboots) {
@@ -127,7 +128,7 @@ public class FlyingHandler {
     private static void stopElytraFlight(PlayerEntity player) {
         player.func_226568_ek_(); // Stop elytra flight pose
         player.abilities.allowFlying = true;
-        if(player.getPersistentData().getBoolean(WAS_FLYING_BEFORE)) {
+        if (player.getPersistentData().getBoolean(WAS_FLYING_BEFORE)) {
             player.abilities.isFlying = true;
             player.getPersistentData().remove(WAS_FLYING_BEFORE);
         }
@@ -135,9 +136,8 @@ public class FlyingHandler {
     }
 
     private static void doElytraFlight(PlayerEntity player, ItemStack jetboots) {
-        drawpower(jetboots);
         // Disable flying
-        if(player.abilities.allowFlying || player.abilities.isFlying) {
+        if (player.abilities.allowFlying || player.abilities.isFlying) {
             player.getPersistentData().putBoolean(WAS_FLYING_BEFORE, player.abilities.isFlying);
             player.abilities.allowFlying = false;
             player.abilities.isFlying = false;
@@ -159,16 +159,20 @@ public class FlyingHandler {
                 .ifPresent(e -> EnergyUtil.extractOrReceive(e, EnergyUtil.getEnergyWhileFlying(jetboots)));
     }
 
-    public static double getAltitudeAboveGround(PlayerEntity player) {
+    public static boolean isTwoBlocksOverGround(PlayerEntity player) {
         if (player.isInWater()) {
-            return 0;
+            return true;
         }
+
         BlockPos blockPos = new BlockPos(player);
-        while (player.world.isAirBlock(blockPos.down())) {
-            blockPos = blockPos.down();
+        for (int i = 0; i < 3; i++) {
+            if (player.world.isAirBlock(blockPos.down()))
+                blockPos = blockPos.down();
+            else
+                break;
         }
-        // calculate the entity's current altitude above the ground
-        return blockPos.distanceSq(player.getPosX(), player.getPosY(), player.getPosZ(), false);
+
+        return blockPos.distanceSq(player.getPosX(), player.getPosY(), player.getPosZ(), false) > 1.9;
     }
 
     @SubscribeEvent

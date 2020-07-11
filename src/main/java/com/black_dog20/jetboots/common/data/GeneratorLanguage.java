@@ -10,7 +10,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.ModList;
 
 import static com.black_dog20.jetboots.common.util.TranslationHelper.*;
-import static com.black_dog20.jetboots.common.util.TranslationHelper.Tooltips.*;
+import static com.black_dog20.jetboots.common.util.TranslationHelper.Translations.*;
 
 public class GeneratorLanguage extends BaseLanguageProvider {
 
@@ -25,6 +25,7 @@ public class GeneratorLanguage extends BaseLanguageProvider {
         add("key.jetboots.engine", "Toggle Jetboots engine mode");
         add("key.jetboots.speed", "Toggle Jetboots speed mode");
         add("key.jetboots.helmet", "Toggle Guardian Helmet mode");
+        add("key.jetboots.helmet_vision", "Toggle Guardian Helmet night vision");
         addItem(ModItems.JET_BOOTS, "Jet Boots");
         addItem(ModItems.BASE_UPGRADE, "Base Upgrade");
         addItem(ModItems.LEATHER_ARMOR_UPGRADE, "Leather Armor Upgrade");
@@ -113,6 +114,7 @@ public class GeneratorLanguage extends BaseLanguageProvider {
         addPrefixed(WALKING_ENERGY, "%s while walking", TextFormatting.GRAY);
         addPrefixed(JETBOOTS_UPGRADES, "Jet Boots Upgrades");
         addPrefixed(CHANGE_HELMET_MODE, "Use %s to change helmet mode");
+        addPrefixed(CHANGE_HELMET_NIGHT_VISION, "Use %s to toggle night vision");
         addPrefixed(HELMET_INFO, "Protects against air loss and other ill effects when materialized");
         addPrefixed(HELMET_INFO2, "You cannot eat and drink while it is materialized", TextFormatting.RED);
         addPrefixed(HELMET_MODE, "Guardian Helmet: %s");
@@ -122,6 +124,10 @@ public class GeneratorLanguage extends BaseLanguageProvider {
         addPrefixed(ARMOR_VALUE, "Armor: %d", TextFormatting.BLUE);
         addPrefixed(TOUGHNESS_VALUE, "Toughness: %d", TextFormatting.BLUE);
         addPrefixed(NO_CHANCE_TO_FIND, "There are no chance to find this item!", TextFormatting.RED);
+        addPrefixed(HELMET_NIGHT_VISION, "Night Vision: %s");
+        addPrefixed(POWER_LOW, "WARNING Jet boots power low!!", TextFormatting.RED);
+        addPrefixed(ON, "On");
+        addPrefixed(OFF, "Off");
 
         //JEI
         addPrefixed(JeiInfo.FORCEFIELD_GENERATOR, "The Forcefield Generator was last seen in the hands of a Wither Skeleton, perhaps it is now hidden in a Nether Fortress", TextFormatting.DARK_GRAY);

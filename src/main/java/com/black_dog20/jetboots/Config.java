@@ -22,17 +22,21 @@ public class Config {
     public static ForgeConfigSpec SERVER_CONFIG;
 
     public static ForgeConfigSpec.BooleanValue MUFFLED_BOOTS;
+    public static ForgeConfigSpec.BooleanValue SHOW_NIGHT_VISION_ICON;
 
     public static ForgeConfigSpec.IntValue DEFAULT_MAX_POWER;
     public static ForgeConfigSpec.IntValue POWER_COST;
     public static ForgeConfigSpec.BooleanValue HELMET_LOOT;
     public static ForgeConfigSpec.BooleanValue FORCEFIELD_PARTS_LOOT;
     public static ForgeConfigSpec.BooleanValue EAT_WITH_HELMET;
+    public static ForgeConfigSpec.BooleanValue HELMET_PROVIDES_FOOD;
 
     static {
         CLIENT_BUILDER.comment("Client settings").push(CLIENT_SETTINGS);
         MUFFLED_BOOTS = CLIENT_BUILDER.comment("Is all jetboots muffled without the upgrade")
                 .define("muffledBoots", false);
+        SHOW_NIGHT_VISION_ICON = CLIENT_BUILDER.comment("Show night vision icon on the HUD")
+                .define("showNightVisionIcon", true);
         CLIENT_BUILDER.pop();
 
         CLIENT_CONFIG = CLIENT_BUILDER.build();
@@ -48,6 +52,8 @@ public class Config {
                 .define("helmetLoot", true);
         FORCEFIELD_PARTS_LOOT = SERVER_BUILDER.comment("If there is a chance for the forcefield parts to be in a End City / Nether fort loot chests")
                 .define("forcefieldPartsLoot", true);
+        HELMET_PROVIDES_FOOD = SERVER_BUILDER.comment("Does the helmet slowly provide food")
+                .define("helmetProvidesFood", true);
         SERVER_BUILDER.pop();
 
         SERVER_CONFIG = SERVER_BUILDER.build();

@@ -18,12 +18,12 @@ public class BatteryUpgradeItem extends UpgradeItem implements IBatteryUpgrade {
     protected final int multiplier;
 
     public BatteryUpgradeItem(int multiplier, ITranslation tooltip) {
-        super(Type.BATTERY, tooltip, Tooltips.BATTERY_UPGRADE_INFO);
+        super(Type.BATTERY, tooltip, Translations.BATTERY_UPGRADE_INFO);
         this.multiplier = multiplier;
     }
 
     public BatteryUpgradeItem(int multiplier, ITranslation tooltip, Properties builder) {
-        super(Type.BATTERY, tooltip, Tooltips.BATTERY_UPGRADE_INFO, builder);
+        super(Type.BATTERY, tooltip, Translations.BATTERY_UPGRADE_INFO, builder);
         this.multiplier = multiplier;
     }
 

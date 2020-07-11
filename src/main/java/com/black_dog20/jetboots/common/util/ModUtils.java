@@ -11,7 +11,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
-import static com.black_dog20.jetboots.common.util.TranslationHelper.Tooltips.*;
+import static com.black_dog20.jetboots.common.util.TranslationHelper.Translations.*;
 
 public class ModUtils {
 
@@ -105,6 +105,24 @@ public class ModUtils {
                 mode = TranslationHelper.translateToString(DEMATERIALIZED, TextFormatting.BLUE);
             }
             return TranslationHelper.translate(HELMET_MODE, TextFormatting.WHITE, mode);
+        }
+        return new StringTextComponent("");
+    }
+
+    public static ITextComponent getHelmetNightVisionText(PlayerEntity player) {
+        ItemStack stack = ModUtils.getGuardianHelmet(player);
+        return getHelmetNightVisionText(stack);
+    }
+
+    public static ITextComponent getHelmetNightVisionText(ItemStack helmet) {
+        if (!helmet.isEmpty()) {
+            String mode = "";
+            if (GuardinanHelmetProperties.getNightVision(helmet)) {
+                mode = TranslationHelper.translateToString(ON, TextFormatting.GREEN);
+            } else {
+                mode = TranslationHelper.translateToString(OFF, TextFormatting.RED);
+            }
+            return TranslationHelper.translate(HELMET_NIGHT_VISION, TextFormatting.WHITE, mode);
         }
         return new StringTextComponent("");
     }

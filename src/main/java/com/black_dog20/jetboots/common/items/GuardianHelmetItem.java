@@ -4,10 +4,14 @@ import com.black_dog20.bml.api.ISoulbindable;
 import com.black_dog20.bml.utils.translate.TranslationUtil;
 import com.black_dog20.jetboots.Config;
 import com.black_dog20.jetboots.client.keybinds.Keybinds;
+import com.black_dog20.jetboots.common.util.GuardinanHelmetProperties;
 import com.black_dog20.jetboots.common.util.TranslationHelper;
+import com.google.common.collect.Multimap;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.IArmorMaterial;
 import net.minecraft.item.ItemStack;
@@ -22,7 +26,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-import static com.black_dog20.jetboots.common.util.TranslationHelper.Tooltips.*;
+import static com.black_dog20.jetboots.common.util.TranslationHelper.Translations.*;
 
 public class GuardianHelmetItem extends BaseArmorItem implements ISoulbindable {
 
@@ -30,6 +34,25 @@ public class GuardianHelmetItem extends BaseArmorItem implements ISoulbindable {
 
     public GuardianHelmetItem(Properties builder) {
         super(MATERIAL, EquipmentSlotType.HEAD, builder.defaultMaxDamage(-1));
+    }
+
+    @Override
+    public Multimap<String, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack stack) {
+        Multimap<String, AttributeModifier> multimap = super.getAttributeModifiers(slot);
+        if (slot == EquipmentSlotType.FEET) {
+            multimap.put(SharedMonsterAttributes.ARMOR.getName(), new AttributeModifier(ARMOR_MODIFIERS[slot.getIndex()], "Armor modifier", getHelmetDamageReduceAmount(stack), AttributeModifier.Operation.ADDITION));
+            multimap.put(SharedMonsterAttributes.ARMOR_TOUGHNESS.getName(), new AttributeModifier(ARMOR_MODIFIERS[slot.getIndex()], "Armor toughness", getHelmetToughness(stack), AttributeModifier.Operation.ADDITION));
+        }
+
+        return multimap;
+    }
+
+    private double getHelmetDamageReduceAmount(ItemStack stack) {
+        return GuardinanHelmetProperties.getMode(stack) ? 5 : 0;
+    }
+
+    private double getHelmetToughness(ItemStack stack) {
+        return GuardinanHelmetProperties.getMode(stack) ? 4 : 0;
     }
 
     @Override
@@ -46,7 +69,8 @@ public class GuardianHelmetItem extends BaseArmorItem implements ISoulbindable {
     public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
         super.addInformation(stack, world, tooltip, flag);
         Minecraft mc = Minecraft.getInstance();
-        tooltip.add(TranslationUtil.translate(CHANGE_HELMET_MODE, TextFormatting.GRAY, Keybinds.keyHelmet.getLocalizedName().toUpperCase()));
+        tooltip.add(TranslationUtil.translate(CHANGE_HELMET_MODE, TextFormatting.GRAY, Keybinds.keyHelmetMode.getLocalizedName().toUpperCase()));
+        tooltip.add(TranslationUtil.translate(CHANGE_HELMET_NIGHT_VISION, TextFormatting.GRAY, Keybinds.keyMode.getLocalizedName().toUpperCase()));
         tooltip.add(TranslationUtil.translate(HELMET_INFO, TextFormatting.GRAY));
         if (!Config.EAT_WITH_HELMET.get())
             tooltip.add(TranslationUtil.translate(HELMET_INFO2));

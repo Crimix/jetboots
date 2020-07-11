@@ -25,7 +25,7 @@ public class ForcefieldArmorUpgradeItem extends UpgradeItem implements IArmorUpg
     private final Set<DamageSource> sources = ImmutableSet.of(DamageSource.DRAGON_BREATH, DamageSource.ON_FIRE, DamageSource.GENERIC);
 
     public ForcefieldArmorUpgradeItem(double damageReduction, int energyCost) {
-        super(Type.ARMOR, Tooltips.FORCEFIELD_ARMOR, Tooltips.FORCEFIELD_ARMOR_INFO);
+        super(Type.ARMOR, Translations.FORCEFIELD_ARMOR, Translations.FORCEFIELD_ARMOR_INFO);
         this.energyCost = energyCost;
         this.damageReduction = damageReduction;
     }
@@ -76,7 +76,7 @@ public class ForcefieldArmorUpgradeItem extends UpgradeItem implements IArmorUpg
         double reduction = MathUtil.clamp(damageReduction, 0.0, 1.0);
         reduction = (1.0 - reduction) * 100;
         tooltips.add(TranslationHelper.translate(info, reduction));
-        tooltips.add(TranslationHelper.translate(Tooltips.FORCEFIELD_ARMOR_INFO_2));
+        tooltips.add(TranslationHelper.translate(Translations.FORCEFIELD_ARMOR_INFO_2));
     }
 
     @Override

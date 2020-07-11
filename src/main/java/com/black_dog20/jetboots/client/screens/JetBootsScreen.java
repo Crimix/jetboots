@@ -15,7 +15,7 @@ import net.minecraftforge.energy.CapabilityEnergy;
 
 import java.util.Optional;
 
-import static com.black_dog20.jetboots.common.util.TranslationHelper.Tooltips.*;
+import static com.black_dog20.jetboots.common.util.TranslationHelper.Translations.*;
 
 public class JetBootsScreen extends ContainerScreen<JetBootsContainer> {
 

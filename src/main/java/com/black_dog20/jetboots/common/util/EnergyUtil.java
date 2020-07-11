@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
 import java.util.Optional;
@@ -83,5 +84,12 @@ public class EnergyUtil {
             energyStorage.extractEnergy(Math.abs(value), false);
         else
             energyStorage.receiveEnergy(value, false);
+    }
+
+    public static int getBatteryPercentage(ItemStack jetboots) {
+        IEnergyStorage energy = jetboots.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
+        if (energy != null)
+            return Math.min((int) (((float) energy.getEnergyStored() / energy.getMaxEnergyStored()) * 100), 100);
+        return 0;
     }
 }

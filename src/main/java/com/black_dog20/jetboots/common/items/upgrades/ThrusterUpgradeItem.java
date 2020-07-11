@@ -11,13 +11,13 @@ public class ThrusterUpgradeItem extends UpgradeItem implements IThrusterUpgrade
     protected final double speedUnderWater;
 
     public ThrusterUpgradeItem(double speed, double speedUnderWater, ITranslation tooltip) {
-        super(Type.THRUSTER, tooltip, Tooltips.THRUSTER_UPGRADE_INFO);
+        super(Type.THRUSTER, tooltip, Translations.THRUSTER_UPGRADE_INFO);
         this.speed = speed;
         this.speedUnderWater = speedUnderWater;
     }
 
     public ThrusterUpgradeItem(double speed, double speedUnderWater, ITranslation tooltip, Properties builder) {
-        super(Type.THRUSTER, tooltip, Tooltips.THRUSTER_UPGRADE_INFO, builder);
+        super(Type.THRUSTER, tooltip, Translations.THRUSTER_UPGRADE_INFO, builder);
         this.speed = speed;
         this.speedUnderWater = speedUnderWater;
     }

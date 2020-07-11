@@ -11,12 +11,12 @@ public class UltimateConverterUpgradeItem extends UpgradeItem implements IConver
     protected final double energyModifier;
 
     public UltimateConverterUpgradeItem(double energyModifier, ITranslation tooltip) {
-        super(Type.CONVERTER, tooltip, Tooltips.CONVERTER_UPGRADE_INFO);
+        super(Type.CONVERTER, tooltip, Translations.CONVERTER_UPGRADE_INFO);
         this.energyModifier = energyModifier;
     }
 
     public UltimateConverterUpgradeItem(double energyModifier, ITranslation tooltip, Properties builder) {
-        super(Type.CONVERTER, tooltip, Tooltips.CONVERTER_UPGRADE_INFO, builder);
+        super(Type.CONVERTER, tooltip, Translations.CONVERTER_UPGRADE_INFO, builder);
         this.energyModifier = energyModifier;
     }
 

@@ -54,13 +54,11 @@ import org.lwjgl.glfw.GLFW;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
-import java.util.UUID;
 
-import static com.black_dog20.jetboots.common.util.TranslationHelper.Tooltips.*;
+import static com.black_dog20.jetboots.common.util.TranslationHelper.Translations.*;
 
 public class JetBootsItem extends BaseArmorItem implements ISoulbindable {
 
-    private static final UUID ARMOR_MODIFIER_UUID = UUID.fromString("7c2b2167-ab05-448b-9f6f-e27e62467f3b");
     private static JetBootsMaterial JET_BOOTS_MATERIAL = new JetBootsMaterial();
 
     public JetBootsItem(Properties builder) {
@@ -71,8 +69,8 @@ public class JetBootsItem extends BaseArmorItem implements ISoulbindable {
     public Multimap<String, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack stack) {
         Multimap<String, AttributeModifier> multimap = super.getAttributeModifiers(slot);
         if (slot == EquipmentSlotType.FEET) {
-            multimap.put(SharedMonsterAttributes.ARMOR.getName(), new AttributeModifier(ARMOR_MODIFIER_UUID, "Armor modifier", getJetBootsDamageReduceAmount(stack), AttributeModifier.Operation.ADDITION));
-            multimap.put(SharedMonsterAttributes.ARMOR_TOUGHNESS.getName(), new AttributeModifier(ARMOR_MODIFIER_UUID, "Armor toughness", getJetBootsToughness(stack), AttributeModifier.Operation.ADDITION));
+            multimap.put(SharedMonsterAttributes.ARMOR.getName(), new AttributeModifier(ARMOR_MODIFIERS[slot.getIndex()], "Armor modifier", getJetBootsDamageReduceAmount(stack), AttributeModifier.Operation.ADDITION));
+            multimap.put(SharedMonsterAttributes.ARMOR_TOUGHNESS.getName(), new AttributeModifier(ARMOR_MODIFIERS[slot.getIndex()], "Armor toughness", getJetBootsToughness(stack), AttributeModifier.Operation.ADDITION));
         }
 
         return multimap;

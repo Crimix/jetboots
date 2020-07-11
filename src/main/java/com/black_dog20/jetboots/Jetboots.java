@@ -37,6 +37,8 @@ public class Jetboots {
 
     public Jetboots() {
         IEventBus event = FMLJavaModLoadingContext.get().getModEventBus();
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_CONFIG);
+        Config.loadConfig(Config.CLIENT_CONFIG, FMLPaths.CONFIGDIR.get().resolve(MOD_ID + "-client.toml"));
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.SERVER_CONFIG);
         Config.loadConfig(Config.SERVER_CONFIG, FMLPaths.CONFIGDIR.get().resolve(MOD_ID + "-server.toml"));
 
@@ -57,7 +59,8 @@ public class Jetboots {
     private void setupClient(final FMLClientSetupEvent event) {
         ClientRegistry.registerKeyBinding(Keybinds.keyMode);
         ClientRegistry.registerKeyBinding(Keybinds.keySpeed);
-        ClientRegistry.registerKeyBinding(Keybinds.keyHelmet);
+        ClientRegistry.registerKeyBinding(Keybinds.keyHelmetMode);
+        ClientRegistry.registerKeyBinding(Keybinds.keyHelmetVision);
         ScreenManager.registerFactory(ModContainers.JETBOOTS_CONTAINER.get(), JetBootsScreen::new);
     }
 

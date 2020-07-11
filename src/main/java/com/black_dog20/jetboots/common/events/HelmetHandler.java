@@ -1,7 +1,9 @@
 package com.black_dog20.jetboots.common.events;
 
+import com.black_dog20.bml.event.ArmorEvent;
 import com.black_dog20.jetboots.Config;
 import com.black_dog20.jetboots.Jetboots;
+import com.black_dog20.jetboots.common.items.ModItems;
 import com.black_dog20.jetboots.common.util.GuardinanHelmetProperties;
 import com.black_dog20.jetboots.common.util.ModUtils;
 import com.black_dog20.jetboots.common.util.TranslationHelper;
@@ -9,8 +11,11 @@ import com.google.common.collect.ImmutableSet;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.UseAction;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -27,6 +32,8 @@ import static com.black_dog20.jetboots.common.util.TranslationHelper.*;
 @Mod.EventBusSubscriber(modid = Jetboots.MOD_ID)
 public class HelmetHandler {
 
+    private final static String USING_NIGHT_VISION = "guardian_helmet_night_vision";
+    private final static String SATURATION_TICKS = "guardian_helmet_saturation_ticks";
     private static final Set<DamageSource> HELMET_SOURCES = ImmutableSet.of(DamageSource.DROWN, DamageSource.WITHER);
     private static final Set<UseAction> HELMET_USE_ACTIONS = ImmutableSet.of(UseAction.DRINK, UseAction.EAT);
 
@@ -101,8 +108,45 @@ public class HelmetHandler {
             return;
         PlayerEntity player = event.getPlayer();
         if (ModUtils.hasGuardianHelmet(player) && GuardinanHelmetProperties.getMode(ModUtils.getGuardianHelmet(player))) {
-            player.sendStatusMessage(TranslationHelper.translate(Tooltips.CANNOT_EAT_WHILE_MATERIALIZED), true);
+            player.sendStatusMessage(TranslationHelper.translate(Translations.CANNOT_EAT_WHILE_MATERIALIZED), true);
             event.setCanceled(true);
+        }
+    }
+
+    @SubscribeEvent
+    public static void onUnequipHelmet(ArmorEvent.Unequip event) {
+        PlayerEntity player = event.player;
+        ItemStack helmet = event.armor;
+        if (event.isArmorEqualTo(ModItems.GUARDIAN_HELMET.get())) {
+            if (GuardinanHelmetProperties.getNightVision(helmet))
+                player.removePotionEffect(Effects.NIGHT_VISION);
+        }
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    @SubscribeEvent
+    public static void onHelmetTick(ArmorEvent.Tick event) {
+        PlayerEntity player = event.player;
+        ItemStack helmet = event.armor;
+        if (event.isArmorEqualTo(ModItems.GUARDIAN_HELMET.get())) {
+            if (GuardinanHelmetProperties.getNightVision(helmet) && GuardinanHelmetProperties.getMode(helmet)) {
+                player.addPotionEffect(new EffectInstance(Effects.NIGHT_VISION, 32767, 0, false, false, Config.SHOW_NIGHT_VISION_ICON.get()));
+                player.getPersistentData().putBoolean(USING_NIGHT_VISION, true);
+            } else {
+                if (player.getPersistentData().getBoolean(USING_NIGHT_VISION)) {
+                    player.getPersistentData().remove(USING_NIGHT_VISION);
+                    player.removePotionEffect(Effects.NIGHT_VISION);
+                }
+            }
+
+            if (Config.HELMET_PROVIDES_FOOD.get() && GuardinanHelmetProperties.getMode(helmet)) {
+                if (player.getPersistentData().getInt(SATURATION_TICKS) % 600 == 0) {
+                    player.getFoodStats().addStats(1, 0.5F);
+                    player.getPersistentData().putInt(SATURATION_TICKS, 1);
+                }
+
+                player.getPersistentData().putInt(SATURATION_TICKS, player.getPersistentData().getInt(SATURATION_TICKS) + 1);
+            }
         }
     }
 }

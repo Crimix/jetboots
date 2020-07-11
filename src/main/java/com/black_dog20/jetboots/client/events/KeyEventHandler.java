@@ -6,6 +6,7 @@ import com.black_dog20.jetboots.common.network.PacketHandler;
 import com.black_dog20.jetboots.common.network.packets.PacketUpdateFlightMode;
 import com.black_dog20.jetboots.common.network.packets.PacketUpdateFlightSpeed;
 import com.black_dog20.jetboots.common.network.packets.PacketUpdateHelmetMode;
+import com.black_dog20.jetboots.common.network.packets.PacketUpdateHelmetVision;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -24,8 +25,10 @@ public class KeyEventHandler {
                 PacketHandler.sendToServer(new PacketUpdateFlightMode());
             } else if (Keybinds.keySpeed.isPressed()) {
                 PacketHandler.sendToServer(new PacketUpdateFlightSpeed());
-            } else if (Keybinds.keyHelmet.isPressed()) {
+            } else if (Keybinds.keyHelmetMode.isPressed()) {
                 PacketHandler.sendToServer(new PacketUpdateHelmetMode());
+            } else if (Keybinds.keyHelmetVision.isPressed()) {
+                PacketHandler.sendToServer(new PacketUpdateHelmetVision());
             }
         }
     }

@@ -7,6 +7,7 @@ import com.black_dog20.jetboots.common.network.packets.PacketSyncStopSound;
 import com.black_dog20.jetboots.common.network.packets.PacketUpdateFlightMode;
 import com.black_dog20.jetboots.common.network.packets.PacketUpdateFlightSpeed;
 import com.black_dog20.jetboots.common.network.packets.PacketUpdateHelmetMode;
+import com.black_dog20.jetboots.common.network.packets.PacketUpdateHelmetVision;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
@@ -40,6 +41,7 @@ public class PacketHandler {
         registerMessage(PacketSyncSound.class, PacketSyncSound::encode, PacketSyncSound::decode, PacketSyncSound.Handler::handle);
         registerMessage(PacketSyncStopSound.class, PacketSyncStopSound::encode, PacketSyncStopSound::decode, PacketSyncStopSound.Handler::handle);
         registerMessage(PacketUpdateHelmetMode.class, PacketUpdateHelmetMode::encode, PacketUpdateHelmetMode::decode, PacketUpdateHelmetMode.Handler::handle);
+        registerMessage(PacketUpdateHelmetVision.class, PacketUpdateHelmetVision::encode, PacketUpdateHelmetVision::decode, PacketUpdateHelmetVision.Handler::handle);
     }
 
     public static void sendTo(Object msg, ServerPlayerEntity player) {

@@ -19,13 +19,13 @@ public class ArmorUpgradeItem extends UpgradeItem implements IArmorUpgrade {
     protected final double toughness;
 
     public ArmorUpgradeItem(double armor, double toughness, ITranslation tooltip) {
-        super(Type.ARMOR, tooltip, Tooltips.ARMOR_INFO);
+        super(Type.ARMOR, tooltip, Translations.ARMOR_INFO);
         this.armor = armor;
         this.toughness = toughness;
     }
 
     public ArmorUpgradeItem(double armor, double toughness, ITranslation tooltip, Properties builder) {
-        super(Type.ARMOR, tooltip, Tooltips.ARMOR_INFO, builder);
+        super(Type.ARMOR, tooltip, Translations.ARMOR_INFO, builder);
         this.armor = armor;
         this.toughness = toughness;
     }
@@ -49,8 +49,8 @@ public class ArmorUpgradeItem extends UpgradeItem implements IArmorUpgrade {
     public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltips, ITooltipFlag flag) {
         super.addInformation(stack, world, tooltips, flag);
 
-        tooltips.add(TranslationHelper.translate(Tooltips.ARMOR_VALUE, (int)getArmor()));
-        if(getToughness() > 0)
-            tooltips.add(TranslationHelper.translate(Tooltips.TOUGHNESS_VALUE, (int)getToughness()));
+        tooltips.add(TranslationHelper.translate(Translations.ARMOR_VALUE, (int) getArmor()));
+        if (getToughness() > 0)
+            tooltips.add(TranslationHelper.translate(Translations.TOUGHNESS_VALUE, (int) getToughness()));
     }
 }
