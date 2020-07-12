@@ -5,6 +5,7 @@ import com.black_dog20.bml.utils.translate.TranslationUtil;
 import com.black_dog20.jetboots.Config;
 import com.black_dog20.jetboots.client.keybinds.Keybinds;
 import com.black_dog20.jetboots.common.util.GuardinanHelmetProperties;
+import com.black_dog20.jetboots.common.util.MultiMapHelper;
 import com.black_dog20.jetboots.common.util.TranslationHelper;
 import com.google.common.collect.Multimap;
 import net.minecraft.client.Minecraft;
@@ -39,7 +40,9 @@ public class GuardianHelmetItem extends BaseArmorItem implements ISoulbindable {
     @Override
     public Multimap<String, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack stack) {
         Multimap<String, AttributeModifier> multimap = super.getAttributeModifiers(slot);
-        if (slot == EquipmentSlotType.FEET) {
+        if (slot == EquipmentSlotType.HEAD) {
+            MultiMapHelper.removeValues(multimap, SharedMonsterAttributes.ARMOR.getName(), ARMOR_MODIFIERS[slot.getIndex()]);
+            MultiMapHelper.removeValues(multimap, SharedMonsterAttributes.ARMOR_TOUGHNESS.getName(), ARMOR_MODIFIERS[slot.getIndex()]);
             multimap.put(SharedMonsterAttributes.ARMOR.getName(), new AttributeModifier(ARMOR_MODIFIERS[slot.getIndex()], "Armor modifier", getHelmetDamageReduceAmount(stack), AttributeModifier.Operation.ADDITION));
             multimap.put(SharedMonsterAttributes.ARMOR_TOUGHNESS.getName(), new AttributeModifier(ARMOR_MODIFIERS[slot.getIndex()], "Armor toughness", getHelmetToughness(stack), AttributeModifier.Operation.ADDITION));
         }

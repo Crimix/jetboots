@@ -17,8 +17,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.RenderPlayerEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 
 @OnlyIn(Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = Jetboots.MOD_ID, value = Dist.CLIENT)
 public class GuardianHelmetLayerRender<T extends LivingEntity, M extends EntityModel<T>> extends LayerRenderer<T, M> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(Jetboots.MOD_ID, "textures/layers/guardian_helmet_layer.png");
     private final GuardianModel<T> model = new GuardianModel(0.1F);
@@ -41,6 +45,28 @@ public class GuardianHelmetLayerRender<T extends LivingEntity, M extends EntityM
                 matrixStack.pop();
             }
         }
+    }
 
+    private static boolean showBefore = true;
+    private static boolean update = true;
+
+    @SubscribeEvent
+    public static void renderPlayerPre(RenderPlayerEvent.Pre event) {
+        ItemStack itemstack = event.getPlayer().getItemStackFromSlot(EquipmentSlotType.HEAD);
+        if (itemstack.getItem() == ModItems.GUARDIAN_HELMET.get()) {
+            if (GuardinanHelmetProperties.getMode(itemstack)) {
+                showBefore = event.getRenderer().getEntityModel().bipedHeadwear.showModel;
+                update = true;
+                event.getRenderer().getEntityModel().bipedHeadwear.showModel = false;
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void renderPlayerPost(RenderPlayerEvent.Post event) {
+        if (update) {
+            update = false;
+            event.getRenderer().getEntityModel().bipedHeadwear.showModel = showBefore;
+        }
     }
 }

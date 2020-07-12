@@ -140,7 +140,7 @@ public class HelmetHandler {
             }
 
             if (Config.HELMET_PROVIDES_FOOD.get() && GuardinanHelmetProperties.getMode(helmet)) {
-                if (player.getPersistentData().getInt(SATURATION_TICKS) % 600 == 0) {
+                if (player.getPersistentData().getInt(SATURATION_TICKS) % 300 == 0) {
                     player.getFoodStats().addStats(1, 0.5F);
                     player.getPersistentData().putInt(SATURATION_TICKS, 1);
                 }

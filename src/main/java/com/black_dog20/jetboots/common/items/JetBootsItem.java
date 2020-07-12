@@ -12,6 +12,7 @@ import com.black_dog20.jetboots.common.util.EnergyUtil;
 import com.black_dog20.jetboots.common.util.JetBootsItemHandler;
 import com.black_dog20.jetboots.common.util.JetBootsProperties;
 import com.black_dog20.jetboots.common.util.ModUtils;
+import com.black_dog20.jetboots.common.util.MultiMapHelper;
 import com.black_dog20.jetboots.common.util.TranslationHelper;
 import com.google.common.collect.Multimap;
 import net.minecraft.client.Minecraft;
@@ -69,6 +70,8 @@ public class JetBootsItem extends BaseArmorItem implements ISoulbindable {
     public Multimap<String, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack stack) {
         Multimap<String, AttributeModifier> multimap = super.getAttributeModifiers(slot);
         if (slot == EquipmentSlotType.FEET) {
+            MultiMapHelper.removeValues(multimap, SharedMonsterAttributes.ARMOR.getName(), ARMOR_MODIFIERS[slot.getIndex()]);
+            MultiMapHelper.removeValues(multimap, SharedMonsterAttributes.ARMOR_TOUGHNESS.getName(), ARMOR_MODIFIERS[slot.getIndex()]);
             multimap.put(SharedMonsterAttributes.ARMOR.getName(), new AttributeModifier(ARMOR_MODIFIERS[slot.getIndex()], "Armor modifier", getJetBootsDamageReduceAmount(stack), AttributeModifier.Operation.ADDITION));
             multimap.put(SharedMonsterAttributes.ARMOR_TOUGHNESS.getName(), new AttributeModifier(ARMOR_MODIFIERS[slot.getIndex()], "Armor toughness", getJetBootsToughness(stack), AttributeModifier.Operation.ADDITION));
         }
