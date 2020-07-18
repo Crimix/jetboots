@@ -101,4 +101,5 @@ public class GuardianModel<T extends LivingEntity> extends AgeableModel<T> imple
         this.bipedHeadwear.showModel = visible;
     }
 
+
 }

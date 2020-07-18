@@ -14,8 +14,6 @@ import net.minecraft.item.UseAction;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -123,14 +121,15 @@ public class HelmetHandler {
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
     public static void onHelmetTick(ArmorEvent.Tick event) {
         PlayerEntity player = event.player;
         ItemStack helmet = event.armor;
+        if(event.side.isClient())
+            return;
         if (event.isArmorEqualTo(ModItems.GUARDIAN_HELMET.get())) {
             if (GuardinanHelmetProperties.getNightVision(helmet) && GuardinanHelmetProperties.getMode(helmet)) {
-                player.addPotionEffect(new EffectInstance(Effects.NIGHT_VISION, 32767, 0, false, false, Config.SHOW_NIGHT_VISION_ICON.get()));
+                player.addPotionEffect(new EffectInstance(Effects.NIGHT_VISION, 32767, 0, false, false, false));
                 player.getPersistentData().putBoolean(USING_NIGHT_VISION, true);
             } else {
                 if (player.getPersistentData().getBoolean(USING_NIGHT_VISION)) {
@@ -141,7 +140,7 @@ public class HelmetHandler {
 
             if (Config.HELMET_PROVIDES_FOOD.get() && GuardinanHelmetProperties.getMode(helmet)) {
                 if (player.getPersistentData().getInt(SATURATION_TICKS) % 300 == 0) {
-                    player.getFoodStats().addStats(1, 0.5F);
+                    player.getFoodStats().addStats(2, 1F);
                     player.getPersistentData().putInt(SATURATION_TICKS, 1);
                 }
 

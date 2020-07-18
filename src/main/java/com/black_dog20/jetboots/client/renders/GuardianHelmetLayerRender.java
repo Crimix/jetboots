@@ -9,9 +9,9 @@ import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.entity.IEntityRenderer;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
-import net.minecraft.client.renderer.entity.model.EntityModel;
+import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -23,7 +23,7 @@ import net.minecraftforge.fml.common.Mod;
 
 @OnlyIn(Dist.CLIENT)
 @Mod.EventBusSubscriber(modid = Jetboots.MOD_ID, value = Dist.CLIENT)
-public class GuardianHelmetLayerRender<T extends LivingEntity, M extends EntityModel<T>> extends LayerRenderer<T, M> {
+public class GuardianHelmetLayerRender<T extends PlayerEntity, M extends BipedModel<T>> extends LayerRenderer<T, M> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(Jetboots.MOD_ID, "textures/layers/guardian_helmet_layer.png");
     private final GuardianModel<T> model = new GuardianModel(0.1F);
 
@@ -37,6 +37,7 @@ public class GuardianHelmetLayerRender<T extends LivingEntity, M extends EntityM
         ItemStack itemstack = entitylivingbase.getItemStackFromSlot(EquipmentSlotType.HEAD);
         if (itemstack.getItem() == ModItems.GUARDIAN_HELMET.get()) {
             if (GuardinanHelmetProperties.getMode(itemstack)) {
+                this.model.isSneak = entitylivingbase.isCrouching();
                 matrixStack.push();
                 this.getEntityModel().setModelAttributes(this.model);
                 this.model.render(entitylivingbase, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);

@@ -1,6 +1,8 @@
 package com.black_dog20.jetboots.common.items;
 
 import com.black_dog20.bml.api.ISoulbindable;
+import com.black_dog20.bml.utils.item.MultiMapHelper;
+import com.black_dog20.bml.utils.keybinds.KeybindsUtil;
 import com.black_dog20.bml.utils.math.MathUtil;
 import com.black_dog20.bml.utils.translate.TranslationUtil;
 import com.black_dog20.jetboots.Config;
@@ -12,13 +14,11 @@ import com.black_dog20.jetboots.common.util.EnergyUtil;
 import com.black_dog20.jetboots.common.util.JetBootsItemHandler;
 import com.black_dog20.jetboots.common.util.JetBootsProperties;
 import com.black_dog20.jetboots.common.util.ModUtils;
-import com.black_dog20.jetboots.common.util.MultiMapHelper;
 import com.black_dog20.jetboots.common.util.TranslationHelper;
 import com.google.common.collect.Multimap;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.I18n;
+import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.client.util.InputMappings;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -69,7 +69,7 @@ public class JetBootsItem extends BaseArmorItem implements ISoulbindable {
     @Override
     public Multimap<String, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack stack) {
         Multimap<String, AttributeModifier> multimap = super.getAttributeModifiers(slot);
-        if (slot == EquipmentSlotType.FEET) {
+        if (slot == this.slot) {
             MultiMapHelper.removeValues(multimap, SharedMonsterAttributes.ARMOR.getName(), ARMOR_MODIFIERS[slot.getIndex()]);
             MultiMapHelper.removeValues(multimap, SharedMonsterAttributes.ARMOR_TOUGHNESS.getName(), ARMOR_MODIFIERS[slot.getIndex()]);
             multimap.put(SharedMonsterAttributes.ARMOR.getName(), new AttributeModifier(ARMOR_MODIFIERS[slot.getIndex()], "Armor modifier", getJetBootsDamageReduceAmount(stack), AttributeModifier.Operation.ADDITION));
@@ -106,6 +106,8 @@ public class JetBootsItem extends BaseArmorItem implements ISoulbindable {
         super.addInformation(stack, world, tooltip, flag);
 
         Minecraft mc = Minecraft.getInstance();
+        KeyBinding sneak = mc.gameSettings.keyBindSneak;
+        int keyModifier = GLFW.GLFW_KEY_LEFT_CONTROL;
 
         stack.getCapability(CapabilityEnergy.ENERGY, null)
                 .ifPresent(energy -> tooltip.add(
@@ -115,10 +117,10 @@ public class JetBootsItem extends BaseArmorItem implements ISoulbindable {
 
         if (JetBootsProperties.hasEngineUpgrade(stack) || JetBootsProperties.hasThrusterUpgrade(stack)) {
             if (JetBootsProperties.hasEngineUpgrade(stack)) {
-                tooltip.add(TranslationUtil.translate(CHANGE_FLIGHT_MODE, TextFormatting.GRAY, Keybinds.keyMode.getLocalizedName().toUpperCase()));
+                tooltip.add(TranslationUtil.translate(CHANGE_FLIGHT_MODE, TextFormatting.GRAY, KeybindsUtil.getKeyBindText(Keybinds.keyMode)));
             }
             if (JetBootsProperties.hasThrusterUpgrade(stack)) {
-                tooltip.add(TranslationUtil.translate(CHANGE_SPEED_MODE, TextFormatting.GRAY, Keybinds.keySpeed.getLocalizedName().toUpperCase()));
+                tooltip.add(TranslationUtil.translate(CHANGE_SPEED_MODE, TextFormatting.GRAY, KeybindsUtil.getKeyBindText(Keybinds.keySpeed)));
             }
 
             if (JetBootsProperties.hasEngineUpgrade(stack)) {
@@ -132,13 +134,13 @@ public class JetBootsItem extends BaseArmorItem implements ISoulbindable {
             tooltip.add(new TranslationTextComponent(""));
         }
 
-        if (!InputMappings.isKeyDown(mc.getMainWindow().getHandle(), mc.gameSettings.keyBindSneak.getKey().getKeyCode())
-                && !InputMappings.isKeyDown(mc.getMainWindow().getHandle(), GLFW.GLFW_KEY_LEFT_CONTROL)) {
+        if (!KeybindsUtil.isKeyDown(sneak)
+                && !KeybindsUtil.isKeyDown(keyModifier)) {
             tooltip.add(TranslationUtil.translate(OPEN_UPGRADES, TextFormatting.GRAY));
-            tooltip.add(TranslationUtil.translate(SHOW_UPGRADES, TextFormatting.GRAY, mc.gameSettings.keyBindSneak.getLocalizedName().toLowerCase()));
-            tooltip.add(TranslationUtil.translate(SHOW_ENERGY, TextFormatting.GRAY, mc.gameSettings.keyBindSneak.getLocalizedName().toLowerCase(), I18n.format(InputMappings.getInputByCode(GLFW.GLFW_KEY_LEFT_CONTROL, -1).getTranslationKey()).toLowerCase()));
-        } else if (InputMappings.isKeyDown(mc.getMainWindow().getHandle(), mc.gameSettings.keyBindSneak.getKey().getKeyCode())
-                && InputMappings.isKeyDown(mc.getMainWindow().getHandle(), GLFW.GLFW_KEY_LEFT_CONTROL)) {
+            tooltip.add(TranslationUtil.translate(SHOW_UPGRADES, TextFormatting.GRAY, KeybindsUtil.getKeyBindText(sneak)));
+            tooltip.add(TranslationUtil.translate(SHOW_ENERGY, TextFormatting.GRAY, KeybindsUtil.getKeyBindText(sneak), KeybindsUtil.getKeyBindText(keyModifier)));
+        } else if (KeybindsUtil.isKeyDown(sneak)
+                && KeybindsUtil.isKeyDown(keyModifier)) {
             EnergyUtil.getFormattedEnergyValue(EnergyUtil.getEnergyWhileFlying(stack)).ifPresent(
                     t -> tooltip.add(TranslationUtil.translate(FLYING_ENERGY, t))
             );

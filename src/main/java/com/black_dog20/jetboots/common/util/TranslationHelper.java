@@ -67,19 +67,23 @@ public class TranslationHelper extends TranslationUtil {
         JETBOOTS_UPGRADES("tooltip.item.jetboots_upgrade_screen"),
         CHANGE_HELMET_MODE("tooltip.item.change_helmet_mode"),
         CHANGE_HELMET_NIGHT_VISION("tooltip.item.change_helmet_night_vision"),
-        HELMET_MODE("msg.helmet_mode"),
-        HELMET_NIGHT_VISION("msg.helmet_night_vision"),
         HELMET_INFO("tooltip.item.helmet_info"),
         HELMET_INFO2("tooltip.item.helmet_info2"),
-        CANNOT_EAT_WHILE_MATERIALIZED("msg.cannot_eat_materialized"),
+        HELMET_INFO3("tooltip.item.helmet_info3"),
         ARMOR_VALUE("tooltip.item.armor_upgrade.armor"),
         TOUGHNESS_VALUE("tooltip.item.armor_upgrade.toughness"),
         NO_CHANCE_TO_FIND("tooltip.item.no_chance"),
+
+        HELMET_MODE("msg.helmet_mode"),
+        HELMET_NIGHT_VISION("msg.helmet_night_vision"),
+        CANNOT_EAT_WHILE_MATERIALIZED("msg.cannot_eat_materialized"),
         POWER_LOW("msg.power_low"),
         ON("msg.on"),
         OFF("msg.off"),
         MATERIALIZED("msg.materialized"),
         DEMATERIALIZED("msg.dematerialized"),
+
+        KEY_CATEGORY("key.category"),
         ;
 
         Translations(String key) {

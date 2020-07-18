@@ -22,7 +22,6 @@ public class Config {
     public static ForgeConfigSpec SERVER_CONFIG;
 
     public static ForgeConfigSpec.BooleanValue MUFFLED_BOOTS;
-    public static ForgeConfigSpec.BooleanValue SHOW_NIGHT_VISION_ICON;
 
     public static ForgeConfigSpec.IntValue DEFAULT_MAX_POWER;
     public static ForgeConfigSpec.IntValue POWER_COST;
@@ -35,8 +34,6 @@ public class Config {
         CLIENT_BUILDER.comment("Client settings").push(CLIENT_SETTINGS);
         MUFFLED_BOOTS = CLIENT_BUILDER.comment("Is all jetboots muffled without the upgrade")
                 .define("muffledBoots", false);
-        SHOW_NIGHT_VISION_ICON = CLIENT_BUILDER.comment("Show night vision icon on the HUD")
-                .define("showNightVisionIcon", true);
         CLIENT_BUILDER.pop();
 
         CLIENT_CONFIG = CLIENT_BUILDER.build();

@@ -29,6 +29,6 @@ description='''Flying has never been this fun'''
 [[dependencies.jetboots]]
     modId="blackdogsmoddinglibrary"
     mandatory=true
-    versionRange="[1.0.12,)"
+    versionRange="[1.0.15,)"
     ordering="BEFORE"
     side="BOTH"

@@ -69,7 +69,6 @@ public class BootHandler {
                     float amount = (float) (Math.round(event.getAmount() * reduction));
                     if (amount >= 0.5) {
                         event.setAmount(amount);
-                        event.getSource().setDamageBypassesArmor();
                     } else {
                         event.setCanceled(true);
                     }

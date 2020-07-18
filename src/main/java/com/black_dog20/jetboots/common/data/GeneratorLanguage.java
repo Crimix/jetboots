@@ -26,6 +26,7 @@ public class GeneratorLanguage extends BaseLanguageProvider {
         add("key.jetboots.speed", "Toggle Jetboots speed mode");
         add("key.jetboots.helmet", "Toggle Guardian Helmet mode");
         add("key.jetboots.helmet_vision", "Toggle Guardian Helmet night vision");
+        addPrefixed(KEY_CATEGORY, "Jet Boots");
         addItem(ModItems.JET_BOOTS, "Jet Boots");
         addItem(ModItems.BASE_UPGRADE, "Base Upgrade");
         addItem(ModItems.LEATHER_ARMOR_UPGRADE, "Leather Armor Upgrade");
@@ -116,11 +117,12 @@ public class GeneratorLanguage extends BaseLanguageProvider {
         addPrefixed(CHANGE_HELMET_MODE, "Use %s to change helmet mode");
         addPrefixed(CHANGE_HELMET_NIGHT_VISION, "Use %s to toggle night vision");
         addPrefixed(HELMET_INFO, "Protects against air loss and other ill effects when materialized");
-        addPrefixed(HELMET_INFO2, "You cannot eat and drink while it is materialized", TextFormatting.RED);
+        addPrefixed(HELMET_INFO2, "You cannot eat and drink when materialized", TextFormatting.RED);
+        addPrefixed(HELMET_INFO3, "Slowly provides some food while materialized", TextFormatting.GREEN);
         addPrefixed(HELMET_MODE, "Guardian Helmet: %s");
         addPrefixed(MATERIALIZED, "Materialized");
         addPrefixed(DEMATERIALIZED, "Dematerialized");
-        addPrefixed(CANNOT_EAT_WHILE_MATERIALIZED, "You cannot eat and drink while the helmet is materialized");
+        addPrefixed(CANNOT_EAT_WHILE_MATERIALIZED, "You cannot " + style("eat", TextFormatting.LIGHT_PURPLE) + " or " + style("drink", TextFormatting.LIGHT_PURPLE) + " while the helmet is materialized");
         addPrefixed(ARMOR_VALUE, "Armor: %d", TextFormatting.BLUE);
         addPrefixed(TOUGHNESS_VALUE, "Toughness: %d", TextFormatting.BLUE);
         addPrefixed(NO_CHANCE_TO_FIND, "There are no chance to find this item!", TextFormatting.RED);
