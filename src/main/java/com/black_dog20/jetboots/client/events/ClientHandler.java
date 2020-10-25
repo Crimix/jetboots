@@ -140,23 +140,11 @@ public class ClientHandler {
             ItemStack jetboots = event.armor;
             int percent = EnergyUtil.getBatteryPercentage(jetboots);
             if (percent < 10) {
-                Minecraft.getInstance().ingameGUI.setOverlayMessage(TranslationHelper.translateToString(Translations.POWER_LOW), false);
+                Minecraft.getInstance().ingameGUI.setOverlayMessage(Translations.POWER_LOW.get(), false);
             }
             tickCounter = 1;
         }
 
         tickCounter++;
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    @SubscribeEvent
-    public static void onUnequipArmor(ArmorEvent.Unequip event) {
-        if (event.isArmorEqualTo(ModItems.JET_BOOTS.get())) {
-            Minecraft minecraft = Minecraft.getInstance();
-            if (minecraft.ingameGUI.overlayMessage.equals(TranslationHelper.translateToString(Translations.POWER_LOW))) {
-                minecraft.ingameGUI.setOverlayMessage("", false);
-            }
-            tickCounter = 1;
-        }
     }
 }

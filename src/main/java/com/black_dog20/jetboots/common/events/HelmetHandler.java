@@ -79,11 +79,11 @@ public class HelmetHandler {
             float toolSpeed = tool.getItem().getDestroySpeed(tool, event.getState());
             if (ModUtils.hasGuardianHelmet(player) && player.isInWater()) {
                 if (toolSpeed > event.getOriginalSpeed())
-                    if (player.onGround)
+                    if (player.isOnGround())
                         event.setNewSpeed(event.getOriginalSpeed() * 5);
                     else
                         event.setNewSpeed(event.getOriginalSpeed() * 25);
-            } else if (ModUtils.isFlying(player) && !player.onGround) {
+            } else if (ModUtils.isFlying(player) && !player.isOnGround()) {
                 if (toolSpeed > event.getOriginalSpeed())
                     event.setNewSpeed(event.getOriginalSpeed() * 5);
             }

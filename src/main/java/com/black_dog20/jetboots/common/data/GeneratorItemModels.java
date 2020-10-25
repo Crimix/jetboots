@@ -5,7 +5,7 @@ import com.black_dog20.jetboots.Jetboots;
 import com.black_dog20.jetboots.common.compat.ModCompat;
 import com.black_dog20.jetboots.common.items.ModItems;
 import net.minecraft.data.DataGenerator;
-import net.minecraftforge.client.model.generators.ExistingFileHelper;
+import net.minecraftforge.common.data.ExistingFileHelper;
 
 public class GeneratorItemModels extends BaseItemModelProvider {
     public GeneratorItemModels(DataGenerator generator, ExistingFileHelper existingFileHelper) {

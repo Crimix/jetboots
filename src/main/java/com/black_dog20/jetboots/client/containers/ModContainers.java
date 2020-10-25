@@ -8,7 +8,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class ModContainers {
-    public static final DeferredRegister<ContainerType<?>> CONTAINERS = new DeferredRegister<>(ForgeRegistries.CONTAINERS, Jetboots.MOD_ID);
+    public static final DeferredRegister<ContainerType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, Jetboots.MOD_ID);
 
     public static final RegistryObject<ContainerType<JetBootsContainer>> JETBOOTS_CONTAINER = CONTAINERS.register("jetboots", () -> IForgeContainerType.create((windowId, inv, data) -> new JetBootsContainer(windowId, inv, inv.player)));
 }

@@ -29,14 +29,14 @@ public class JetbootSound extends TickableSound {
     }
 
     public static boolean playing(PlayerEntity player) {
-        return PLAYING_FOR.containsKey(player.getUniqueID()) && PLAYING_FOR.get(player.getUniqueID()) != null && !PLAYING_FOR.get(player.getUniqueID()).donePlaying;
+        return PLAYING_FOR.containsKey(player.getUniqueID()) && PLAYING_FOR.get(player.getUniqueID()) != null && !PLAYING_FOR.get(player.getUniqueID()).isDonePlaying();
     }
 
     public static void stop(PlayerEntity player) {
         if (PLAYING_FOR.containsKey(player.getUniqueID()) && PLAYING_FOR.get(player.getUniqueID()) != null) {
             synchronized (PLAYING_FOR) {
                 JetbootSound sound = PLAYING_FOR.get(player.getUniqueID());
-                sound.donePlaying = true;
+                sound.func_239509_o_();
                 PLAYING_FOR.remove(player.getUniqueID());
             }
         }

@@ -2,7 +2,7 @@ package com.black_dog20.jetboots.client.renders;
 
 import com.google.common.collect.ImmutableList;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.entity.model.AgeableModel;
+import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.renderer.entity.model.IHasHead;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.entity.LivingEntity;
@@ -13,7 +13,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import java.util.function.Function;
 
 @OnlyIn(Dist.CLIENT)
-public class GuardianModel<T extends LivingEntity> extends AgeableModel<T> implements IHasHead {
+public class GuardianHelmetModel<T extends LivingEntity> extends BipedModel<T> implements IHasHead {
 
     public ModelRenderer bipedHead;
     public ModelRenderer bipedHeadwear;
@@ -21,12 +21,12 @@ public class GuardianModel<T extends LivingEntity> extends AgeableModel<T> imple
     public float swimAnimation;
     private float remainingItemUseTime;
 
-    public GuardianModel(float modelSize) {
-        this(RenderType::entityTranslucent, modelSize, 0.0F, 64, 64);
+    public GuardianHelmetModel(float modelSize) {
+        this(RenderType::getEntityTranslucent, modelSize, 0.0F, 64, 64);
     }
 
-    public GuardianModel(Function<ResourceLocation, RenderType> renderTypeIn, float modelSizeIn, float yOffsetIn, int textureWidthIn, int textureHeightIn) {
-        super(renderTypeIn, true, 16.0F, 0.0F, 2.0F, 2.0F, 24.0F);
+    public GuardianHelmetModel(Function<ResourceLocation, RenderType> renderTypeIn, float modelSizeIn, float yOffsetIn, int textureWidthIn, int textureHeightIn) {
+        super(renderTypeIn, modelSizeIn, yOffsetIn, textureWidthIn, textureHeightIn);
         this.textureWidth = textureWidthIn;
         this.textureHeight = textureHeightIn;
         this.bipedHead = new ModelRenderer(this, 0, 0);
@@ -50,6 +50,11 @@ public class GuardianModel<T extends LivingEntity> extends AgeableModel<T> imple
     @Override
     public ModelRenderer getModelHead() {
         return this.bipedHead;
+    }
+
+    @Override
+    public void setRotationAngles(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+
     }
 
     public void setLivingAnimations(T entityIn, float limbSwing, float limbSwingAmount, float partialTick) {

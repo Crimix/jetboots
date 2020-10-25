@@ -7,11 +7,13 @@ import com.black_dog20.bml.utils.translate.TranslationUtil;
 import com.black_dog20.jetboots.client.keybinds.Keybinds;
 import com.black_dog20.jetboots.common.util.GuardinanHelmetProperties;
 import com.black_dog20.jetboots.common.util.TranslationHelper;
+import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.IArmorMaterial;
 import net.minecraft.item.ItemStack;
@@ -37,13 +39,14 @@ public class GuardianHelmetItem extends BaseArmorItem implements ISoulbindable {
     }
 
     @Override
-    public Multimap<String, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack stack) {
-        Multimap<String, AttributeModifier> multimap = super.getAttributeModifiers(slot);
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack stack) {
+        Multimap<Attribute, AttributeModifier> multimap = HashMultimap.create(super.getAttributeModifiers(slot));
         if (slot == this.slot) {
-            MultiMapHelper.removeValues(multimap, SharedMonsterAttributes.ARMOR.getName(), ARMOR_MODIFIERS[slot.getIndex()]);
-            MultiMapHelper.removeValues(multimap, SharedMonsterAttributes.ARMOR_TOUGHNESS.getName(), ARMOR_MODIFIERS[slot.getIndex()]);
-            multimap.put(SharedMonsterAttributes.ARMOR.getName(), new AttributeModifier(ARMOR_MODIFIERS[slot.getIndex()], "Armor modifier", getHelmetDamageReduceAmount(stack), AttributeModifier.Operation.ADDITION));
-            multimap.put(SharedMonsterAttributes.ARMOR_TOUGHNESS.getName(), new AttributeModifier(ARMOR_MODIFIERS[slot.getIndex()], "Armor toughness", getHelmetToughness(stack), AttributeModifier.Operation.ADDITION));
+            MultiMapHelper.removeValues(multimap, Attributes.ARMOR, ARMOR_MODIFIERS[slot.getIndex()]);
+            MultiMapHelper.removeValues(multimap, Attributes.ARMOR_TOUGHNESS, ARMOR_MODIFIERS[slot.getIndex()]);
+            multimap.put(Attributes.ARMOR, new AttributeModifier(ARMOR_MODIFIERS[slot.getIndex()], "Armor modifier", getHelmetDamageReduceAmount(stack), AttributeModifier.Operation.ADDITION));
+            multimap.put(Attributes.ARMOR_TOUGHNESS, new AttributeModifier(ARMOR_MODIFIERS[slot.getIndex()], "Armor toughness", getHelmetToughness(stack), AttributeModifier.Operation.ADDITION));
+            multimap.put(Attributes.KNOCKBACK_RESISTANCE, new AttributeModifier(ARMOR_MODIFIERS[slot.getIndex()], "Armor knockback resistance", getHelmetKnockbackResistance(stack), AttributeModifier.Operation.ADDITION));
         }
 
         return multimap;
@@ -55,6 +58,10 @@ public class GuardianHelmetItem extends BaseArmorItem implements ISoulbindable {
 
     private double getHelmetToughness(ItemStack stack) {
         return GuardinanHelmetProperties.getMode(stack) ? 4 : 0;
+    }
+
+    private double getHelmetKnockbackResistance(ItemStack stack) {
+        return GuardinanHelmetProperties.getMode(stack) ? 0 : 0;
     }
 
     @Override
@@ -110,6 +117,11 @@ public class GuardianHelmetItem extends BaseArmorItem implements ISoulbindable {
 
         @Override
         public float getToughness() {
+            return 0;
+        }
+
+        @Override
+        public float getKnockbackResistance() {
             return 0;
         }
 

@@ -20,7 +20,7 @@ public class ModCompat {
 
     public static final Item.Properties ITEM_GROUP = new Item.Properties().group(compatItemGroup);
 
-    public static final DeferredRegister<Item> ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, Jetboots.MOD_ID);
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Jetboots.MOD_ID);
 
     public static void register(IEventBus bus) {
         Cyclic.registerItems(ITEMS);

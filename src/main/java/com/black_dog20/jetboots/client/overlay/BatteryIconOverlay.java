@@ -6,6 +6,7 @@ import com.black_dog20.jetboots.Config;
 import com.black_dog20.jetboots.Jetboots;
 import com.black_dog20.jetboots.common.util.EnergyUtil;
 import com.black_dog20.jetboots.common.util.ModUtils;
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.ChatScreen;
@@ -15,6 +16,7 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 
 import java.util.Optional;
@@ -49,7 +51,7 @@ public class BatteryIconOverlay extends ConfigurablePercentageScaledOverlay.Post
     }
 
     @Override
-    public void onRender(int scaledwidth, int scaledheight) {
+    public void onRender(MatrixStack matrixStack, int scaledwidth, int scaledheight) {
         int xPos = (int) (scaledwidth * (getPercentagePosX() / 100.0));
         int yPos = (int) (scaledheight * (getPercentagePosY() / 100.0));
         Minecraft minecraft = Minecraft.getInstance();
@@ -147,7 +149,7 @@ public class BatteryIconOverlay extends ConfigurablePercentageScaledOverlay.Post
     }
 
     @Override
-    public Optional<String> getMessage() {
+    public Optional<ITextComponent> getMessage() {
         return Optional.empty();
     }
 

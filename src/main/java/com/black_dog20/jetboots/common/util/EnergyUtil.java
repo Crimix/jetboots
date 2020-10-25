@@ -1,6 +1,7 @@
 package com.black_dog20.jetboots.common.util;
 
 import com.black_dog20.bml.utils.math.MathUtil;
+import com.black_dog20.bml.utils.text.TextComponentBuilder;
 import com.black_dog20.jetboots.Config;
 import com.black_dog20.jetboots.common.items.JetBootsItem;
 import com.black_dog20.jetboots.common.items.upgrades.api.IFlatValueEnergyModifier;
@@ -38,17 +39,19 @@ public class EnergyUtil {
                 .reduce(1.0, (a, b) -> a * b);
     }
 
-    public static Optional<String> getFormattedEnergyValue(int value) {
+    public static Optional<ITextComponent> getFormattedEnergyValue(int value) {
         if (value == 0)
             return Optional.empty();
         else if (value > 0) {
-            ITextComponent textComponent = new StringTextComponent(String.format("+%d FE", Math.abs(value)));
-            textComponent.getStyle().setColor(TextFormatting.GREEN);
-            return Optional.of(textComponent.getFormattedText());
+            ITextComponent textComponent = TextComponentBuilder.of(new StringTextComponent(String.format("+%d FE", Math.abs(value))))
+                    .format(TextFormatting.GREEN)
+                    .build();
+            return Optional.of(textComponent);
         } else {
-            ITextComponent textComponent = new StringTextComponent(String.format("-%d FE", Math.abs(value)));
-            textComponent.getStyle().setColor(TextFormatting.RED);
-            return Optional.of(textComponent.getFormattedText());
+            ITextComponent textComponent = TextComponentBuilder.of(new StringTextComponent(String.format("-%d FE", Math.abs(value))))
+                    .format(TextFormatting.RED)
+                    .build();
+            return Optional.of(textComponent);
         }
     }
 

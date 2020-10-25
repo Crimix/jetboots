@@ -272,6 +272,11 @@ public class JetBootsItem extends BaseArmorItem implements ISoulbindable {
             return 0;
         }
 
+        @Override
+        public float getKnockbackResistance() {
+            return 0;
+        }
+
     }
 
     class JetbootsCapabilities implements ICapabilityProvider {

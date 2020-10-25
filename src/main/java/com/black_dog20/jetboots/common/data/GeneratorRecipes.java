@@ -17,12 +17,12 @@ import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.registry.Registry;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.crafting.ConditionalAdvancement;
 import net.minecraftforge.common.crafting.ConditionalRecipe;
 import net.minecraftforge.common.crafting.conditions.ModLoadedCondition;
 import net.minecraftforge.fml.ModList;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.function.Consumer;
 
@@ -239,7 +239,7 @@ public class GeneratorRecipes extends BaseRecipeProvider {
 
 
     private void registerCompatArmorUpgradeRecipe(String modId, Item ouput, Item compatBoots, Consumer<IFinishedRecipe> consumer) {
-        ResourceLocation recipeId = Registry.ITEM.getKey(ouput);
+        ResourceLocation recipeId = ForgeRegistries.ITEMS.getKey(ouput);
         ConditionalRecipe.builder()
                 .addCondition(new ModLoadedCondition(modId))
                 .addRecipe(
@@ -258,7 +258,7 @@ public class GeneratorRecipes extends BaseRecipeProvider {
                                                 .withRewards(AdvancementRewards.Builder.recipe(recipeId))
                                                 .withRequirementsStrategy(IRequirementsStrategy.OR)
                                                 .withCriterion("has_jetboots", hasItem(JET_BOOTS.get()))
-                                                .withCriterion("has_the_recipe", new RecipeUnlockedTrigger.Instance(recipeId))
+                                                .withCriterion("has_the_recipe", RecipeUnlockedTrigger.create(recipeId))
                                 )
                 )
                 .build(consumer, recipeId);

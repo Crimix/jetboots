@@ -25,7 +25,7 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = Jetboots.MOD_ID, value = Dist.CLIENT)
 public class GuardianHelmetLayerRender<T extends PlayerEntity, M extends BipedModel<T>> extends LayerRenderer<T, M> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(Jetboots.MOD_ID, "textures/layers/guardian_helmet_layer.png");
-    private final GuardianModel<T> model = new GuardianModel(0.1F);
+    private final GuardianHelmetModel<T> model = new GuardianHelmetModel(0.1F);
 
 
     public GuardianHelmetLayerRender(IEntityRenderer<T, M> renderer) {
@@ -42,7 +42,7 @@ public class GuardianHelmetLayerRender<T extends PlayerEntity, M extends BipedMo
                 this.getEntityModel().setModelAttributes(this.model);
                 this.model.render(entitylivingbase, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
                 IVertexBuilder ivertexbuilder = ItemRenderer.getBuffer(buffer, this.model.getRenderType(TEXTURE), false, itemstack.hasEffect());
-                this.model.render(matrixStack, ivertexbuilder, packedLight, OverlayTexture.DEFAULT_LIGHT, 1.0F, 1.0F, 1.0F, 1.0F);
+                this.model.render(matrixStack, ivertexbuilder, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
                 matrixStack.pop();
             }
         }

@@ -17,7 +17,7 @@ import static com.black_dog20.jetboots.common.util.TranslationHelper.*;
 
 public class ModItems {
     public static final Item.Properties ITEM_GROUP = new Item.Properties().group(Jetboots.itemGroup);
-    public static final DeferredRegister<Item> ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, Jetboots.MOD_ID);
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Jetboots.MOD_ID);
 
     public static final RegistryObject<Item> JET_BOOTS = ITEMS.register("jetboots", () -> new JetBootsItem(ITEM_GROUP.maxStackSize(1)));
     public static final RegistryObject<Item> BASE_UPGRADE = ITEMS.register("base_upgrade", () -> new BaseItem(ITEM_GROUP));
