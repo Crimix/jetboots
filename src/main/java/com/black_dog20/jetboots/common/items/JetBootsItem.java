@@ -81,7 +81,6 @@ public class JetBootsItem extends BaseArmorItem implements ISoulbindable {
 
     private double getJetBootsDamageReduceAmount(ItemStack stack) {
         return JetBootsProperties.getArmorUpgrade(stack)
-                .filter(upgrade -> upgrade.getArmorUpgradeType() == IArmorUpgrade.ArmorType.NORMAL)
                 .filter(upgrade -> upgrade.providesProtection(stack))
                 .map(IArmorUpgrade::getArmor)
                 .orElse(0.0);
@@ -89,7 +88,6 @@ public class JetBootsItem extends BaseArmorItem implements ISoulbindable {
 
     private double getJetBootsToughness(ItemStack stack) {
         return JetBootsProperties.getArmorUpgrade(stack)
-                .filter(upgrade -> upgrade.getArmorUpgradeType() == IArmorUpgrade.ArmorType.NORMAL)
                 .filter(upgrade -> upgrade.providesProtection(stack))
                 .map(IArmorUpgrade::getToughness)
                 .orElse(0.0);
@@ -134,26 +132,8 @@ public class JetBootsItem extends BaseArmorItem implements ISoulbindable {
             tooltip.add(new TranslationTextComponent(""));
         }
 
-        if (!KeybindsUtil.isKeyDown(sneak)
+        if (KeybindsUtil.isKeyDownIgnoreConflicts(sneak)
                 && !KeybindsUtil.isKeyDown(keyModifier)) {
-            tooltip.add(TranslationUtil.translate(OPEN_UPGRADES, TextFormatting.GRAY));
-            tooltip.add(TranslationUtil.translate(SHOW_UPGRADES, TextFormatting.GRAY, KeybindsUtil.getKeyBindText(sneak)));
-            tooltip.add(TranslationUtil.translate(SHOW_ENERGY, TextFormatting.GRAY, KeybindsUtil.getKeyBindText(sneak), KeybindsUtil.getKeyBindText(keyModifier)));
-        } else if (KeybindsUtil.isKeyDown(sneak)
-                && KeybindsUtil.isKeyDown(keyModifier)) {
-            EnergyUtil.getFormattedEnergyValue(EnergyUtil.getEnergyWhileFlying(stack)).ifPresent(
-                    t -> tooltip.add(TranslationUtil.translate(FLYING_ENERGY, t))
-            );
-            EnergyUtil.getFormattedEnergyValue(EnergyUtil.getEnergyWhileWalking(stack)).ifPresent(
-                    t -> tooltip.add(TranslationUtil.translate(WALKING_ENERGY, t))
-            );
-            EnergyUtil.getFormattedEnergyValue(EnergyUtil.getEnergyOnHit(stack)).ifPresent(
-                    t -> tooltip.add(TranslationUtil.translate(HIT_ENERGY, t))
-            );
-            EnergyUtil.getFormattedEnergyValue(EnergyUtil.getEnergyOnHurt(stack)).ifPresent(
-                    t -> tooltip.add(TranslationUtil.translate(HURT_ENERGY, t))
-            );
-        } else {
             tooltip.add(TranslationUtil.translate(UPGRADES, TextFormatting.WHITE));
 
             JetBootsProperties.getArmorUpgrade(stack)
@@ -176,6 +156,24 @@ public class JetBootsItem extends BaseArmorItem implements ISoulbindable {
                     .ifPresent(upgrade -> tooltip.add(upgrade.getTooltip()));
             JetBootsProperties.getSoulboundUpgrade(stack)
                     .ifPresent(upgrade -> tooltip.add(upgrade.getTooltip()));
+        } else if (KeybindsUtil.isKeyDownIgnoreConflicts(sneak)
+                && KeybindsUtil.isKeyDown(keyModifier)) {
+            EnergyUtil.getFormattedEnergyValue(EnergyUtil.getEnergyWhileFlying(stack)).ifPresent(
+                    t -> tooltip.add(TranslationUtil.translate(FLYING_ENERGY, t))
+            );
+            EnergyUtil.getFormattedEnergyValue(EnergyUtil.getEnergyWhileWalking(stack)).ifPresent(
+                    t -> tooltip.add(TranslationUtil.translate(WALKING_ENERGY, t))
+            );
+            EnergyUtil.getFormattedEnergyValue(EnergyUtil.getEnergyOnHit(stack)).ifPresent(
+                    t -> tooltip.add(TranslationUtil.translate(HIT_ENERGY, t))
+            );
+            EnergyUtil.getFormattedEnergyValue(EnergyUtil.getEnergyOnHurt(stack)).ifPresent(
+                    t -> tooltip.add(TranslationUtil.translate(HURT_ENERGY, t))
+            );
+        } else {
+            tooltip.add(TranslationUtil.translate(OPEN_UPGRADES, TextFormatting.GRAY));
+            tooltip.add(TranslationUtil.translate(SHOW_UPGRADES, TextFormatting.GRAY, KeybindsUtil.getKeyBindText(sneak)));
+            tooltip.add(TranslationUtil.translate(SHOW_ENERGY, TextFormatting.GRAY, KeybindsUtil.getKeyBindText(sneak), KeybindsUtil.getKeyBindText(keyModifier)));
         }
     }
 

@@ -1,6 +1,0 @@
-{
-  "parent": "item/handheld",
-  "textures": {
-    "layer0": "jetboots:item/forcefield_generator"
-  }
-}

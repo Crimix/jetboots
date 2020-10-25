@@ -9,7 +9,7 @@ authors="black_dog20"
 displayURL="https://www.curseforge.com/minecraft/mc-mods/jet-boots"
 version="${file.jarVersion}"
 displayName="Jet Boots"
-updateJSONURL="https://raw.githubusercontent.com/Crimix/jetboots/master/update.json"
+updateJSONURL="https://raw.githubusercontent.com/Crimix/jetboots/1.15/update.json"
 logoFile="jetboots-logo.png"
 credits="To all my friends for putting up with me breaking the server multiple times during testing"
 description='''Flying has never been this fun'''
@@ -29,6 +29,6 @@ description='''Flying has never been this fun'''
 [[dependencies.jetboots]]
     modId="blackdogsmoddinglibrary"
     mandatory=true
-    versionRange="[1.0.15,)"
+    versionRange="[1.1.2,)"
     ordering="BEFORE"
     side="BOTH"

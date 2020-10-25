@@ -22,8 +22,6 @@ public class JEIPlugin implements IModPlugin {
 
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
-        registration.addIngredientInfo(new ItemStack(ModItems.FORCEFIELD_GENERATOR.get()), VanillaTypes.ITEM, TranslationHelper.translateToString(JeiInfo.FORCEFIELD_GENERATOR));
-        registration.addIngredientInfo(new ItemStack(ModItems.FORCEFIELD_PROJECTOR.get()), VanillaTypes.ITEM, TranslationHelper.translateToString(JeiInfo.FORCEFIELD_PROJECTOR));
         registration.addIngredientInfo(new ItemStack(ModItems.GUARDIAN_HELMET.get()), VanillaTypes.ITEM, TranslationHelper.translateToString(JeiInfo.GUARDING_HELMET));
         Jetboots.getLogger().debug("JEI Recipes registered");
     }

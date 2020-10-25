@@ -32,7 +32,6 @@ public class GeneratorLanguage extends BaseLanguageProvider {
         addItem(ModItems.LEATHER_ARMOR_UPGRADE, "Leather Armor Upgrade");
         addItem(ModItems.IRON_ARMOR_UPGRADE, "Iron Armor Upgrade");
         addItem(ModItems.DIAMOND_ARMOR_UPGRADE, "Diamond Armor Upgrade");
-        addItem(ModItems.FORCEFIELD_ARMOR_UPGRADE, "Forcefield Armor Upgrade");
         addItem(ModItems.ADVANCED_BATTERY_UPGRADE, "Advanced Battery Upgrade");
         addItem(ModItems.ELITE_BATTERY_UPGRADE, "Elite Battery Upgrade");
         addItem(ModItems.ULTIMATE_BATTERY_UPGRADE, "Ultimate Battery Upgrade");
@@ -46,8 +45,6 @@ public class GeneratorLanguage extends BaseLanguageProvider {
         addItem(ModItems.MUFFLED_UPGRADE, "Muffled Upgrade");
         addItem(ModItems.UNDERWATER_UPGRADE, "Underwater Upgrade");
         addItem(ModItems.SOULBOUND_UPGRADE, "Soulbound Upgrade");
-        addItem(ModItems.FORCEFIELD_GENERATOR, "Forcefield Generator");
-        addItem(ModItems.FORCEFIELD_PROJECTOR, "Forcefield Projector");
         addItem(ModItems.GUARDIAN_HELMET, "Guardian Helmet");
 
         // Blocks
@@ -61,7 +58,6 @@ public class GeneratorLanguage extends BaseLanguageProvider {
         addPrefixed(LEATHER_ARMOR, "Armored: Leather", TextFormatting.GRAY);
         addPrefixed(IRON_ARMOR, "Armored: Iron", TextFormatting.GRAY);
         addPrefixed(DIAMOND_ARMOR, "Armored: Diamond", TextFormatting.BLUE);
-        addPrefixed(FORCEFIELD_ARMOR, "Armored: Forcefield", TextFormatting.LIGHT_PURPLE);
         addPrefixed(ENGINE_UPGRADE, "Upgraded engine", TextFormatting.GRAY);
         addPrefixed(THRUSTER_UPGRADE, "Upgraded thruster", TextFormatting.GRAY);
         addPrefixed(SHOCK_ABSORBER_UPGRADE, "Shock absorber", TextFormatting.GRAY);
@@ -78,8 +74,6 @@ public class GeneratorLanguage extends BaseLanguageProvider {
         addPrefixed(ULTIMATE_CONVERTER_UPGRADE, "Ultimate Converter", TextFormatting.LIGHT_PURPLE);
 
         addPrefixed(ARMOR_INFO, "Provides protection", TextFormatting.GRAY);
-        addPrefixed(FORCEFIELD_ARMOR_INFO, "Negates damage from supported types by %d%%", TextFormatting.GRAY);
-        addPrefixed(FORCEFIELD_ARMOR_INFO_2, "Negates knockback", TextFormatting.GRAY);
         addPrefixed(ENGINE_UPGRADE_INFO, "Unlocks Elytra based flight", TextFormatting.GRAY);
         addPrefixed(THRUSTER_UPGRADE_INFO, "Unlocks super speed toggle", TextFormatting.GRAY);
         addPrefixed(SHOCK_ABSORBER_UPGRADE_INFO, "Removes fall damage while wearing jet boots", TextFormatting.GRAY);
@@ -117,8 +111,6 @@ public class GeneratorLanguage extends BaseLanguageProvider {
         addPrefixed(CHANGE_HELMET_MODE, "Use %s to change helmet mode");
         addPrefixed(CHANGE_HELMET_NIGHT_VISION, "Use %s to toggle night vision");
         addPrefixed(HELMET_INFO, "Protects against air loss and other ill effects when materialized");
-        addPrefixed(HELMET_INFO2, "You cannot eat and drink when materialized", TextFormatting.RED);
-        addPrefixed(HELMET_INFO3, "Slowly provides some food while materialized", TextFormatting.GREEN);
         addPrefixed(HELMET_MODE, "Guardian Helmet: %s");
         addPrefixed(MATERIALIZED, "Materialized");
         addPrefixed(DEMATERIALIZED, "Dematerialized");
@@ -132,9 +124,7 @@ public class GeneratorLanguage extends BaseLanguageProvider {
         addPrefixed(OFF, "Off");
 
         //JEI
-        addPrefixed(JeiInfo.FORCEFIELD_GENERATOR, "The Forcefield Generator was last seen in the hands of a Wither Skeleton, perhaps it is now hidden in a Nether Fortress", TextFormatting.DARK_GRAY);
-        addPrefixed(JeiInfo.FORCEFIELD_PROJECTOR, "The Forcefield Project was last seen in the hands of an Enderman, perhaps it is now hidden in The End", TextFormatting.DARK_GRAY);
-        addPrefixed(JeiInfo.GUARDING_HELMET, "The Guarding went missing in The End, did he take his helmet with him?", TextFormatting.DARK_GRAY);
+        addPrefixed(JeiInfo.GUARDING_HELMET, "The Guarding went missing in The End or was it Nether, more important did he take his helmet with him?", TextFormatting.DARK_GRAY);
 
         //Compat
         if (ModList.get().isLoaded(Cyclic.MOD_ID)) {

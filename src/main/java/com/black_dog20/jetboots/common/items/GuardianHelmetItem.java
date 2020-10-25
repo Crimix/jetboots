@@ -4,7 +4,6 @@ import com.black_dog20.bml.api.ISoulbindable;
 import com.black_dog20.bml.utils.item.MultiMapHelper;
 import com.black_dog20.bml.utils.keybinds.KeybindsUtil;
 import com.black_dog20.bml.utils.translate.TranslationUtil;
-import com.black_dog20.jetboots.Config;
 import com.black_dog20.jetboots.client.keybinds.Keybinds;
 import com.black_dog20.jetboots.common.util.GuardinanHelmetProperties;
 import com.black_dog20.jetboots.common.util.TranslationHelper;
@@ -74,10 +73,6 @@ public class GuardianHelmetItem extends BaseArmorItem implements ISoulbindable {
         tooltip.add(TranslationUtil.translate(CHANGE_HELMET_MODE, TextFormatting.GRAY, KeybindsUtil.getKeyBindText(Keybinds.keyHelmetMode)));
         tooltip.add(TranslationUtil.translate(CHANGE_HELMET_NIGHT_VISION, TextFormatting.GRAY, KeybindsUtil.getKeyBindText(Keybinds.keyHelmetVision)));
         tooltip.add(TranslationUtil.translate(HELMET_INFO, TextFormatting.GRAY));
-        if (!Config.EAT_WITH_HELMET.get())
-            tooltip.add(TranslationUtil.translate(HELMET_INFO2));
-        if(Config.HELMET_PROVIDES_FOOD.get())
-            tooltip.add(TranslationUtil.translate(HELMET_INFO3));
         tooltip.add(TranslationHelper.translate(SOULBOUND_UPGRADE));
     }
 

@@ -71,12 +71,12 @@ public class FlyingHandler {
 
                 if (useElytraFlight(player, jetboots)) {
                     if (event.side == LogicalSide.SERVER)
-                        drawpower(jetboots);
+                        drawpower(player, jetboots);
                     doElytraFlight(player, jetboots);
                 } else if (player.isElytraFlying()) {
                     stopElytraFlight(player);
                 } else if (player.abilities.isFlying && event.side == LogicalSide.SERVER) {
-                    drawpower(jetboots);
+                    drawpower(player,jetboots);
                 }
                 sendSoundAndPartical(event, player, jetboots);
             } else {
@@ -154,9 +154,11 @@ public class FlyingHandler {
         player.setMotion(vec3d1.add(vec3d.x * d1 + (vec3d.x * speed - vec3d1.x) * d2, vec3d.y * d1 + (vec3d.y * speed - vec3d1.y) * d2, vec3d.z * d1 + (vec3d.z * speed - vec3d1.z) * d2));
     }
 
-    private static void drawpower(ItemStack jetboots) {
-        jetboots.getCapability(CapabilityEnergy.ENERGY, null)
-                .ifPresent(e -> EnergyUtil.extractOrReceive(e, EnergyUtil.getEnergyWhileFlying(jetboots)));
+    private static void drawpower(PlayerEntity player, ItemStack jetboots) {
+        if(!player.isCreative()) {
+            jetboots.getCapability(CapabilityEnergy.ENERGY, null)
+                    .ifPresent(e -> EnergyUtil.extractOrReceive(e, EnergyUtil.getEnergyWhileFlying(jetboots)));
+        }
     }
 
     public static boolean isTwoBlocksOverGround(PlayerEntity player) {

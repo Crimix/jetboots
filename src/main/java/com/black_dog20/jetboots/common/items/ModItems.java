@@ -4,7 +4,6 @@ import com.black_dog20.jetboots.Jetboots;
 import com.black_dog20.jetboots.common.items.upgrades.ArmorUpgradeItem;
 import com.black_dog20.jetboots.common.items.upgrades.BatteryUpgradeItem;
 import com.black_dog20.jetboots.common.items.upgrades.ConverterUpgradeItem;
-import com.black_dog20.jetboots.common.items.upgrades.ForcefieldArmorUpgradeItem;
 import com.black_dog20.jetboots.common.items.upgrades.ThrusterUpgradeItem;
 import com.black_dog20.jetboots.common.items.upgrades.UltimateConverterUpgradeItem;
 import com.black_dog20.jetboots.common.items.upgrades.UpgradeItem;
@@ -25,7 +24,6 @@ public class ModItems {
     public static final RegistryObject<Item> LEATHER_ARMOR_UPGRADE = ITEMS.register("leather_armor_upgrade", () -> new ArmorUpgradeItem(2, 0, Translations.LEATHER_ARMOR));
     public static final RegistryObject<Item> IRON_ARMOR_UPGRADE = ITEMS.register("iron_armor_upgrade", () -> new ArmorUpgradeItem(5, 0, Translations.IRON_ARMOR));
     public static final RegistryObject<Item> DIAMOND_ARMOR_UPGRADE = ITEMS.register("diamond_armor_upgrade", () -> new ArmorUpgradeItem(6, 4, Translations.DIAMOND_ARMOR));
-    public static final RegistryObject<Item> FORCEFIELD_ARMOR_UPGRADE = ITEMS.register("forcefield_armor_upgrade", () -> new ForcefieldArmorUpgradeItem(0.05, -1000));
     public static final RegistryObject<Item> ADVANCED_BATTERY_UPGRADE = ITEMS.register("advanced_battery_upgrade", () -> new BatteryUpgradeItem(3, Translations.ADVANCED_BATTERY_UPGRADE));
     public static final RegistryObject<Item> ELITE_BATTERY_UPGRADE = ITEMS.register("elite_battery_upgrade", () -> new BatteryUpgradeItem(6, Translations.ELITE_BATTERY_UPGRADE));
     public static final RegistryObject<Item> ULTIMATE_BATTERY_UPGRADE = ITEMS.register("ultimate_battery_upgrade", () -> new BatteryUpgradeItem(10, Translations.ULTIMATE_BATTERY_UPGRADE));
@@ -39,7 +37,5 @@ public class ModItems {
     public static final RegistryObject<Item> MUFFLED_UPGRADE = ITEMS.register("muffled_upgrade", () -> new UpgradeItem(Type.MUFFLED, Translations.MUFFLED_UPGRADE, Translations.MUFFLED_UPGRADE_INFO));
     public static final RegistryObject<Item> UNDERWATER_UPGRADE = ITEMS.register("underwater_upgrade", () -> new UpgradeItem(Type.UNDERWATER, Translations.UNDERWATER_UPGRADE, Translations.UNDERWATER_UPGRADE_INFO));
     public static final RegistryObject<Item> SOULBOUND_UPGRADE = ITEMS.register("soulbound_upgrade", () -> new UpgradeItem(Type.SOULBOUND, Translations.SOULBOUND_UPGRADE, Translations.SOULBOUND_UPGRADE_INFO));
-    public static final RegistryObject<Item> FORCEFIELD_GENERATOR = ITEMS.register("forcefield_generator", () -> new BaseItem(ITEM_GROUP));
-    public static final RegistryObject<Item> FORCEFIELD_PROJECTOR = ITEMS.register("forcefield_projector", () -> new BaseItem(ITEM_GROUP));
     public static final RegistryObject<Item> GUARDIAN_HELMET = ITEMS.register("guardian_helmet", () -> new GuardianHelmetItem(ITEM_GROUP.maxStackSize(1)));
 }

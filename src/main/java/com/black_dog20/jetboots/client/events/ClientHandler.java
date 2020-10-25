@@ -99,10 +99,6 @@ public class ClientHandler {
         List<ITextComponent> tooltips = e.getToolTip();
         if (item.equals(ModItems.GUARDIAN_HELMET.get()) && !Config.HELMET_LOOT.get()) {
             tooltips.add(TranslationHelper.translate(Translations.NO_CHANCE_TO_FIND));
-        } else if (item.equals(ModItems.FORCEFIELD_PROJECTOR.get()) && !Config.FORCEFIELD_PARTS_LOOT.get()) {
-            tooltips.add(TranslationHelper.translate(Translations.NO_CHANCE_TO_FIND));
-        } else if (item.equals(ModItems.FORCEFIELD_GENERATOR.get()) && !Config.FORCEFIELD_PARTS_LOOT.get()) {
-            tooltips.add(TranslationHelper.translate(Translations.NO_CHANCE_TO_FIND));
         }
     }
 

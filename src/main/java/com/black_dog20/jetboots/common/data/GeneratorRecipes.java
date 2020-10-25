@@ -218,18 +218,6 @@ public class GeneratorRecipes extends BaseRecipeProvider {
                 .addCriterion("has_jetboots", hasItem(JET_BOOTS.get()))
                 .build(consumer);
 
-        ShapedRecipeBuilder.shapedRecipe(FORCEFIELD_ARMOR_UPGRADE.get())
-                .key('g', Tags.Items.GLASS)
-                .key('f', FORCEFIELD_GENERATOR.get())
-                .key('p', FORCEFIELD_PROJECTOR.get())
-                .key('u', BASE_UPGRADE.get())
-                .key('n', Items.NETHER_STAR)
-                .patternLine("ggg")
-                .patternLine("fup")
-                .patternLine("gng")
-                .addCriterion("has_jetboots", hasItem(JET_BOOTS.get()))
-                .build(consumer);
-
         //Compat
         if (ModList.get().isLoaded(Cyclic.MOD_ID)) {
             registerCompatArmorUpgradeRecipe(Cyclic.MOD_ID, Cyclic.CRYSTAL_ARMOR_UPGRADE_CYCLIC.get(), Cyclic.CRYSTAL_BOOTS, consumer);

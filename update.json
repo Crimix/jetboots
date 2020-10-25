@@ -1,7 +1,7 @@
 {
   "homepage": "https://www.curseforge.com/minecraft/mc-mods/jet-boots",
   "1.15.2": {
-    "1.0.0": "https://github.com/Crimix/jetboots/blob/master/CHANGELOG.md"
+    "1.0.0": "https://github.com/Crimix/jetboots/blob/1.15/CHANGELOG.md"
   },
   "promos": {
     "1.15.2-latest": "1.0.0",

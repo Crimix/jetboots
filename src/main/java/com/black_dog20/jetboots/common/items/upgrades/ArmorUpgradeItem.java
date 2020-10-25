@@ -41,11 +41,6 @@ public class ArmorUpgradeItem extends UpgradeItem implements IArmorUpgrade {
     }
 
     @Override
-    public ArmorType getArmorUpgradeType() {
-        return ArmorType.NORMAL;
-    }
-
-    @Override
     public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltips, ITooltipFlag flag) {
         super.addInformation(stack, world, tooltips, flag);
 
