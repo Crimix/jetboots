@@ -17,17 +17,20 @@ public class ArmorUpgradeItem extends UpgradeItem implements IArmorUpgrade {
 
     protected final double armor;
     protected final double toughness;
+    protected final double knockbackResistance;
 
-    public ArmorUpgradeItem(double armor, double toughness, ITranslation tooltip) {
+    public ArmorUpgradeItem(double armor, double toughness, double knockbackResistance, ITranslation tooltip) {
         super(Type.ARMOR, tooltip, Translations.ARMOR_INFO);
         this.armor = armor;
         this.toughness = toughness;
+        this.knockbackResistance = knockbackResistance;
     }
 
-    public ArmorUpgradeItem(double armor, double toughness, ITranslation tooltip, Properties builder) {
+    public ArmorUpgradeItem(double armor, double toughness, double knockbackResistance, ITranslation tooltip, Properties builder) {
         super(Type.ARMOR, tooltip, Translations.ARMOR_INFO, builder);
         this.armor = armor;
         this.toughness = toughness;
+        this.knockbackResistance = knockbackResistance;
     }
 
     @Override
@@ -41,11 +44,18 @@ public class ArmorUpgradeItem extends UpgradeItem implements IArmorUpgrade {
     }
 
     @Override
+    public double getKnockbackResistance() {
+        return knockbackResistance;
+    }
+
+    @Override
     public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltips, ITooltipFlag flag) {
         super.addInformation(stack, world, tooltips, flag);
 
         tooltips.add(TranslationHelper.translate(Translations.ARMOR_VALUE, (int) getArmor()));
         if (getToughness() > 0)
             tooltips.add(TranslationHelper.translate(Translations.TOUGHNESS_VALUE, (int) getToughness()));
+        if (getToughness() > 0)
+            tooltips.add(TranslationHelper.translate(Translations.KNOCKBACK_RESISTANCE_VALUE, ((int) getKnockbackResistance()) * 10));
     }
 }

@@ -11,22 +11,12 @@ import com.black_dog20.jetboots.common.network.packets.PacketSyncStopSound;
 import com.black_dog20.jetboots.common.util.EnergyUtil;
 import com.black_dog20.jetboots.common.util.JetBootsProperties;
 import com.black_dog20.jetboots.common.util.ModUtils;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.SoundType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.player.PlayerFlyableFallEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
@@ -56,20 +46,20 @@ public class FlyingHandler {
         if (event.isArmorEqualTo(ModItems.JET_BOOTS.get())) {
             // To render elytra flight correct
             if (event.phase == TickEvent.Phase.END) {
-                if (useElytraFlight(player, jetboots)) {
-                    player.func_226567_ej_(); // Start elytra flight pose
+                if (ModUtils.canUseElytraFlight(player)) {
+                    player.startFallFlying(); // Start elytra flight pose
                 }
                 return;
             }
 
             if (ModUtils.canFlyWithBoots(player)) {
                 // Enable allow flying if not using elytra flight
-                if (!player.abilities.allowFlying && !useElytraFlight(player, jetboots)) {
+                if (!player.abilities.allowFlying && !ModUtils.useElytraFlight(player, jetboots) && !player.isElytraFlying()) {
                     player.abilities.allowFlying = true;
                     player.sendPlayerAbilities();
                 }
 
-                if (useElytraFlight(player, jetboots)) {
+                if (ModUtils.useElytraFlight(player, jetboots)) {
                     if (event.side == LogicalSide.SERVER)
                         drawpower(player, jetboots);
                     doElytraFlight(player, jetboots);
@@ -104,10 +94,6 @@ public class FlyingHandler {
         }
     }
 
-    private static boolean useElytraFlight(PlayerEntity player, ItemStack jetboots) {
-        return JetBootsProperties.hasEngineUpgrade(jetboots) && JetBootsProperties.getMode(jetboots) && (isTwoBlocksOverGround(player) || (player.isInWater() && JetBootsProperties.hasUnderWaterUpgrade(jetboots)));
-    }
-
     private static void sendSoundAndPartical(ArmorEvent.Tick event, PlayerEntity player, ItemStack jetboots) {
         if (event.side == LogicalSide.SERVER) {
             if (ModUtils.isFlying(player)) {
@@ -126,7 +112,7 @@ public class FlyingHandler {
     }
 
     private static void stopElytraFlight(PlayerEntity player) {
-        player.func_226568_ek_(); // Stop elytra flight pose
+        player.stopFallFlying(); // Stop elytra flight pose
         player.abilities.allowFlying = true;
         if (player.getPersistentData().getBoolean(WAS_FLYING_BEFORE)) {
             player.abilities.isFlying = true;
@@ -143,13 +129,13 @@ public class FlyingHandler {
             player.abilities.isFlying = false;
             player.sendPlayerAbilities();
         }
-        player.func_226567_ej_(); // Start elytra flight pose
-        Vec3d vec3d = player.getLookVec();
+        player.startFallFlying(); // Start elytra flight pose
+        Vector3d vec3d = player.getLookVec();
         double d0 = 1.5D;
         double d1 = 0.1D;
         double d2 = 0.5D;
         double d3 = 3D;
-        Vec3d vec3d1 = player.getMotion();
+        Vector3d vec3d1 = player.getMotion();
         double speed = getSpeed(player, jetboots, d0, d2);
         player.setMotion(vec3d1.add(vec3d.x * d1 + (vec3d.x * speed - vec3d1.x) * d2, vec3d.y * d1 + (vec3d.y * speed - vec3d1.y) * d2, vec3d.z * d1 + (vec3d.z * speed - vec3d1.z) * d2));
     }
@@ -159,64 +145,6 @@ public class FlyingHandler {
             jetboots.getCapability(CapabilityEnergy.ENERGY, null)
                     .ifPresent(e -> EnergyUtil.extractOrReceive(e, EnergyUtil.getEnergyWhileFlying(jetboots)));
         }
-    }
-
-    public static boolean isTwoBlocksOverGround(PlayerEntity player) {
-        if (player.isInWater()) {
-            return true;
-        }
-
-        BlockPos blockPos = new BlockPos(player);
-        for (int i = 0; i < 3; i++) {
-            if (player.world.isAirBlock(blockPos.down()))
-                blockPos = blockPos.down();
-            else
-                break;
-        }
-
-        return blockPos.distanceSq(player.getPosX(), player.getPosY(), player.getPosZ(), false) > 1.9;
-    }
-
-    @SubscribeEvent
-    public static void onPlayerFlyFall(PlayerFlyableFallEvent event) {
-        PlayerEntity player = event.getPlayer();
-        if (ModUtils.hasJetBoots(player)) {
-            ItemStack jetboots = ModUtils.getJetBoots(player);
-            if (!JetBootsProperties.hasShockUpgrade(jetboots)) {
-                int i = calc(player, event.getDistance(), event.getMultiplier());
-                if (i > 0) {
-                    player.playSound(getFallSound(i), 1.0F, 1.0F);
-                    playFallSound(player);
-                    player.attackEntityFrom(DamageSource.FALL, (float) i);
-                }
-            }
-        }
-    }
-
-
-    private static void playFallSound(PlayerEntity player) {
-        if (!player.isSilent()) {
-            int i = MathHelper.floor(player.getPosX());
-            int j = MathHelper.floor(player.getPosY() - (double) 0.2F);
-            int k = MathHelper.floor(player.getPosZ());
-            BlockPos pos = new BlockPos(i, j, k);
-            BlockState blockstate = player.world.getBlockState(pos);
-            if (!blockstate.isAir(player.world, pos)) {
-                SoundType soundtype = blockstate.getSoundType(player.world, pos, player);
-                player.playSound(soundtype.getFallSound(), soundtype.getVolume() * 0.5F, soundtype.getPitch() * 0.75F);
-            }
-
-        }
-    }
-
-    private static int calc(PlayerEntity player, float distance, float damageMultiplier) {
-        EffectInstance effectinstance = player.getActivePotionEffect(Effects.JUMP_BOOST);
-        float f = effectinstance == null ? 0.0F : (float) (effectinstance.getAmplifier() + 1);
-        return MathHelper.ceil((distance - 3.0F - f) * damageMultiplier);
-    }
-
-    private static SoundEvent getFallSound(int heightIn) {
-        return heightIn > 4 ? SoundEvents.ENTITY_PLAYER_BIG_FALL : SoundEvents.ENTITY_PLAYER_SMALL_FALL;
     }
 
     private static double getSpeed(PlayerEntity player, ItemStack jetboots, double defaultSpeedAir, double defaultSpeedUnderWater) {

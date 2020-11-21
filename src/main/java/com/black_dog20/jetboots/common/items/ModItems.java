@@ -21,9 +21,10 @@ public class ModItems {
 
     public static final RegistryObject<Item> JET_BOOTS = ITEMS.register("jetboots", () -> new JetBootsItem(ITEM_GROUP.maxStackSize(1)));
     public static final RegistryObject<Item> BASE_UPGRADE = ITEMS.register("base_upgrade", () -> new BaseItem(ITEM_GROUP));
-    public static final RegistryObject<Item> LEATHER_ARMOR_UPGRADE = ITEMS.register("leather_armor_upgrade", () -> new ArmorUpgradeItem(2, 0, Translations.LEATHER_ARMOR));
-    public static final RegistryObject<Item> IRON_ARMOR_UPGRADE = ITEMS.register("iron_armor_upgrade", () -> new ArmorUpgradeItem(5, 0, Translations.IRON_ARMOR));
-    public static final RegistryObject<Item> DIAMOND_ARMOR_UPGRADE = ITEMS.register("diamond_armor_upgrade", () -> new ArmorUpgradeItem(6, 4, Translations.DIAMOND_ARMOR));
+    public static final RegistryObject<Item> LEATHER_ARMOR_UPGRADE = ITEMS.register("leather_armor_upgrade", () -> new ArmorUpgradeItem(2, 0, 0, Translations.LEATHER_ARMOR));
+    public static final RegistryObject<Item> IRON_ARMOR_UPGRADE = ITEMS.register("iron_armor_upgrade", () -> new ArmorUpgradeItem(5, 0, 0, Translations.IRON_ARMOR));
+    public static final RegistryObject<Item> DIAMOND_ARMOR_UPGRADE = ITEMS.register("diamond_armor_upgrade", () -> new ArmorUpgradeItem(6, 4, 0, Translations.DIAMOND_ARMOR));
+    public static final RegistryObject<Item> NETHERITE_ARMOR_UPGRADE = ITEMS.register("netherite_armor_upgrade", () -> new ArmorUpgradeItem(8, 6, 2, Translations.NETHERITE_ARMOR));
     public static final RegistryObject<Item> ADVANCED_BATTERY_UPGRADE = ITEMS.register("advanced_battery_upgrade", () -> new BatteryUpgradeItem(3, Translations.ADVANCED_BATTERY_UPGRADE));
     public static final RegistryObject<Item> ELITE_BATTERY_UPGRADE = ITEMS.register("elite_battery_upgrade", () -> new BatteryUpgradeItem(6, Translations.ELITE_BATTERY_UPGRADE));
     public static final RegistryObject<Item> ULTIMATE_BATTERY_UPGRADE = ITEMS.register("ultimate_battery_upgrade", () -> new BatteryUpgradeItem(10, Translations.ULTIMATE_BATTERY_UPGRADE));

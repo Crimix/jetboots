@@ -14,6 +14,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.energy.CapabilityEnergy;
 
@@ -32,7 +33,7 @@ public class JetBootsScreen extends ContainerScreen<JetBootsContainer> {
     @Override
     protected void init() {
         super.init();
-        Button button = new SmallButton(width / 2 + 70, height / 2 - 80, 10, 10, "I", this::onIconPress);
+        Button button = new SmallButton(width / 2 + 70, height / 2 - 80, 10, 10, new StringTextComponent("I"), this::onIconPress);
         addButton(button);
     }
 

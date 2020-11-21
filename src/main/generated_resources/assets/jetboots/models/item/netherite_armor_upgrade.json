@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/handheld",
   "textures": {
-    "layer0": "jetboots:item/guardian_helmet"
+    "layer0": "jetboots:item/netherite_armor_upgrade"
   }
 }

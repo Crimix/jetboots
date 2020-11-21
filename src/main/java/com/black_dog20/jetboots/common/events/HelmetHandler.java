@@ -8,6 +8,7 @@ import com.black_dog20.jetboots.common.util.ModUtils;
 import com.google.common.collect.ImmutableSet;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
@@ -26,6 +27,7 @@ public class HelmetHandler {
 
     private final static String USING_NIGHT_VISION = "guardian_helmet_night_vision";
     private static final Set<DamageSource> HELMET_SOURCES = ImmutableSet.of(DamageSource.DROWN, DamageSource.WITHER);
+    private static final Set<Effect> HELMET_EFFECTS_REMOVED = ImmutableSet.of(Effects.WITHER);
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onPlayerAttack(LivingAttackEvent event) {
@@ -64,9 +66,10 @@ public class HelmetHandler {
                 if (player.isInWater()) {
                     player.setAir(player.getMaxAir());
                 }
-                if (player.isPotionActive(Effects.WITHER)) {
-                    player.removePotionEffect(Effects.WITHER);
-                }
+
+                HELMET_EFFECTS_REMOVED.stream()
+                        .filter(player::isPotionActive)
+                        .forEach(player::removePotionEffect);
             }
         }
     }

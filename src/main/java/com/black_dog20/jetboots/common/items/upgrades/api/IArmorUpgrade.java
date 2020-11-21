@@ -18,13 +18,10 @@ public interface IArmorUpgrade extends IUpgrade {
     double getToughness();
 
     /***
-     * The reduction in knockback the upgrade.
-     * Should be a value between 0.0 and 1.0 where 1 means no reduction.
-     * @return the knockback reduction.
+     * The armor knockback resistance of the upgrade.
+     * @return knockback resistanc.
      */
-    default double getKnockBackReduction() {
-        return 1;
-    }
+    double getKnockbackResistance();
 
     /***
      * Returns weather or not this upgrade provides protection based on the boots.

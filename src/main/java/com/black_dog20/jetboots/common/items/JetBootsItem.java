@@ -15,13 +15,15 @@ import com.black_dog20.jetboots.common.util.JetBootsItemHandler;
 import com.black_dog20.jetboots.common.util.JetBootsProperties;
 import com.black_dog20.jetboots.common.util.ModUtils;
 import com.black_dog20.jetboots.common.util.TranslationHelper;
+import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -67,13 +69,15 @@ public class JetBootsItem extends BaseArmorItem implements ISoulbindable {
     }
 
     @Override
-    public Multimap<String, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack stack) {
-        Multimap<String, AttributeModifier> multimap = super.getAttributeModifiers(slot);
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack stack) {
+        Multimap<Attribute, AttributeModifier> multimap = HashMultimap.create(super.getAttributeModifiers(slot));
         if (slot == this.slot) {
-            MultiMapHelper.removeValues(multimap, SharedMonsterAttributes.ARMOR.getName(), ARMOR_MODIFIERS[slot.getIndex()]);
-            MultiMapHelper.removeValues(multimap, SharedMonsterAttributes.ARMOR_TOUGHNESS.getName(), ARMOR_MODIFIERS[slot.getIndex()]);
-            multimap.put(SharedMonsterAttributes.ARMOR.getName(), new AttributeModifier(ARMOR_MODIFIERS[slot.getIndex()], "Armor modifier", getJetBootsDamageReduceAmount(stack), AttributeModifier.Operation.ADDITION));
-            multimap.put(SharedMonsterAttributes.ARMOR_TOUGHNESS.getName(), new AttributeModifier(ARMOR_MODIFIERS[slot.getIndex()], "Armor toughness", getJetBootsToughness(stack), AttributeModifier.Operation.ADDITION));
+            MultiMapHelper.removeValues(multimap, Attributes.ARMOR, ARMOR_MODIFIERS[slot.getIndex()]);
+            MultiMapHelper.removeValues(multimap, Attributes.ARMOR_TOUGHNESS, ARMOR_MODIFIERS[slot.getIndex()]);
+            MultiMapHelper.removeValues(multimap, Attributes.KNOCKBACK_RESISTANCE, ARMOR_MODIFIERS[slot.getIndex()]);
+            multimap.put(Attributes.ARMOR, new AttributeModifier(ARMOR_MODIFIERS[slot.getIndex()], "Armor modifier", getJetBootsDamageReduceAmount(stack), AttributeModifier.Operation.ADDITION));
+            multimap.put(Attributes.ARMOR_TOUGHNESS, new AttributeModifier(ARMOR_MODIFIERS[slot.getIndex()], "Armor toughness", getJetBootsToughness(stack), AttributeModifier.Operation.ADDITION));
+            multimap.put(Attributes.KNOCKBACK_RESISTANCE, new AttributeModifier(ARMOR_MODIFIERS[slot.getIndex()], "Armor knockback resistance", getKnockbackResistance(stack), AttributeModifier.Operation.ADDITION));
         }
 
         return multimap;
@@ -90,6 +94,13 @@ public class JetBootsItem extends BaseArmorItem implements ISoulbindable {
         return JetBootsProperties.getArmorUpgrade(stack)
                 .filter(upgrade -> upgrade.providesProtection(stack))
                 .map(IArmorUpgrade::getToughness)
+                .orElse(0.0);
+    }
+
+    private double getKnockbackResistance(ItemStack stack) {
+        return JetBootsProperties.getArmorUpgrade(stack)
+                .filter(upgrade -> upgrade.providesProtection(stack))
+                .map(IArmorUpgrade::getKnockbackResistance)
                 .orElse(0.0);
     }
 
@@ -122,11 +133,11 @@ public class JetBootsItem extends BaseArmorItem implements ISoulbindable {
             }
 
             if (JetBootsProperties.hasEngineUpgrade(stack)) {
-                tooltip.add(ModUtils.getFlightModeText(stack));
+                tooltip.add(ModUtils.getFlightModeText(stack, TextFormatting.GRAY));
             }
 
             if (JetBootsProperties.hasThrusterUpgrade(stack)) {
-                tooltip.add(ModUtils.getFlightSpeedText(stack));
+                tooltip.add(ModUtils.getFlightSpeedText(stack, TextFormatting.GRAY));
             }
 
             tooltip.add(new TranslationTextComponent(""));
@@ -229,7 +240,7 @@ public class JetBootsItem extends BaseArmorItem implements ISoulbindable {
                     }
                 });
             }
-            return ActionResult.func_226248_a_(player.getHeldItem(hand));
+            return ActionResult.resultPass(player.getHeldItem(hand));
         }
         return super.onItemRightClick(world, player, hand);
     }

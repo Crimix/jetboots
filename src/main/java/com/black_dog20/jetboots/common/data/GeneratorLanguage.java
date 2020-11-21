@@ -32,6 +32,7 @@ public class GeneratorLanguage extends BaseLanguageProvider {
         addItem(ModItems.LEATHER_ARMOR_UPGRADE, "Leather Armor Upgrade");
         addItem(ModItems.IRON_ARMOR_UPGRADE, "Iron Armor Upgrade");
         addItem(ModItems.DIAMOND_ARMOR_UPGRADE, "Diamond Armor Upgrade");
+        addItem(ModItems.NETHERITE_ARMOR_UPGRADE, "Netherite Armor Upgrade");
         addItem(ModItems.ADVANCED_BATTERY_UPGRADE, "Advanced Battery Upgrade");
         addItem(ModItems.ELITE_BATTERY_UPGRADE, "Elite Battery Upgrade");
         addItem(ModItems.ULTIMATE_BATTERY_UPGRADE, "Ultimate Battery Upgrade");
@@ -58,6 +59,7 @@ public class GeneratorLanguage extends BaseLanguageProvider {
         addPrefixed(LEATHER_ARMOR, "Armored: Leather", TextFormatting.GRAY);
         addPrefixed(IRON_ARMOR, "Armored: Iron", TextFormatting.GRAY);
         addPrefixed(DIAMOND_ARMOR, "Armored: Diamond", TextFormatting.BLUE);
+        addPrefixed(NETHERITE_ARMOR, "Armored: Netherite", TextFormatting.DARK_PURPLE);
         addPrefixed(ENGINE_UPGRADE, "Upgraded engine", TextFormatting.GRAY);
         addPrefixed(THRUSTER_UPGRADE, "Upgraded thruster", TextFormatting.GRAY);
         addPrefixed(SHOCK_ABSORBER_UPGRADE, "Shock absorber", TextFormatting.GRAY);
@@ -85,9 +87,9 @@ public class GeneratorLanguage extends BaseLanguageProvider {
 
         addPrefixed(CHANGE_FLIGHT_MODE, "Use %s to change flight mode");
         addPrefixed(CHANGE_SPEED_MODE, "Use %s to change speed");
-        addPrefixed(FLIGHT_MODE, "Flight mode: %s");
+        addPrefixed(FLIGHT_MODE, "Flight mode");
         addPrefixed(STORED_ENERGY, "Energy: %d/%d");
-        addPrefixed(SPEED_MODE, "Speed: %s");
+        addPrefixed(SPEED_MODE, "Speed");
         addPrefixed(NORMAL, "Normal");
         addPrefixed(BASIC, "Basic");
         addPrefixed(ADVANCED, "Advanced");
@@ -111,14 +113,14 @@ public class GeneratorLanguage extends BaseLanguageProvider {
         addPrefixed(CHANGE_HELMET_MODE, "Use %s to change helmet mode");
         addPrefixed(CHANGE_HELMET_NIGHT_VISION, "Use %s to toggle night vision");
         addPrefixed(HELMET_INFO, "Protects against air loss and other ill effects when materialized");
-        addPrefixed(HELMET_MODE, "Guardian Helmet: %s");
+        addPrefixed(HELMET_MODE, "Guardian Helmet");
         addPrefixed(MATERIALIZED, "Materialized");
         addPrefixed(DEMATERIALIZED, "Dematerialized");
-        addPrefixed(CANNOT_EAT_WHILE_MATERIALIZED, "You cannot " + style("eat", TextFormatting.LIGHT_PURPLE) + " or " + style("drink", TextFormatting.LIGHT_PURPLE) + " while the helmet is materialized");
         addPrefixed(ARMOR_VALUE, "Armor: %d", TextFormatting.BLUE);
         addPrefixed(TOUGHNESS_VALUE, "Toughness: %d", TextFormatting.BLUE);
+        addPrefixed(KNOCKBACK_RESISTANCE_VALUE, "Knockback Resistance: %d", TextFormatting.BLUE);
         addPrefixed(NO_CHANCE_TO_FIND, "There are no chance to find this item!", TextFormatting.RED);
-        addPrefixed(HELMET_NIGHT_VISION, "Night Vision: %s");
+        addPrefixed(HELMET_NIGHT_VISION, "Night Vision");
         addPrefixed(POWER_LOW, "WARNING Jet boots power low!!", TextFormatting.RED);
         addPrefixed(ON, "On");
         addPrefixed(OFF, "Off");
