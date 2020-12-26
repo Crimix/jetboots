@@ -3,7 +3,6 @@ package com.black_dog20.jetboots.common.events;
 import com.black_dog20.bml.event.ArmorEvent;
 import com.black_dog20.jetboots.Jetboots;
 import com.black_dog20.jetboots.common.items.ModItems;
-import com.black_dog20.jetboots.common.items.upgrades.api.IThrusterUpgrade;
 import com.black_dog20.jetboots.common.network.PacketHandler;
 import com.black_dog20.jetboots.common.network.packets.PacketSyncPartical;
 import com.black_dog20.jetboots.common.network.packets.PacketSyncSound;
@@ -14,7 +13,6 @@ import com.black_dog20.jetboots.common.util.ModUtils;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -23,10 +21,10 @@ import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.network.PacketDistributor;
 
+import static com.black_dog20.jetboots.common.util.NBTTags.*;
+
 @Mod.EventBusSubscriber(modid = Jetboots.MOD_ID)
 public class FlyingHandler {
-
-    private final static String WAS_FLYING_BEFORE = "jetboots-flying-before-elytra";
 
     @SubscribeEvent
     public static void onEquipJetboots(ArmorEvent.Equip event) {
@@ -98,7 +96,7 @@ public class FlyingHandler {
         if (event.side == LogicalSide.SERVER) {
             if (ModUtils.isFlying(player)) {
                 PacketHandler.NETWORK.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> player), new PacketSyncPartical(player.getUniqueID(), player.abilities.isFlying));
-                if (!JetBootsProperties.hasMuffledUpgrade(jetboots)) {
+                if (!JetBootsProperties.hasActiveMuffledUpgrade(jetboots)) {
                     if (!player.isInWater()) {
                         PacketHandler.NETWORK.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> player), new PacketSyncSound(player.getUniqueID()));
                     } else {
@@ -136,7 +134,7 @@ public class FlyingHandler {
         double d2 = 0.5D;
         double d3 = 3D;
         Vector3d vec3d1 = player.getMotion();
-        double speed = getSpeed(player, jetboots, d0, d2);
+        double speed = getSpeed(player, jetboots);
         player.setMotion(vec3d1.add(vec3d.x * d1 + (vec3d.x * speed - vec3d1.x) * d2, vec3d.y * d1 + (vec3d.y * speed - vec3d1.y) * d2, vec3d.z * d1 + (vec3d.z * speed - vec3d1.z) * d2));
     }
 
@@ -147,14 +145,12 @@ public class FlyingHandler {
         }
     }
 
-    private static double getSpeed(PlayerEntity player, ItemStack jetboots, double defaultSpeedAir, double defaultSpeedUnderWater) {
+    private static double getSpeed(PlayerEntity player, ItemStack jetboots) {
         boolean inWater = player.isInWater();
-        LazyOptional<IThrusterUpgrade> upgrade = JetBootsProperties.getThrusterUpgrade(jetboots);
-        IThrusterUpgrade thrusterUpgrade = upgrade.orElse(null);
 
-        if (thrusterUpgrade != null && JetBootsProperties.getSpeed(jetboots))
-            return inWater ? thrusterUpgrade.getSpeedUnderWater() : thrusterUpgrade.getSpeed();
+        if (JetBootsProperties.hasThrusterUpgrade(jetboots) && JetBootsProperties.getSpeed(jetboots))
+            return inWater ? 1.5D : 3D;
         else
-            return inWater ? defaultSpeedUnderWater : defaultSpeedAir;
+            return inWater ? 0.5D : 1.5D;
     }
 }

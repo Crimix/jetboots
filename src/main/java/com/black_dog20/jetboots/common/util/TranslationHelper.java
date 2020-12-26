@@ -1,20 +1,17 @@
 package com.black_dog20.jetboots.common.util;
 
+import com.black_dog20.bml.utils.text.TextComponentBuilder;
 import com.black_dog20.bml.utils.translate.ITranslation;
 import com.black_dog20.bml.utils.translate.TranslationUtil;
 import com.black_dog20.jetboots.Jetboots;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
 
 public class TranslationHelper extends TranslationUtil {
     public enum Translations implements ITranslation {
-        SHOW_UPGRADES("tooltip.item.show_upgrades"),
-        SHOW_ENERGY("tooltip.item.show_energy"),
-        OPEN_UPGRADES("tooltip.item.open_upgrades"),
-        UPGRADES("tooltip.item.upgrades"),
-        ARMOR_INFO("tooltip.item.armor_upgrade_info"),
-        LEATHER_ARMOR("tooltip.item.leather_armor_upgrade"),
-        IRON_ARMOR("tooltip.item.iron_armor_upgrade"),
-        DIAMOND_ARMOR("tooltip.item.diamond_armor_upgrade"),
-        NETHERITE_ARMOR("tooltip.item.netherite_armor_upgrade"),
+        SHOW_MORE_INFO("tooltip.item.show_upgrades"),
+        OPEN_CONTAINER("tooltip.item.open_upgrades"),
         ENGINE_UPGRADE("tooltip.item.engine_upgrade"),
         ENGINE_UPGRADE_INFO("tooltip.item.engine_upgrade.info"),
         THRUSTER_UPGRADE("tooltip.item.thruster_upgrade"),
@@ -23,20 +20,8 @@ public class TranslationHelper extends TranslationUtil {
         SHOCK_ABSORBER_UPGRADE_INFO("tooltip.item.shock_absorber_upgrade.info"),
         UNDERWATER_UPGRADE("tooltip.item.underwater_upgrade"),
         UNDERWATER_UPGRADE_INFO("tooltip.item.underwater_upgrade.info"),
-        SOULBOUND_UPGRADE("tooltip.item.soulbound_upgrade"),
-        SOULBOUND_UPGRADE_INFO("tooltip.item.soulbound_upgrade.info"),
         MUFFLED_UPGRADE("tooltip.item.muffled_upgrade"),
         MUFFLED_UPGRADE_INFO("tooltip.item.muffled_upgrade.info"),
-        BATTERY_UPGRADE_INFO("tooltip.item.battery_upgrade.info"),
-        BASIC_BATTERY_UPGRADE("tooltip.item.basic_battery_upgrade"),
-        ADVANCED_BATTERY_UPGRADE("tooltip.item.advanced_battery_upgrade"),
-        ELITE_BATTERY_UPGRADE("tooltip.item.elite_battery_upgrade"),
-        ULTIMATE_BATTERY_UPGRADE("tooltip.item.ultimate_battery_upgrade"),
-        CONVERTER_UPGRADE_INFO("tooltip.item.converter_upgrade_info"),
-        BASIC_CONVERTER_UPGRADE("tooltip.item.basic_converter_upgrade"),
-        ADVANCED_CONVERTER_UPGRADE("tooltip.item.advanced_converter_upgrade"),
-        ELITE_CONVERTER_UPGRADE("tooltip.item.elite_converter_upgrade"),
-        ULTIMATE_CONVERTER_UPGRADE("tooltip.item.ultimate_converter_upgrade"),
 
         CHANGE_FLIGHT_MODE("tooltip.item.change_flight_mode"),
         CHANGE_SPEED_MODE("tooltip.item.change_speed_mode"),
@@ -44,32 +29,20 @@ public class TranslationHelper extends TranslationUtil {
         STORED_ENERGY("tooltip.item.stored_energy"),
         SPEED_MODE("tooltip.item.speed_mode"),
         NORMAL("tooltip.item.normal"),
-        BASIC("tooltip.item.basic"),
-        ADVANCED("tooltip.item.advanced"),
         SUPER("tooltip.item.super"),
         ELYTRA("tooltip.item.elytra"),
-        ENERGY_USE_MORE("tooltip.item.energy_use_more"),
-        ENERGY_USE_LESS("tooltip.item.energy_use_less"),
-        ENERGY_USE_DRAW("tooltip.item.energy_use_draw"),
-        ENERGY_USE_GENERATE("tooltip.item.energy_use_generate"),
-        ENERGY_HIT_DRAW("tooltip.item.energy_hit_draw"),
-        ENERGY_HIT_GENERATE("tooltip.item.energy_hit_generate"),
-        ENERGY_HURT_DRAW("tooltip.item.energy_hurt_draw"),
-        ENERGY_HURT_GENERATE("tooltip.item.energy_hurt_generate"),
-        ENERGY_WALK_DRAW("tooltip.item.energy_walk_draw"),
-        ENERGY_WALK_GENERATE("tooltip.item.energy_walk_generate"),
+        SOULBOUND("tooltip.item.soulbound"),
         FLYING_ENERGY("tooltip.item.energy_flying"),
-        HIT_ENERGY("tooltip.item.energy_hit"),
-        HURT_ENERGY("tooltip.item.energy_hurt"),
-        WALKING_ENERGY("tooltip.item.energy_walking"),
         JETBOOTS_UPGRADES("tooltip.item.jetboots_upgrade_screen"),
         CHANGE_HELMET_MODE("tooltip.item.change_helmet_mode"),
         CHANGE_HELMET_NIGHT_VISION("tooltip.item.change_helmet_night_vision"),
         HELMET_INFO("tooltip.item.helmet_info"),
-        ARMOR_VALUE("tooltip.item.armor_upgrade.armor"),
-        TOUGHNESS_VALUE("tooltip.item.armor_upgrade.toughness"),
-        KNOCKBACK_RESISTANCE_VALUE("tooltip.item.armor_upgrade.knockback"),
-        NO_CHANCE_TO_FIND("tooltip.item.no_chance"),
+
+        NOT_LEVELABLE("tooltip.item.not_able_to_level"),
+        MAX_LEVEL("tooltip.item.max_level"),
+        LEVEL("tooltip.item.level"),
+        PROGRESS("tooltip.item.level_progress"),
+        SOULBOUND_ACHIEVED("tooltip.item.soulbound_achieved"),
 
         HELMET_MODE("msg.helmet_mode"),
         HELMET_NIGHT_VISION("msg.helmet_night_vision"),
@@ -102,18 +75,28 @@ public class TranslationHelper extends TranslationUtil {
     }
 
     public enum Compat implements ITranslation {
-        EMERALD_ARMOR_CYCLIC("tooltip.item.emerald_armor_upgrade_cyclic"),
-        CRYSTAL_ARMOR_CYCLIC("tooltip.item.crystal_armor_upgrade_cyclic"),
+        WIRELESS_CRAFTING_USE("tooltip.item.refinedstorage_use_wireless_crafting"),
+        WIRELESS_CRAFTING_UPGRADE("tooltip.item.refinedstorage_wireless_crafting_upgrade"),
+        WIRELESS_CRAFTING_UPGRADE_INFO("tooltip.item.refinedstorage_wireless_crafting_upgrade_info"),
+        WIRELESS_RANGE_UPGRADE("tooltip.item.refinedstorage_wireless_range_upgrade"),
+        WIRELESS_RANGE_UPGRADE_INFO("tooltip.item.refinedstorage_wireless_range_upgrade_info"),
+        WIRELESS_RANGE_UPGRADE_INFO_2("tooltip.item.refinedstorage_wireless_range_upgrade_info_2"),
+        WIRELESS_CRAFTING_UPGRADE_NOT_INSTALLED("tooltip.item.refinedstorage_wireless_crafting_upgrade_not_installed"),
+        NETWORK_LINKED("tooltip.item.refinedstorage_network_linked"),
+        NOT_LINKED_TO_NETWORK("tooltip.item.refinedstorage_not_linked"),
 
-        BRONZE_ARMOR_MEKANISM("tooltip.item.bronze_armor_upgrade_mekanism"),
-        LAPIS_ARMOR_MEKANISM("tooltip.item.lapis_armor_upgrade_mekanism"),
-        OSMIUM_ARMOR_MEKANISM("tooltip.item.osmium_armor_upgrade_mekanism"),
-        REFINED_GLOWSTONE_ARMOR_MEKANISM("tooltip.item.refined_glowstone_armor_upgrade_mekanism"),
-        REFINED_OBSIDIAN_ARMOR_MEKANISM("tooltip.item.refined_obsidian_armor_upgrade_mekanism"),
-        STEEL_ARMOR_MEKANISM("tooltip.item.steel_armor_upgrade_mekanism");
+        RS_OUT_OF_RANGE("misc.refinedstorage", "network_item.out_of_range"),
+        RS_NETWORK_NOT_FOUND("misc.refinedstorage","network_item.not_found"),
+
+        ;
 
         Compat(String key) {
             this.modId = Jetboots.MOD_ID;
+            this.key = key;
+        }
+
+        Compat(String modId, String key) {
+            this.modId = modId;
             this.key = key;
         }
 
@@ -131,28 +114,17 @@ public class TranslationHelper extends TranslationUtil {
         }
     }
 
-    public enum JeiInfo implements ITranslation {
-        FORCEFIELD_GENERATOR("jei.info.item.forcefield_generator"),
-        FORCEFIELD_PROJECTOR("jei.info.item.forcefield_projector"),
-        GUARDING_HELMET("jei.info.item.guarding_helmet"),
-        ;
+    public static ITextComponent getLevelProgress(ItemStack stack) {
+        return getLevelProgress(stack, TextFormatting.GRAY);
+    }
 
-        JeiInfo(String key) {
-            this.modId = Jetboots.MOD_ID;
-            this.key = key;
-        }
-
-        private final String modId;
-        private final String key;
-
-        @Override
-        public String getKey() {
-            return key;
-        }
-
-        @Override
-        public String getModId() {
-            return modId;
-        }
+    public static ITextComponent getLevelProgress(ItemStack stack, TextFormatting baseColor) {
+        return TextComponentBuilder.of(Translations.LEVEL)
+                .format(baseColor)
+                .with(":")
+                .format(baseColor)
+                .space()
+                .with(LevelProperties.getXpToNextLevel(stack))
+                .build();
     }
 }

@@ -1,5 +1,7 @@
 package com.black_dog20.jetboots.mixin;
 
+import com.black_dog20.jetboots.common.util.JetBootsProperties;
+import com.black_dog20.jetboots.common.util.ModUtils;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -25,7 +27,12 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 
     @Inject(method = "onLivingFall(FF)Z", at = @At("HEAD"), cancellable = true)
     private void onLivingFallDamage(float distance, float damageMultiplier, CallbackInfoReturnable<Boolean> ci) {
-        if(((Object)this) instanceof PlayerEntity) {
+        if (((Object)this) instanceof PlayerEntity) {
+            PlayerEntity player = (PlayerEntity) (Object) this;
+            if (JetBootsProperties.hasShockUpgrade(ModUtils.getJetBoots(player))){
+                return;
+            }
+
             if (distance >= 2.0F) {
                 this.addStat(Stats.FALL_ONE_CM, (int)Math.round((double)distance * 100.0D));
             }

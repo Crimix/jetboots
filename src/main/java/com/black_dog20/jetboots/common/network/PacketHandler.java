@@ -1,6 +1,8 @@
 package com.black_dog20.jetboots.common.network;
 
 import com.black_dog20.jetboots.Jetboots;
+import com.black_dog20.jetboots.common.compat.refinedstorage.RefinedStorageCompat;
+import com.black_dog20.jetboots.common.compat.refinedstorage.network.packets.PacketOpenCraftingGrid;
 import com.black_dog20.jetboots.common.network.packets.PacketSyncPartical;
 import com.black_dog20.jetboots.common.network.packets.PacketSyncSound;
 import com.black_dog20.jetboots.common.network.packets.PacketSyncStopSound;
@@ -8,12 +10,14 @@ import com.black_dog20.jetboots.common.network.packets.PacketUpdateFlightMode;
 import com.black_dog20.jetboots.common.network.packets.PacketUpdateFlightSpeed;
 import com.black_dog20.jetboots.common.network.packets.PacketUpdateHelmetMode;
 import com.black_dog20.jetboots.common.network.packets.PacketUpdateHelmetVision;
+import com.black_dog20.jetboots.common.network.packets.PacketUpdateMuffledMode;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.FakePlayer;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.network.NetworkDirection;
 import net.minecraftforge.fml.network.NetworkEvent;
 import net.minecraftforge.fml.network.NetworkRegistry;
@@ -42,6 +46,10 @@ public class PacketHandler {
         registerMessage(PacketSyncStopSound.class, PacketSyncStopSound::encode, PacketSyncStopSound::decode, PacketSyncStopSound.Handler::handle);
         registerMessage(PacketUpdateHelmetMode.class, PacketUpdateHelmetMode::encode, PacketUpdateHelmetMode::decode, PacketUpdateHelmetMode.Handler::handle);
         registerMessage(PacketUpdateHelmetVision.class, PacketUpdateHelmetVision::encode, PacketUpdateHelmetVision::decode, PacketUpdateHelmetVision.Handler::handle);
+        registerMessage(PacketUpdateMuffledMode.class, PacketUpdateMuffledMode::encode, PacketUpdateMuffledMode::decode, PacketUpdateMuffledMode.Handler::handle);
+        if (ModList.get().isLoaded(RefinedStorageCompat.MOD_ID)) {
+            registerMessage(PacketOpenCraftingGrid.class, PacketOpenCraftingGrid::encode, PacketOpenCraftingGrid::decode, PacketOpenCraftingGrid.Handler::handle);
+        }
     }
 
     public static void sendTo(Object msg, ServerPlayerEntity player) {

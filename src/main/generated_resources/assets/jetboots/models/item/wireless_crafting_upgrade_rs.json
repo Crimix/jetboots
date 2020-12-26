@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "jetboots:item/wireless_crafting_upgrade_rs"
+  }
+}

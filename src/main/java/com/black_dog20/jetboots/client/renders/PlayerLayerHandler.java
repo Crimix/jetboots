@@ -16,7 +16,7 @@ public class PlayerLayerHandler {
         PlayerRenderer playerRendererDefault = Minecraft.getInstance().getRenderManager().getSkinMap().get("default");
         PlayerRenderer playerRendererSlim = Minecraft.getInstance().getRenderManager().getSkinMap().get("slim");
 
-        playerRendererDefault.addLayer(new GuardianHelmetLayerRender<>(playerRendererDefault));
-        playerRendererSlim.addLayer(new GuardianHelmetLayerRender<>(playerRendererSlim));
+        playerRendererDefault.addLayer(new GuardianHelmetLayerRender<>(playerRendererDefault, false));
+        playerRendererSlim.addLayer(new GuardianHelmetLayerRender<>(playerRendererSlim, true));
     }
 }

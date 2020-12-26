@@ -1,7 +1,7 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "oeo",
+    "geg",
     "oio",
     "bgb"
   ],
@@ -9,17 +9,17 @@
     "o": {
       "tag": "forge:obsidian"
     },
+    "g": {
+      "item": "jetboots:obsidian_infused_gold"
+    },
     "e": {
       "tag": "forge:gems/emerald"
     },
     "i": {
-      "item": "minecraft:iron_boots"
+      "item": "jetboots:armor_core"
     },
     "b": {
       "tag": "forge:rods/blaze"
-    },
-    "g": {
-      "tag": "forge:ingots/gold"
     }
   },
   "result": {

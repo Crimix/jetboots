@@ -1,0 +1,88 @@
+{
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "modid": "refinedstorage",
+          "type": "forge:mod_loaded"
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:crafting_shaped",
+        "pattern": [
+          "dtd",
+          "gcg",
+          "ded"
+        ],
+        "key": {
+          "d": {
+            "tag": "forge:gems/diamond"
+          },
+          "e": {
+            "tag": "forge:gems/emerald"
+          },
+          "g": {
+            "item": "jetboots:obsidian_infused_gold"
+          },
+          "c": {
+            "item": "jetboots:armor_core"
+          },
+          "t": [
+            {
+              "item": "refinedstorage:white_wireless_transmitter"
+            },
+            {
+              "item": "refinedstorage:orange_wireless_transmitter"
+            },
+            {
+              "item": "refinedstorage:magenta_wireless_transmitter"
+            },
+            {
+              "item": "refinedstorage:wireless_transmitter"
+            },
+            {
+              "item": "refinedstorage:yellow_wireless_transmitter"
+            },
+            {
+              "item": "refinedstorage:lime_wireless_transmitter"
+            },
+            {
+              "item": "refinedstorage:pink_wireless_transmitter"
+            },
+            {
+              "item": "refinedstorage:gray_wireless_transmitter"
+            },
+            {
+              "item": "refinedstorage:light_gray_wireless_transmitter"
+            },
+            {
+              "item": "refinedstorage:cyan_wireless_transmitter"
+            },
+            {
+              "item": "refinedstorage:purple_wireless_transmitter"
+            },
+            {
+              "item": "refinedstorage:blue_wireless_transmitter"
+            },
+            {
+              "item": "refinedstorage:brown_wireless_transmitter"
+            },
+            {
+              "item": "refinedstorage:green_wireless_transmitter"
+            },
+            {
+              "item": "refinedstorage:red_wireless_transmitter"
+            },
+            {
+              "item": "refinedstorage:black_wireless_transmitter"
+            }
+          ]
+        },
+        "result": {
+          "item": "jetboots:wireless_crafting_upgrade_rs"
+        }
+      }
+    }
+  ]
+}

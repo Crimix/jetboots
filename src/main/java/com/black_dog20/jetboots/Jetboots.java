@@ -5,6 +5,7 @@ import com.black_dog20.jetboots.client.sound.ModSounds;
 import com.black_dog20.jetboots.common.compat.ModCompat;
 import com.black_dog20.jetboots.common.items.ModItems;
 import com.black_dog20.jetboots.common.network.PacketHandler;
+import com.black_dog20.jetboots.common.recipe.ModRecipeSerializers;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
@@ -41,6 +42,7 @@ public class Jetboots {
         ModCompat.register(event);
         ModContainers.CONTAINERS.register(event);
         ModSounds.SOUNDS.register(event);
+        ModRecipeSerializers.RECIPE_SERIALIZERS.register(event);
 
         event.addListener(this::setup);
         MinecraftForge.EVENT_BUS.register(this);

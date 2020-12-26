@@ -26,7 +26,6 @@ buildscript {
 
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'com.matthewprenger.cursegradle'
-apply plugin: "com.wynprice.cursemaven"
 apply plugin: 'eclipse'
 //Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 
@@ -131,6 +130,9 @@ repositories {
         url = "https://minecraft.curseforge.com/api/maven/"
     }
     maven {
+        url "https://www.cursemaven.com"
+    }
+    maven {
         name = "GitHubPackages"
         url = uri("https://maven.pkg.github.com/crimix/bml")
         credentials {
@@ -152,14 +154,14 @@ dependencies {
     runtimeOnly fg.deobf("mezz.jei:jei-${jei_version}")
     compileOnly fg.deobf("com.black_dog20.bml:bml:${mc_version}-${bml_version}")
     runtimeOnly fg.deobf("com.black_dog20.bml:bml:${mc_version}-${bml_version}")
-    compileOnly fg.deobf("curse.maven:cyclic:3086233")
-    runtimeOnly fg.deobf("curse.maven:cyclic:3086233")
-    compileOnly fg.deobf("curse.maven:mekanism:3090945")
-    runtimeOnly fg.deobf("curse.maven:mekanism:3090945")
-    compileOnly fg.deobf("curse.maven:mekanism-tools:3090948")
-    runtimeOnly fg.deobf("curse.maven:mekanism-tools:3090948")
-    compileOnly fg.deobf("curse.maven:mekanism-generators:3090947")
-    runtimeOnly fg.deobf("curse.maven:mekanism-generators:3090947")
+    compileOnly fg.deobf("curse.maven:refined-storage-243076:3111240")
+    runtimeOnly fg.deobf("curse.maven:refined-storage-243076:3111240")
+    compileOnly fg.deobf("curse.maven:mekanism-268560:3090945")
+    runtimeOnly fg.deobf("curse.maven:mekanism-268560:3090945")
+    compileOnly fg.deobf("curse.maven:mekanism-tools-268567:3090948")
+    runtimeOnly fg.deobf("curse.maven:mekanism-tools-268567:3090948")
+    compileOnly fg.deobf("curse.maven:mekanism-generators-268566:3090947")
+    runtimeOnly fg.deobf("curse.maven:mekanism-generators-268566:3090947")
 }
 
 jar {
