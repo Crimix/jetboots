@@ -54,7 +54,7 @@ public class GuardianJacketItem extends BaseGuardianArmorItem {
     }
 
     private double getCustomDamageReduceAmount(ItemStack stack) {
-        return LevelProperties.calculateValue(4, 10, stack);
+        return LevelProperties.calculateValue(6, 10, stack);
     }
 
     private double getCustomToughness(ItemStack stack) {

@@ -43,9 +43,9 @@ public class GeneratorRecipes extends BaseRecipeProvider {
     @Override
     protected void registerRecipes(Consumer<IFinishedRecipe> consumer) {
 
-        SmithingRecipeBuilder.func_240502_a_(Ingredient.fromTag(Tags.Items.INGOTS_GOLD), Ingredient.fromTag(Tags.Items.OBSIDIAN), OBSIDIAN_INFUSED_GOLD.get())
-                .func_240503_a_("has_obsidian", hasItem(Tags.Items.OBSIDIAN))
-                .func_240505_a_(consumer, getRecipeId(OBSIDIAN_INFUSED_GOLD.get()));
+        SmithingRecipeBuilder.smithingRecipe(Ingredient.fromTag(Tags.Items.INGOTS_GOLD), Ingredient.fromTag(Tags.Items.OBSIDIAN), OBSIDIAN_INFUSED_GOLD.get())
+                .addCriterion("has_obsidian", hasItem(Tags.Items.OBSIDIAN))
+                .build(consumer, getRecipeId(OBSIDIAN_INFUSED_GOLD.get()));
 
         ShapedRecipeBuilder.shapedRecipe(ARMOR_CORE.get())
                 .key('o', OBSIDIAN_INFUSED_GOLD.get())

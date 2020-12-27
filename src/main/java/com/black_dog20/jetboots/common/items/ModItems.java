@@ -20,7 +20,7 @@ public class ModItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Jetboots.MOD_ID);
 
     public static final RegistryObject<Item> JET_BOOTS = ITEMS.register("jetboots", () -> new JetBootsItem(ITEM_GROUP.maxStackSize(1)));
-    public static final RegistryObject<Item> OBSIDIAN_INFUSED_GOLD = ITEMS.register("obsidian_infused_gold", () -> new BaseItem(ITEM_GROUP));
+    public static final RegistryObject<Item> OBSIDIAN_INFUSED_GOLD = ITEMS.register("obsidian_infused_gold", () -> new BaseItem(ITEM_GROUP.maxStackSize(64)));
     public static final RegistryObject<Item> ARMOR_CORE = ITEMS.register("armor_core", () -> new BaseItem(ITEM_GROUP));
     public static final RegistryObject<Item> THRUSTER_UPGRADE = ITEMS.register("thruster_upgrade", () -> new UpgradeItem(UpgradeItem.Type.BOOTS, Translations.THRUSTER_UPGRADE_INFO, createApplyUpgradeBoolean(NBTTags.TAG_HAS_THRUSTER_UPGRADE), createValidateUpgradeBoolean(NBTTags.TAG_HAS_THRUSTER_UPGRADE)));
     public static final RegistryObject<Item> ENGINE_UPGRADE = ITEMS.register("engine_upgrade", () -> new UpgradeItem(UpgradeItem.Type.BOOTS, Translations.ENGINE_UPGRADE_INFO, createApplyUpgradeBoolean(NBTTags.TAG_HAS_ENGINE_UPGRADE), createValidateUpgradeBoolean(NBTTags.TAG_HAS_ENGINE_UPGRADE)));

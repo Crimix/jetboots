@@ -21,56 +21,46 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderPlayerEvent;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+
+import javax.annotation.Nonnull;
 
 @OnlyIn(Dist.CLIENT)
-@Mod.EventBusSubscriber(modid = Jetboots.MOD_ID, value = Dist.CLIENT)
-public class GuardianHelmetLayerRender<T extends PlayerEntity, M extends BipedModel<T>> extends LayerRenderer<T, M> {
+public class GuardianLayerRender<T extends PlayerEntity, M extends BipedModel<T>> extends LayerRenderer<T, M> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(Jetboots.MOD_ID, "textures/layers/guardian_layer.png");
     private final PlayerModel<T> model;
 
-
-    public GuardianHelmetLayerRender(IEntityRenderer<T, M> renderer, boolean smallArms) {
+    public GuardianLayerRender(IEntityRenderer<T, M> renderer, boolean smallArms) {
         super(renderer);
         model = new PlayerModel(0.1F, smallArms);
+        MinecraftForge.EVENT_BUS.register(this);
     }
 
     @Override
-    public void render(MatrixStack matrixStack, IRenderTypeBuffer buffer, int packedLight, T entitylivingbase, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void render(@Nonnull MatrixStack matrixStack, @Nonnull IRenderTypeBuffer buffer, int packedLight, @Nonnull T entitylivingbase, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
+        prepareModel(entitylivingbase, model);
         if (shouldRender(entitylivingbase)) {
-            prepareModel(entitylivingbase);
             this.model.isSneak = entitylivingbase.isCrouching();
             matrixStack.push();
             this.getEntityModel().setModelAttributes(this.model);
             this.model.setRotationAngles(entitylivingbase, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+            this.getEntityModel().setModelAttributes(this.model); //Do it again because mods like Quark reset the rotateZ angle at every render tick see https://github.com/Vazkii/Quark/issues/2765
             IVertexBuilder ivertexbuilder = ItemRenderer.getBuffer(buffer, this.model.getRenderType(TEXTURE), false, false);
             this.model.render(matrixStack, ivertexbuilder, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
             matrixStack.pop();
         }
-
-        /*ItemStack itemstack = entitylivingbase.getItemStackFromSlot(EquipmentSlotType.HEAD);
-        if (itemstack.getItem() == ModItems.GUARDIAN_HELMET.get()) {
-            if (GuardinanHelmetProperties.getMode(itemstack)) {
-                this.model.isSneak = entitylivingbase.isCrouching();
-                matrixStack.push();
-                this.getEntityModel().setModelAttributes(this.model);
-                this.model.setRotationAngles(entitylivingbase, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-                IVertexBuilder ivertexbuilder = ItemRenderer.getBuffer(buffer, this.model.getRenderType(TEXTURE), false, false);
-                this.model.render(matrixStack, ivertexbuilder, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
-                matrixStack.pop();
-            }
-        }*/
     }
 
-    private boolean shouldRender(T entitylivingbase) {
+    private boolean shouldRender(PlayerEntity entitylivingbase) {
         return hasHelmet(entitylivingbase)
                 || hasJacket(entitylivingbase)
                 || hasPants(entitylivingbase);
     }
 
 
-    private void prepareModel(T entitylivingbase){
+    private void prepareModel(PlayerEntity entitylivingbase, PlayerModel<T> model){
         boolean hasHelmet = hasHelmet(entitylivingbase);
         boolean hasJacket = hasJacket(entitylivingbase);
         boolean hasPants = hasPants(entitylivingbase);
@@ -96,15 +86,15 @@ public class GuardianHelmetLayerRender<T extends PlayerEntity, M extends BipedMo
         return entitylivingbase.getItemStackFromSlot(EquipmentSlotType.LEGS).getItem() == ModItems.GUARDIAN_PANTS.get();
     }
 
-    private static ModelStateHolder headWear = new ModelStateHolder();
-    private static ModelStateHolder bodyWear = new ModelStateHolder();
-    private static ModelStateHolder rightArmWear = new ModelStateHolder();
-    private static ModelStateHolder leftArmWear = new ModelStateHolder();
-    private static ModelStateHolder rightLegWear = new ModelStateHolder();
-    private static ModelStateHolder leftLegWear = new ModelStateHolder();
+    private ModelStateHolder headWear = new ModelStateHolder();
+    private ModelStateHolder bodyWear = new ModelStateHolder();
+    private ModelStateHolder rightArmWear = new ModelStateHolder();
+    private ModelStateHolder leftArmWear = new ModelStateHolder();
+    private ModelStateHolder rightLegWear = new ModelStateHolder();
+    private ModelStateHolder leftLegWear = new ModelStateHolder();
 
-    @SubscribeEvent
-    public static void renderPlayerPre(RenderPlayerEvent.Pre event) {
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public void renderPlayerPre(RenderPlayerEvent.Pre event) {
         PlayerEntity playerEntity = event.getPlayer();
         PlayerModel<AbstractClientPlayerEntity> playerModel = event.getRenderer().getEntityModel();
         if (hasHelmet(playerEntity)) {
@@ -122,7 +112,7 @@ public class GuardianHelmetLayerRender<T extends PlayerEntity, M extends BipedMo
     }
 
     @SubscribeEvent
-    public static void renderPlayerPost(RenderPlayerEvent.Post event) {
+    public void renderPlayerPost(RenderPlayerEvent.Post event) {
         PlayerModel<AbstractClientPlayerEntity> playerModel = event.getRenderer().getEntityModel();
         headWear.restore(playerModel.bipedHeadwear);
         bodyWear.restore(playerModel.bipedBodyWear);

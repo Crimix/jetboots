@@ -78,6 +78,7 @@ public class TranslationHelper extends TranslationUtil {
         WIRELESS_CRAFTING_USE("tooltip.item.refinedstorage_use_wireless_crafting"),
         WIRELESS_CRAFTING_UPGRADE("tooltip.item.refinedstorage_wireless_crafting_upgrade"),
         WIRELESS_CRAFTING_UPGRADE_INFO("tooltip.item.refinedstorage_wireless_crafting_upgrade_info"),
+        WIRELESS_CRAFTING_UPGRADE_INFO_2("tooltip.item.refinedstorage_wireless_crafting_upgrade_info_2"),
         WIRELESS_RANGE_UPGRADE("tooltip.item.refinedstorage_wireless_range_upgrade"),
         WIRELESS_RANGE_UPGRADE_INFO("tooltip.item.refinedstorage_wireless_range_upgrade_info"),
         WIRELESS_RANGE_UPGRADE_INFO_2("tooltip.item.refinedstorage_wireless_range_upgrade_info_2"),

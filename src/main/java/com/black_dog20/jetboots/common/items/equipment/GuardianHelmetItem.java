@@ -58,7 +58,7 @@ public class GuardianHelmetItem extends BaseGuardianArmorItem {
     }
 
     private double getCustomDamageReduceAmount(ItemStack stack) {
-        return GuardinanHelmetProperties.getMode(stack) ? LevelProperties.calculateValue(2, 6, stack) : 0;
+        return GuardinanHelmetProperties.getMode(stack) ? LevelProperties.calculateValue(3, 6, stack) : 0;
     }
 
     private double getCustomToughness(ItemStack stack) {

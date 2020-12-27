@@ -23,7 +23,11 @@ public class UpgradeItem extends BaseItem {
     protected final Function<ItemStack, Boolean> hasBeenAppliedAlready;
 
     public UpgradeItem(Type type, ITranslation info, Function<ItemStack, ItemStack> applyUpgrade, Function<ItemStack, Boolean> hasBeenAppliedAlready) {
-        super(ModItems.ITEM_GROUP.maxStackSize(1));
+        this(type, info, applyUpgrade, hasBeenAppliedAlready, ModItems.ITEM_GROUP.maxStackSize(1));
+    }
+
+    public UpgradeItem(Type type, ITranslation info, Function<ItemStack, ItemStack> applyUpgrade, Function<ItemStack, Boolean> hasBeenAppliedAlready, Properties builder) {
+        super(builder);
         this.type = type;
         this.info = info;
         this.applyUpgrade = applyUpgrade;

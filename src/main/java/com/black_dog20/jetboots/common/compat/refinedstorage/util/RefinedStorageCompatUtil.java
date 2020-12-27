@@ -104,7 +104,7 @@ public class RefinedStorageCompatUtil {
         if (compoundNBT.contains(TAG_NODE_DIM)) {
             ResourceLocation name = ResourceLocation.tryCreate(compoundNBT.getString(TAG_NODE_DIM));
             if (name != null) {
-                return RegistryKey.func_240903_a_(Registry.WORLD_KEY, name);
+                return RegistryKey.getOrCreateKey(Registry.WORLD_KEY, name);
             }
         }
 

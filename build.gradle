@@ -162,6 +162,11 @@ dependencies {
     runtimeOnly fg.deobf("curse.maven:mekanism-tools-268567:3090948")
     compileOnly fg.deobf("curse.maven:mekanism-generators-268566:3090947")
     runtimeOnly fg.deobf("curse.maven:mekanism-generators-268566:3090947")
+    //compileOnly fg.deobf("curse.maven:quark-243121:3144658")
+    //runtimeOnly fg.deobf("curse.maven:quark-243121:3144658")
+    //compileOnly fg.deobf("curse.maven:AutoRegLib-250363:3128555")
+    //runtimeOnly fg.deobf("curse.maven:AutoRegLib-250363:3128555")
+
 }
 
 jar {
