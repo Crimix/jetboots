@@ -15,6 +15,7 @@ public class RSCompatModEventHandler {
     public void onCommonSetup(FMLCommonSetupEvent event) {
         RefinedStorageCompat.RSAPI.getGridManager().add(WirelessCraftingUpgradeGridFactory.ID, new WirelessCraftingUpgradeGridFactory());
         RSCompatPacketHandler.register();
+        MinecraftForge.EVENT_BUS.register(new RSCompatEventHandler());
     }
 
     @SubscribeEvent
@@ -23,6 +24,5 @@ public class RSCompatModEventHandler {
 
         MinecraftForge.EVENT_BUS.register(new RSCompatKeybindHandler());
         MinecraftForge.EVENT_BUS.register(new RSCompatTooltipsHandler());
-        MinecraftForge.EVENT_BUS.register(new RSCompatEventHandler());
     }
 }

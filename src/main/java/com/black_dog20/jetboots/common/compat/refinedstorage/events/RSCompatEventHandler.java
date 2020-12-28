@@ -18,8 +18,6 @@ public class RSCompatEventHandler {
 
     @SubscribeEvent
     public void onItemUse(PlayerInteractEvent.RightClickBlock event) {
-        if (event.getWorld().isRemote)
-            return;
         if (event.getItemStack().getItem() instanceof GuardianHelmetItem) {
             ItemStack stack = event.getItemStack();
             if (!NBTUtil.getBoolean(stack, TAG_HAS_WIRELESS_CRAFTING_UPGRADE)) {
@@ -29,12 +27,14 @@ public class RSCompatEventHandler {
 
             INetwork network = NetworkUtils.getNetworkFromNode(NetworkUtils.getNodeFromTile(event.getWorld().getTileEntity(event.getPos())));
             if (network != null) {
-                NBTItemBuilder.init(stack)
-                        .addTag(TAG_NODE_X, network.getPosition().getX())
-                        .addTag(TAG_NODE_Y, network.getPosition().getY())
-                        .addTag(TAG_NODE_Z, network.getPosition().getZ())
-                        .addTag(TAG_NODE_DIM, DimensionUtil.getDimensionResourceLocation(event.getWorld()).toString());
-                event.getPlayer().sendMessage(NETWORK_LINKED.get(), event.getPlayer().getUniqueID());
+                if (!event.getWorld().isRemote) {
+                    NBTItemBuilder.init(stack)
+                            .addTag(TAG_NODE_X, network.getPosition().getX())
+                            .addTag(TAG_NODE_Y, network.getPosition().getY())
+                            .addTag(TAG_NODE_Z, network.getPosition().getZ())
+                            .addTag(TAG_NODE_DIM, DimensionUtil.getDimensionResourceLocation(event.getWorld()).toString());
+                    event.getPlayer().sendMessage(NETWORK_LINKED.get(), event.getPlayer().getUniqueID());
+                }
                 event.setCancellationResult(ActionResultType.CONSUME);
                 event.setCanceled(true);
                 return;

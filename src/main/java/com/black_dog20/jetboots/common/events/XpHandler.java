@@ -70,7 +70,7 @@ public class XpHandler {
                     .filter(stack -> stack.getItem() instanceof ILevelableItem)
                     .collect(Collectors.toSet());
 
-            int xp = (int) Math.ceil(MathUtil.clamp(event.getAmount(), 1.0f, 10.0f));
+            int xp = (int) Math.ceil(MathUtil.clamp(event.getAmount(), 3.0f, 10.0f));
 
             for (ItemStack stack : levelableItems) {
                 LevelProperties.addXp(player, stack, xp);
