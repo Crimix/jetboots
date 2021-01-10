@@ -1,8 +1,11 @@
 package com.black_dog20.jetboots.mixin;
 
+import com.black_dog20.jetboots.common.util.JetBootsProperties;
+import com.black_dog20.jetboots.common.util.ModUtils;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -26,12 +29,19 @@ public abstract class PlayerEntityMixin extends LivingEntity {
     @Inject(method = "onLivingFall(FF)Z", at = @At("HEAD"), cancellable = true)
     private void onLivingFallDamage(float distance, float damageMultiplier, CallbackInfoReturnable<Boolean> ci) {
         if(((Object)this) instanceof PlayerEntity) {
-            if (distance >= 2.0F) {
-                this.addStat(Stats.FALL_ONE_CM, (int)Math.round((double)distance * 100.0D));
-            }
+            PlayerEntity player = (PlayerEntity)(Object)this;
+            ItemStack boots = ModUtils.getJetBoots(player);
+            if(!boots.isEmpty() && !JetBootsProperties.hasShockUpgrade(boots)) {
+                if (distance >= 2.0F) {
+                    this.addStat(Stats.FALL_ONE_CM, (int)Math.round((double)distance * 100.0D));
+                }
 
-            ci.setReturnValue(super.onLivingFall(distance, damageMultiplier));
-            ci.cancel();
+                ci.setReturnValue(super.onLivingFall(distance, damageMultiplier));
+                ci.cancel();
+            } else if(!boots.isEmpty() && JetBootsProperties.hasShockUpgrade(boots)) {
+                ci.setReturnValue(false);
+                ci.cancel();
+            }
         }
     }
 }

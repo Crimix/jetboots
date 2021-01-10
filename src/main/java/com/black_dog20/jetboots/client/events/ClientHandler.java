@@ -135,6 +135,10 @@ public class ClientHandler {
             return;
         if (event.phase != TickEvent.Phase.START)
             return;
+        if(Minecraft.getInstance().player == null)
+            return;
+        if (event.player.getUniqueID() != Minecraft.getInstance().player.getUniqueID())
+            return;
 
         if (tickCounter % 240 == 0) {
             ItemStack jetboots = event.armor;

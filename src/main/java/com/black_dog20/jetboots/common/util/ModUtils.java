@@ -43,7 +43,7 @@ public class ModUtils {
             }
             IEnergyStorage energy = jetboots.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
             if (energy != null) {
-                return energy.getEnergyStored() >= EnergyUtil.getEnergyWhileFlying(jetboots);
+                return energy.getEnergyStored() + EnergyUtil.getEnergyWhileFlying(jetboots) >= 0; //Needs to be plus as the return of getEnergyWhileFlying is negative
             } else
                 return false;
         }
