@@ -16,6 +16,11 @@ and the boots can not be upgraded directly to increase armor. Instead you earn i
 - Helmet is not longer soulbound from the start, level up to get it back.
 - Helmet is now craftable and can not be found in The Nether or The End.
 
+## [1.16.3, 1.0.1] - 2021-01-10
+- Fixed [Issue-18](https://github.com/Crimix/jetboots/issues/18)
+- Fixed [Issue-19](https://github.com/Crimix/jetboots/issues/19)
+- Fixed [Issue-20](https://github.com/Crimix/jetboots/issues/20)
+
 ## [1.16.3, 1.0.0] - 2020-11-21
 - Port to 1.16.3+
 

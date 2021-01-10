@@ -5,6 +5,7 @@ import com.black_dog20.jetboots.common.util.ModUtils;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -29,16 +30,19 @@ public abstract class PlayerEntityMixin extends LivingEntity {
     private void onLivingFallDamage(float distance, float damageMultiplier, CallbackInfoReturnable<Boolean> ci) {
         if (((Object)this) instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) (Object) this;
-            if (JetBootsProperties.hasShockUpgrade(ModUtils.getJetBoots(player))){
-                return;
-            }
+            ItemStack boots = ModUtils.getJetBoots(player);
 
-            if (distance >= 2.0F) {
-                this.addStat(Stats.FALL_ONE_CM, (int)Math.round((double)distance * 100.0D));
-            }
+            if(!boots.isEmpty() && !JetBootsProperties.hasShockUpgrade(boots)) {
+                if (distance >= 2.0F) {
+                    this.addStat(Stats.FALL_ONE_CM, (int) Math.round((double) distance * 100.0D));
+                }
 
-            ci.setReturnValue(super.onLivingFall(distance, damageMultiplier));
-            ci.cancel();
+                ci.setReturnValue(super.onLivingFall(distance, damageMultiplier));
+                ci.cancel();
+            } else if(!boots.isEmpty() && JetBootsProperties.hasShockUpgrade(boots)) {
+                ci.setReturnValue(false);
+                ci.cancel();
+            }
         }
     }
 }
