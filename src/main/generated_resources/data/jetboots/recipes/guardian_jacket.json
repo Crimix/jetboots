@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "r r",
+    "oco",
+    "ror"
+  ],
+  "key": {
+    "o": {
+      "item": "jetboots:obsidian_infused_gold"
+    },
+    "r": {
+      "tag": "forge:dyes/red"
+    },
+    "c": {
+      "item": "jetboots:armor_core"
+    }
+  },
+  "result": {
+    "item": "jetboots:guardian_jacket"
+  }
+}

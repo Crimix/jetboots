@@ -10,10 +10,10 @@
       "tag": "minecraft:wool"
     },
     "j": {
-      "item": "jetboots:base_upgrade"
+      "item": "jetboots:armor_core"
     },
     "o": {
-      "tag": "forge:obsidian"
+      "item": "jetboots:obsidian_infused_gold"
     },
     "d": {
       "tag": "forge:gems/diamond"

@@ -14,6 +14,7 @@ public class Config {
 
     public static final String CLIENT_SETTINGS = "client";
     public static final String CATEGORY_GENERAL = "general";
+    public static final String CATEGORY_LEVEL = "leveling";
 
     private static final ForgeConfigSpec.Builder CLIENT_BUILDER = new ForgeConfigSpec.Builder();
     private static final ForgeConfigSpec.Builder SERVER_BUILDER = new ForgeConfigSpec.Builder();
@@ -28,7 +29,10 @@ public class Config {
 
     public static ForgeConfigSpec.IntValue DEFAULT_MAX_POWER;
     public static ForgeConfigSpec.IntValue POWER_COST;
-    public static ForgeConfigSpec.BooleanValue HELMET_LOOT;
+
+    public static ForgeConfigSpec.IntValue BASE_XP;
+    public static ForgeConfigSpec.DoubleValue LEVEL_XP_MULTIPLIER;
+    public static ForgeConfigSpec.IntValue TICKS_BETWEEN_FLIGHT_XP_GAIN;
 
     static {
         CLIENT_BUILDER.comment("Client settings").push(CLIENT_SETTINGS);
@@ -49,8 +53,15 @@ public class Config {
                 .defineInRange("defaultMaxPower", 1000000, 0, Integer.MAX_VALUE);
         POWER_COST = SERVER_BUILDER.comment("Cost per tick to use jetboots")
                 .defineInRange("powerCost", 50, 0, Integer.MAX_VALUE);
-        HELMET_LOOT = SERVER_BUILDER.comment("If there is a chance for the helmet to be in a End City / Nether loot chests")
-                .define("helmetLoot", true);
+        SERVER_BUILDER.pop();
+
+        SERVER_BUILDER.push(CATEGORY_LEVEL);
+        BASE_XP = SERVER_BUILDER.comment("The base xp required to level up a levelable items")
+                .defineInRange("baseLevelXp", 500, 100, Integer.MAX_VALUE);
+        LEVEL_XP_MULTIPLIER = SERVER_BUILDER.comment("The xp multiplier added ot the base xp required for each level")
+                .defineInRange("levelXpMultiplier", 1.1, 1, Double.MAX_VALUE);
+        TICKS_BETWEEN_FLIGHT_XP_GAIN = SERVER_BUILDER.comment("How often in ticks the player can earn xp by flying with jetboots (Only for jetboots)")
+                .defineInRange("ticksBetweenFlightXp", 80, 20, 1200);
         SERVER_BUILDER.pop();
 
         SERVER_CONFIG = SERVER_BUILDER.build();
@@ -76,6 +87,4 @@ public class Config {
     @SubscribeEvent
     public static void onReload(final ModConfig.Reloading configEvent) {
     }
-
-
 }

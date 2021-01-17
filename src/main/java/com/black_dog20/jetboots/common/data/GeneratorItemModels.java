@@ -28,6 +28,6 @@ public class GeneratorItemModels extends BaseItemModelProvider {
 
     @Override
     public String getName() {
-        return "Item Models";
+        return "Jet Boots: Item Models";
     }
 }

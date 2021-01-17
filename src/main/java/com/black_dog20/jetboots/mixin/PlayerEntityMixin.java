@@ -28,12 +28,13 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 
     @Inject(method = "onLivingFall(FF)Z", at = @At("HEAD"), cancellable = true)
     private void onLivingFallDamage(float distance, float damageMultiplier, CallbackInfoReturnable<Boolean> ci) {
-        if(((Object)this) instanceof PlayerEntity) {
-            PlayerEntity player = (PlayerEntity)(Object)this;
+        if (((Object)this) instanceof PlayerEntity) {
+            PlayerEntity player = (PlayerEntity) (Object) this;
             ItemStack boots = ModUtils.getJetBoots(player);
+
             if(!boots.isEmpty() && !JetBootsProperties.hasShockUpgrade(boots)) {
                 if (distance >= 2.0F) {
-                    this.addStat(Stats.FALL_ONE_CM, (int)Math.round((double)distance * 100.0D));
+                    this.addStat(Stats.FALL_ONE_CM, (int) Math.round((double) distance * 100.0D));
                 }
 
                 ci.setReturnValue(super.onLivingFall(distance, damageMultiplier));

@@ -36,7 +36,7 @@ public class JetbootSound extends TickableSound {
         if (PLAYING_FOR.containsKey(player.getUniqueID()) && PLAYING_FOR.get(player.getUniqueID()) != null) {
             synchronized (PLAYING_FOR) {
                 JetbootSound sound = PLAYING_FOR.get(player.getUniqueID());
-                sound.func_239509_o_();
+                sound.finishPlaying();
                 PLAYING_FOR.remove(player.getUniqueID());
             }
         }

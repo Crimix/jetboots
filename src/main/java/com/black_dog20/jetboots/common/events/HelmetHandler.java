@@ -22,10 +22,11 @@ import net.minecraftforge.fml.common.Mod;
 
 import java.util.Set;
 
+import static com.black_dog20.jetboots.common.util.NBTTags.*;
+
 @Mod.EventBusSubscriber(modid = Jetboots.MOD_ID)
 public class HelmetHandler {
 
-    private final static String USING_NIGHT_VISION = "guardian_helmet_night_vision";
     private static final Set<DamageSource> HELMET_SOURCES = ImmutableSet.of(DamageSource.DROWN, DamageSource.WITHER);
     private static final Set<Effect> HELMET_EFFECTS_REMOVED = ImmutableSet.of(Effects.WITHER);
 

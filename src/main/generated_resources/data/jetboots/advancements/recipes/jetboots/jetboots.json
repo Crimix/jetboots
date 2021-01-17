@@ -6,12 +6,12 @@
     ]
   },
   "criteria": {
-    "has_diamonds": {
+    "has_obsidian_infused_gold": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "tag": "forge:gems/diamond"
+            "item": "jetboots:obsidian_infused_gold"
           }
         ]
       }
@@ -25,7 +25,7 @@
   },
   "requirements": [
     [
-      "has_diamonds",
+      "has_obsidian_infused_gold",
       "has_the_recipe"
     ]
   ]

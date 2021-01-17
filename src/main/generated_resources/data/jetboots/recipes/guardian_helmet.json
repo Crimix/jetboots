@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ioi",
+    "dcd",
+    "ioi"
+  ],
+  "key": {
+    "o": {
+      "item": "jetboots:obsidian_infused_gold"
+    },
+    "i": {
+      "tag": "forge:ingots/iron"
+    },
+    "c": {
+      "item": "jetboots:armor_core"
+    },
+    "d": {
+      "tag": "forge:gems/diamond"
+    }
+  },
+  "result": {
+    "item": "jetboots:guardian_helmet"
+  }
+}

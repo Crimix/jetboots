@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "jetboots:item/obsidian_infused_gold"
+  }
+}

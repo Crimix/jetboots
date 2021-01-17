@@ -5,7 +5,7 @@ import com.black_dog20.jetboots.Jetboots;
 import com.black_dog20.jetboots.client.containers.ModContainers;
 import com.black_dog20.jetboots.client.keybinds.Keybinds;
 import com.black_dog20.jetboots.client.overlay.BatteryIconOverlay;
-import com.black_dog20.jetboots.client.screens.JetBootsScreen;
+import com.black_dog20.jetboots.client.screens.EnchantableItemScreen;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -22,7 +22,7 @@ public class ClientStartup {
         ClientRegistry.registerKeyBinding(Keybinds.keySpeed);
         ClientRegistry.registerKeyBinding(Keybinds.keyHelmetMode);
         ClientRegistry.registerKeyBinding(Keybinds.keyHelmetVision);
-        ScreenManager.registerFactory(ModContainers.JETBOOTS_CONTAINER.get(), JetBootsScreen::new);
+        ScreenManager.registerFactory(ModContainers.ENCHANTABLE_ITEM_CONTAINER.get(), EnchantableItemScreen::new);
         OverlayRegistry.register(new BatteryIconOverlay());
     }
 }

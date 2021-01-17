@@ -10,5 +10,5 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class ModContainers {
     public static final DeferredRegister<ContainerType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, Jetboots.MOD_ID);
 
-    public static final RegistryObject<ContainerType<JetBootsContainer>> JETBOOTS_CONTAINER = CONTAINERS.register("jetboots", () -> IForgeContainerType.create((windowId, inv, data) -> new JetBootsContainer(windowId, inv, inv.player)));
+    public static final RegistryObject<ContainerType<EnchantableItemContainer>> ENCHANTABLE_ITEM_CONTAINER = CONTAINERS.register("enchantable_item_container", () -> IForgeContainerType.create((windowId, inv, data) -> new EnchantableItemContainer(windowId, inv, inv.player)));
 }

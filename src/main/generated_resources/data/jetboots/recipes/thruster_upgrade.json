@@ -10,10 +10,10 @@
       "item": "minecraft:hopper"
     },
     "j": {
-      "item": "jetboots:base_upgrade"
+      "item": "jetboots:armor_core"
     },
     "o": {
-      "tag": "forge:obsidian"
+      "item": "jetboots:obsidian_infused_gold"
     },
     "g": {
       "tag": "forge:ingots/gold"

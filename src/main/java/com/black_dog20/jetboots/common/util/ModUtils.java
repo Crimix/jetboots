@@ -1,8 +1,8 @@
 package com.black_dog20.jetboots.common.util;
 
 import com.black_dog20.bml.utils.text.TextComponentBuilder;
-import com.black_dog20.jetboots.common.items.GuardianHelmetItem;
-import com.black_dog20.jetboots.common.items.JetBootsItem;
+import com.black_dog20.jetboots.common.items.equipment.GuardianHelmetItem;
+import com.black_dog20.jetboots.common.items.equipment.JetBootsItem;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
