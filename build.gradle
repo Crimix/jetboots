@@ -198,6 +198,7 @@ curseforge {
         addGameVersion '1.16.5'
         relations {
             requiredDependency 'bml'
+            optionalDependency 'refined-storage'
         }
     }
 }
