@@ -106,4 +106,9 @@ public class GuardianPantsItem extends BaseGuardianArmorItem {
     public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundNBT nbt) {
         return new GuardianCapabilities(stack);
     }
+
+    @Override
+    public boolean hasEffect(ItemStack stack) {
+        return false;
+    }
 }

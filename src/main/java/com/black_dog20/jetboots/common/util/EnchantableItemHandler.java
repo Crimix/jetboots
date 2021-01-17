@@ -39,10 +39,18 @@ public class EnchantableItemHandler extends ItemStackHandler {
             return false;
         }
 
-        Set<Enchantment> enchantments = getEnchantmentMap().keySet();
+        Set<Enchantment> newEnchantments = EnchantmentHelper.getEnchantments(stack).keySet();
+        boolean canBeAppliedToItem = newEnchantments.stream()
+                .allMatch(e -> e.type.canEnchantItem(container.getItem()));
 
-        return enchantments.stream()
-                .allMatch(e -> EnchantmentHelper.areAllCompatibleWith(enchantments, e));
+        if (!canBeAppliedToItem) {
+            return false;
+        }
+
+        Set<Enchantment> currentEnchantments = getEnchantmentMap().keySet();
+
+        return newEnchantments.stream()
+                .allMatch(e -> EnchantmentHelper.areAllCompatibleWith(currentEnchantments, e));
     }
 
     private Map<Enchantment, Integer> getEnchantmentMap() {

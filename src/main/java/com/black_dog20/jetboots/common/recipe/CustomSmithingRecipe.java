@@ -2,6 +2,9 @@ package com.black_dog20.jetboots.common.recipe;
 
 import com.black_dog20.jetboots.common.items.UpgradeItem;
 import com.black_dog20.jetboots.common.items.equipment.GuardianHelmetItem;
+import com.black_dog20.jetboots.common.items.equipment.GuardianJacketItem;
+import com.black_dog20.jetboots.common.items.equipment.GuardianPantsItem;
+import com.black_dog20.jetboots.common.items.equipment.GuardianSwordItem;
 import com.black_dog20.jetboots.common.items.equipment.JetBootsItem;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -29,10 +32,16 @@ public class CustomSmithingRecipe extends SmithingRecipe {
                 return false;
 
             switch (upgradeItem.getType()) {
-                case BOOTS:
-                    return input.getItem() instanceof JetBootsItem && input.getCount() == 1;
                 case HELMET:
                     return input.getItem() instanceof GuardianHelmetItem && input.getCount() == 1;
+                case JACKET:
+                    return input.getItem() instanceof GuardianJacketItem && input.getCount() == 1;
+                case PANTS:
+                    return input.getItem() instanceof GuardianPantsItem && input.getCount() == 1;
+                case BOOTS:
+                    return input.getItem() instanceof JetBootsItem && input.getCount() == 1;
+                case SWORD:
+                    return input.getItem() instanceof GuardianSwordItem && input.getCount() == 1;
             }
         }
 

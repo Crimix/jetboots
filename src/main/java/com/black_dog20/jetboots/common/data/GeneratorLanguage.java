@@ -37,7 +37,7 @@ public class GeneratorLanguage extends BaseLanguageProvider {
         addItem(ModItems.GUARDIAN_HELMET, "Guardian Helmet");
         addItem(ModItems.GUARDIAN_JACKET, "Guardian Jacket");
         addItem(ModItems.GUARDIAN_PANTS, "Guardian Pants");
-        addItem(ModItems.GUARDIAN_SWORD, "Godslayer");
+        addItem(ModItems.GUARDIAN_SWORD, "The Godslayer");
 
         // Blocks
         //addBlock(ModBlocks., "");

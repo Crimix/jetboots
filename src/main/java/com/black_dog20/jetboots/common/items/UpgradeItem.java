@@ -13,8 +13,11 @@ import java.util.function.Function;
 public class UpgradeItem extends BaseItem {
 
     public enum Type {
+        HELMET,
+        JACKET,
+        PANTS,
         BOOTS,
-        HELMET
+        SWORD
     }
 
     protected final Type type;

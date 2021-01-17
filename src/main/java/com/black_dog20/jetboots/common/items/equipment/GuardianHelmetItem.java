@@ -22,9 +22,7 @@ import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ActionResultType;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -110,14 +108,14 @@ public class GuardianHelmetItem extends BaseGuardianArmorItem {
         }
     }
 
-    @Override
-    public ActionResultType onItemUse(ItemUseContext context) {
-        return super.onItemUse(context);
-    }
-
     @Nullable
     @Override
     public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundNBT nbt) {
         return new GuardianCapabilities(stack);
+    }
+
+    @Override
+    public boolean hasEffect(ItemStack stack) {
+        return false;
     }
 }

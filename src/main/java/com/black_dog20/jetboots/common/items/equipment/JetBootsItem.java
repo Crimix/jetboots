@@ -184,4 +184,9 @@ public class JetBootsItem extends BaseGuardianArmorItem {
 
         return MathHelper.hsvToRGB(Math.max(0.0F, (float) energy.getEnergyStored() / (float) energy.getMaxEnergyStored()) / 3.0F, 1.0F, 1.0F);
     }
+
+    @Override
+    public boolean hasEffect(ItemStack stack) {
+        return false;
+    }
 }

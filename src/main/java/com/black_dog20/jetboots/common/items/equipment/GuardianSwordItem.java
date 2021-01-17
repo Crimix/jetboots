@@ -132,4 +132,9 @@ public class GuardianSwordItem extends SwordItem implements ISoulbindable, ILeve
     public boolean isDamageable() {
         return false;
     }
+
+    @Override
+    public boolean hasEffect(ItemStack stack) {
+        return false;
+    }
 }
