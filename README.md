@@ -13,8 +13,5 @@ Speed Modes:
 - Super (Really fast)
 
 The jet boots are upgraded using modules, there are many different kinds and also support for more to come as compatibility between mods.
-Right now there are extra modules from the following mods:
-- Cyclic
-- Mekanism
 
 This mod requires [BML](https://github.com/Crimix/bml).  
