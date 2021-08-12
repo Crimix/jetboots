@@ -10,7 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
   These are now considered tier 1 of flight in this mod.   
   They will level up and get more flight time and as the rest of the items this is configurable.  
   This part fixes the rest of [#24](https://github.com/Crimix/jetboots/issues/24).
-- Changed the recipe for the Jet Boots to required Rocket Boots and a Netherite ingot. 
+- Changed the recipe for the Jet Boots to required Rocket Boots. 
 
 ## [1.16.3, 1.1.0] - 2021-01-17
 - Completly changed the upgrade system.  

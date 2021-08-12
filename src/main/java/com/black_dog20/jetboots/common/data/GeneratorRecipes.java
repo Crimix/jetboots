@@ -90,7 +90,7 @@ public class GeneratorRecipes extends BaseRecipeProvider {
         ShapedRecipeBuilder.shaped(JET_BOOTS.get())
                 .define('o', Tags.Items.OBSIDIAN)
                 .define('g', OBSIDIAN_INFUSED_GOLD.get())
-                .define('e', Tags.Items.INGOTS_NETHERITE)
+                .define('e', Tags.Items.GEMS_EMERALD)
                 .define('c', ROCKET_BOOTS.get())
                 .define('b', Tags.Items.RODS_BLAZE)
                 .pattern("geg")
