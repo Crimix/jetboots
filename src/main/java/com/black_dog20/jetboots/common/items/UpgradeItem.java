@@ -1,13 +1,14 @@
 package com.black_dog20.jetboots.common.items;
 
 import com.black_dog20.bml.utils.translate.ITranslation;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Function;
 
 public class UpgradeItem extends BaseItem {
@@ -17,28 +18,38 @@ public class UpgradeItem extends BaseItem {
         JACKET,
         PANTS,
         BOOTS,
+        ROCKET_BOOTS,
         SWORD
     }
 
-    protected final Type type;
+    protected final Set<Type> types;
     protected final ITranslation info;
     protected final Function<ItemStack, ItemStack> applyUpgrade;
     protected final Function<ItemStack, Boolean> hasBeenAppliedAlready;
 
+
     public UpgradeItem(Type type, ITranslation info, Function<ItemStack, ItemStack> applyUpgrade, Function<ItemStack, Boolean> hasBeenAppliedAlready) {
-        this(type, info, applyUpgrade, hasBeenAppliedAlready, ModItems.ITEM_GROUP.maxStackSize(1));
+        this(type, info, applyUpgrade, hasBeenAppliedAlready, ModItems.ITEM_GROUP.stacksTo(1));
     }
 
     public UpgradeItem(Type type, ITranslation info, Function<ItemStack, ItemStack> applyUpgrade, Function<ItemStack, Boolean> hasBeenAppliedAlready, Properties builder) {
+        this(Set.of(type), info, applyUpgrade, hasBeenAppliedAlready, builder);
+    }
+
+    public UpgradeItem(Set<Type> types, ITranslation info, Function<ItemStack, ItemStack> applyUpgrade, Function<ItemStack, Boolean> hasBeenAppliedAlready) {
+        this(types, info, applyUpgrade, hasBeenAppliedAlready, ModItems.ITEM_GROUP.stacksTo(1));
+    }
+
+    public UpgradeItem(Set<Type> types, ITranslation info, Function<ItemStack, ItemStack> applyUpgrade, Function<ItemStack, Boolean> hasBeenAppliedAlready, Properties builder) {
         super(builder);
-        this.type = type;
+        this.types = types;
         this.info = info;
         this.applyUpgrade = applyUpgrade;
         this.hasBeenAppliedAlready = hasBeenAppliedAlready;
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltips, ITooltipFlag flag) {
+    public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> tooltips, TooltipFlag flag) {
         tooltips.add(info.get());
     }
 
@@ -51,7 +62,7 @@ public class UpgradeItem extends BaseItem {
         return hasBeenAppliedAlready.apply(stack);
     }
 
-    public Type getType() {
-        return type;
+    public Set<Type> getTypes() {
+        return types;
     }
 }

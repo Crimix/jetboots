@@ -5,20 +5,20 @@ import com.black_dog20.jetboots.Jetboots;
 import com.black_dog20.jetboots.client.ClientHelper;
 import com.black_dog20.jetboots.common.items.ModItems;
 import com.black_dog20.jetboots.common.util.EnergyUtil;
-import com.black_dog20.jetboots.common.util.GuardinanHelmetProperties;
 import com.black_dog20.jetboots.common.util.ModUtils;
+import com.black_dog20.jetboots.common.util.TranslationHelper.Translations;
+import com.black_dog20.jetboots.common.util.properties.GuardinanHelmetProperties;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.gui.ForgeIngameGui;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-
-import static com.black_dog20.jetboots.common.util.TranslationHelper.*;
 
 @OnlyIn(Dist.CLIENT)
 @Mod.EventBusSubscriber(modid = Jetboots.MOD_ID, value = Dist.CLIENT)
@@ -30,11 +30,11 @@ public class ClientHandler {
     }
 
     @SubscribeEvent
-    public static void overlayEvent(RenderGameOverlayEvent.Pre event) {
-        PlayerEntity player = Minecraft.getInstance().player;
+    public static void overlayEvent(RenderGameOverlayEvent.PreLayer event) {
+        Player player = Minecraft.getInstance().player;
         if (player != null && ModUtils.hasGuardianHelmet(player)) {
             if (GuardinanHelmetProperties.getMode(ModUtils.getGuardianHelmet(player))) {
-                if (event.getType() == RenderGameOverlayEvent.ElementType.AIR)
+                if (event.getOverlay() == ForgeIngameGui.AIR_LEVEL_ELEMENT)
                     event.setCanceled(true);
             }
         }
@@ -51,14 +51,14 @@ public class ClientHandler {
             return;
         if(Minecraft.getInstance().player == null)
             return;
-        if (event.player.getUniqueID() != Minecraft.getInstance().player.getUniqueID())
+        if (event.player.getUUID() != Minecraft.getInstance().player.getUUID())
             return;
 
         if (tickCounter % 240 == 0) {
             ItemStack jetboots = event.armor;
             int percent = EnergyUtil.getBatteryPercentage(jetboots);
             if (percent < 10) {
-                Minecraft.getInstance().ingameGUI.setOverlayMessage(Translations.POWER_LOW.get(), false);
+                Minecraft.getInstance().gui.setOverlayMessage(Translations.POWER_LOW.get(), false);
             }
             tickCounter = 1;
         }

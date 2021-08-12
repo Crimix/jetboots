@@ -1,11 +1,11 @@
 package com.black_dog20.jetboots.common.network.packets;
 
 import com.black_dog20.jetboots.common.items.equipment.JetBootsItem;
-import com.black_dog20.jetboots.common.util.JetBootsProperties;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.fml.network.NetworkEvent;
+import com.black_dog20.jetboots.common.util.properties.JetBootsProperties;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
@@ -13,22 +13,22 @@ public class PacketUpdateMuffledMode {
     public PacketUpdateMuffledMode() {
     }
 
-    public static void encode(PacketUpdateMuffledMode msg, PacketBuffer buffer) {
+    public static void encode(PacketUpdateMuffledMode msg, FriendlyByteBuf buffer) {
 
     }
 
-    public static PacketUpdateMuffledMode decode(PacketBuffer buffer) {
+    public static PacketUpdateMuffledMode decode(FriendlyByteBuf buffer) {
         return new PacketUpdateMuffledMode();
     }
 
     public static class Handler {
         public static void handle(PacketUpdateMuffledMode msg, Supplier<NetworkEvent.Context> ctx) {
             ctx.get().enqueueWork(() -> {
-                ServerPlayerEntity player = ctx.get().getSender();
+                ServerPlayer player = ctx.get().getSender();
                 if (player == null)
                     return;
 
-                ItemStack stack = player.getHeldItemMainhand();
+                ItemStack stack = player.getMainHandItem();
 
                 if (!stack.isEmpty() && stack.getItem() instanceof JetBootsItem) {
                     JetBootsProperties.setActiveMuffledUpgrade(stack, !JetBootsProperties.hasActiveMuffledUpgrade(stack));

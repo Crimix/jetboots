@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "jetboots:rocket_boots"
+    ]
+  },
+  "criteria": {
+    "has_obsidian_infused_gold": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "jetboots:obsidian_infused_gold"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "jetboots:rocket_boots"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_obsidian_infused_gold",
+      "has_the_recipe"
+    ]
+  ]
+}

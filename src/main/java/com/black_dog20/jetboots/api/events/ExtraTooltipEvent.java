@@ -1,8 +1,8 @@
 package com.black_dog20.jetboots.api.events;
 
 import com.black_dog20.bml.utils.translate.ITranslation;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.eventbus.api.Event;
 
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ public class ExtraTooltipEvent extends Event {
         SNEAKING
     }
 
-    private List<ITextComponent> extraTooltips = new ArrayList<>();
+    private List<Component> extraTooltips = new ArrayList<>();
     private final ItemStack stack;
     private final Type type;
 
@@ -37,7 +37,7 @@ public class ExtraTooltipEvent extends Event {
         return type;
     }
 
-    public void add(ITextComponent tooltip) {
+    public void add(Component tooltip) {
         extraTooltips.add(tooltip);
     }
 
@@ -45,7 +45,7 @@ public class ExtraTooltipEvent extends Event {
         add(tooltip.get());
     }
 
-    public List<ITextComponent> getExtraTooltips() {
+    public List<Component> getExtraTooltips() {
         return extraTooltips;
     }
 }

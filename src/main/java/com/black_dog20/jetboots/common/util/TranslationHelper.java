@@ -1,12 +1,8 @@
 package com.black_dog20.jetboots.common.util;
 
-import com.black_dog20.bml.utils.text.TextComponentBuilder;
 import com.black_dog20.bml.utils.translate.ITranslation;
 import com.black_dog20.bml.utils.translate.TranslationUtil;
 import com.black_dog20.jetboots.Jetboots;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
 
 public class TranslationHelper extends TranslationUtil {
     public enum Translations implements ITranslation {
@@ -25,6 +21,7 @@ public class TranslationHelper extends TranslationUtil {
 
         CHANGE_FLIGHT_MODE("tooltip.item.change_flight_mode"),
         CHANGE_SPEED_MODE("tooltip.item.change_speed_mode"),
+        TURN_OFF("tooltip.item.turn_off"),
         FLIGHT_MODE("tooltip.item.flight_mode"),
         STORED_ENERGY("tooltip.item.stored_energy"),
         SPEED_MODE("tooltip.item.speed_mode"),
@@ -37,12 +34,6 @@ public class TranslationHelper extends TranslationUtil {
         CHANGE_HELMET_MODE("tooltip.item.change_helmet_mode"),
         CHANGE_HELMET_NIGHT_VISION("tooltip.item.change_helmet_night_vision"),
         HELMET_INFO("tooltip.item.helmet_info"),
-
-        NOT_LEVELABLE("tooltip.item.not_able_to_level"),
-        MAX_LEVEL("tooltip.item.max_level"),
-        LEVEL("tooltip.item.level"),
-        PROGRESS("tooltip.item.level_progress"),
-        SOULBOUND_ACHIEVED("tooltip.item.soulbound_achieved"),
 
         HELMET_MODE("msg.helmet_mode"),
         HELMET_NIGHT_VISION("msg.helmet_night_vision"),
@@ -113,19 +104,5 @@ public class TranslationHelper extends TranslationUtil {
         public String getModId() {
             return modId;
         }
-    }
-
-    public static ITextComponent getLevelProgress(ItemStack stack) {
-        return getLevelProgress(stack, TextFormatting.GRAY);
-    }
-
-    public static ITextComponent getLevelProgress(ItemStack stack, TextFormatting baseColor) {
-        return TextComponentBuilder.of(Translations.LEVEL)
-                .format(baseColor)
-                .with(":")
-                .format(baseColor)
-                .space()
-                .with(LevelProperties.getXpToNextLevel(stack))
-                .build();
     }
 }

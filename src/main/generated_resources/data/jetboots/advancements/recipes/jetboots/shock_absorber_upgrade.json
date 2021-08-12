@@ -6,12 +6,26 @@
     ]
   },
   "criteria": {
+    "has_rocketboots": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "jetboots:rocket_boots"
+            ]
+          }
+        ]
+      }
+    },
     "has_jetboots": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "jetboots:jetboots"
+            "items": [
+              "jetboots:jetboots"
+            ]
           }
         ]
       }
@@ -25,6 +39,7 @@
   },
   "requirements": [
     [
+      "has_rocketboots",
       "has_jetboots",
       "has_the_recipe"
     ]

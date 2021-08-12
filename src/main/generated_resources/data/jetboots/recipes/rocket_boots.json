@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "geg",
+    "ici",
+    "bgb"
+  ],
+  "key": {
+    "i": {
+      "tag": "forge:ingots/iron"
+    },
+    "g": {
+      "item": "jetboots:obsidian_infused_gold"
+    },
+    "e": {
+      "tag": "forge:gems/emerald"
+    },
+    "c": {
+      "item": "jetboots:armor_core"
+    },
+    "b": {
+      "tag": "minecraft:coals"
+    }
+  },
+  "result": {
+    "item": "jetboots:rocket_boots"
+  }
+}

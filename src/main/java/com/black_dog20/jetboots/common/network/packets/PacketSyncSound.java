@@ -2,11 +2,11 @@ package com.black_dog20.jetboots.common.network.packets;
 
 import com.black_dog20.jetboots.client.ClientHelper;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 import java.util.UUID;
 import java.util.function.Supplier;
@@ -18,18 +18,18 @@ public class PacketSyncSound {
         this.uuid = uuid;
     }
 
-    public static void encode(PacketSyncSound msg, PacketBuffer buffer) {
-        buffer.writeString(msg.uuid.toString());
+    public static void encode(PacketSyncSound msg, FriendlyByteBuf buffer) {
+        buffer.writeUtf(msg.uuid.toString());
     }
 
-    public static PacketSyncSound decode(PacketBuffer buffer) {
-        return new PacketSyncSound(UUID.fromString(buffer.readString()));
+    public static PacketSyncSound decode(FriendlyByteBuf buffer) {
+        return new PacketSyncSound(UUID.fromString(buffer.readUtf()));
     }
 
     public static class Handler {
         public static void handle(PacketSyncSound msg, Supplier<NetworkEvent.Context> ctx) {
             ctx.get().enqueueWork(() -> DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
-                PlayerEntity player = Minecraft.getInstance().world.getPlayerByUuid(msg.uuid);
+                Player player = Minecraft.getInstance().level.getPlayerByUUID(msg.uuid);
                 ClientHelper.play(player);
             }));
 

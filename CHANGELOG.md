@@ -1,6 +1,16 @@
 # Jet Boots Changelog
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.17.1, 1.2.0-b1] - 2021-08-xx
+- Port to 1.17.1
+- Will be in beta until full Forge release, expect things to break
+- Added much more config options for controlling the leveling of items and how OP they will become.
+  Part of this fixes [#24](https://github.com/Crimix/jetboots/issues/24).
+- Added Rocket Boots, that work like a limited jetpack, there is no hover and the it can fly for a limited time and will replenish that time when not in use.
+  These are now considered tier 1 of flight in this mod.   
+  They will level up and get more flight time and as the rest of the items this is configurable.  
+  This part fixes the rest of [#24](https://github.com/Crimix/jetboots/issues/24).
+- Changed the recipe for the Jet Boots to required Rocket Boots and a Netherite ingot. 
 
 ## [1.16.3, 1.1.0] - 2021-01-17
 - Completly changed the upgrade system.  

@@ -1,9 +1,10 @@
-package com.black_dog20.jetboots.common.util;
+package com.black_dog20.jetboots.common.util.properties;
 
 import com.black_dog20.bml.utils.item.NBTUtil;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 
-import static com.black_dog20.jetboots.common.util.NBTTags.*;
+import static com.black_dog20.jetboots.common.util.NBTTags.HELMET_MODE;
+import static com.black_dog20.jetboots.common.util.NBTTags.HELMET_NIGHT_VISION;
 
 public class GuardinanHelmetProperties {
     private GuardinanHelmetProperties() {

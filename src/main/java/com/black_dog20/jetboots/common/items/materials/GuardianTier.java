@@ -1,39 +1,39 @@
 package com.black_dog20.jetboots.common.items.materials;
 
-import net.minecraft.item.IItemTier;
-import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.crafting.Ingredient;
 
-public class GuardianTier implements IItemTier {
+public class GuardianTier implements Tier {
 
     private static final GuardianTier instance = new GuardianTier();
 
     @Override
-    public int getMaxUses() {
+    public int getUses() {
         return -1;
     }
 
     @Override
-    public float getEfficiency() {
+    public float getSpeed() {
         return 9.0F;
     }
 
     @Override
-    public float getAttackDamage() {
+    public float getAttackDamageBonus() {
         return 0;
     }
 
     @Override
-    public int getHarvestLevel() {
+    public int getLevel() {
         return 4;
     }
 
     @Override
-    public int getEnchantability() {
+    public int getEnchantmentValue() {
         return 0;
     }
 
     @Override
-    public Ingredient getRepairMaterial() {
+    public Ingredient getRepairIngredient() {
         return null;
     }
 

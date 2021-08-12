@@ -1,24 +1,24 @@
 package com.black_dog20.jetboots.client.containers;
 
-import com.black_dog20.jetboots.common.util.EnchantableItemHandler;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.ClickType;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
+import com.black_dog20.jetboots.common.util.objects.EnchantableItemHandler;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ClickType;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
-public class EnchantableItemContainer extends Container {
+public class EnchantableItemContainer extends AbstractContainerMenu {
     protected LazyOptional<IItemHandler> inventory;
     public ItemStack container;
 
-    public EnchantableItemContainer(int windowId, PlayerInventory playerInventory, PlayerEntity player) {
+    public EnchantableItemContainer(int windowId, Inventory playerInventory, Player player) {
         super(ModContainers.ENCHANTABLE_ITEM_CONTAINER.get(), windowId);
 
-        container = player.getHeldItemMainhand();
+        container = player.getMainHandItem();
 
         inventory = container.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY);
 
@@ -28,18 +28,18 @@ public class EnchantableItemContainer extends Container {
         });
 
         if (!inventory.isPresent())
-            player.closeScreen();
+            player.closeContainer();
 
     }
 
     @Override
-    public boolean canInteractWith(PlayerEntity playerIn) {
+    public boolean stillValid(Player playerIn) {
         return true;
     }
 
     @Override
-    public void detectAndSendChanges() {
-        super.detectAndSendChanges();
+    public void broadcastChanges() {
+        super.broadcastChanges();
         if (inventory.isPresent()) {
             IItemHandler handler = inventory
                     .orElseGet(null);
@@ -51,43 +51,43 @@ public class EnchantableItemContainer extends Container {
     }
 
     @Override
-    public ItemStack transferStackInSlot(PlayerEntity player, int index) {
+    public ItemStack quickMoveStack(Player player, int index) {
         ItemStack itemstack = ItemStack.EMPTY;
-        Slot slot = inventorySlots.get(index);
+        Slot slot = slots.get(index);
 
-        if (slot != null && slot.getHasStack()) {
-            ItemStack itemstack1 = slot.getStack();
+        if (slot != null && slot.hasItem()) {
+            ItemStack itemstack1 = slot.getItem();
             itemstack = itemstack1.copy();
 
-            int containerSlots = inventorySlots.size() - player.inventory.mainInventory.size();
+            int containerSlots = slots.size() - player.getInventory().items.size();
 
             if (index < containerSlots) {
-                if (!this.mergeItemStack(itemstack1, containerSlots, inventorySlots.size(), true)) {
+                if (!this.moveItemStackTo(itemstack1, containerSlots, slots.size(), true)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!this.mergeItemStack(itemstack1, 0, containerSlots, false)) {
+            } else if (!this.moveItemStackTo(itemstack1, 0, containerSlots, false)) {
                 return ItemStack.EMPTY;
             }
 
             if (itemstack1.isEmpty()) {
-                slot.putStack(ItemStack.EMPTY);
+                slot.set(ItemStack.EMPTY);
             } else {
-                slot.onSlotChanged();
+                slot.setChanged();
             }
         }
         return itemstack;
     }
 
     @Override
-    public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player) {
+    public void clicked(int slotId, int dragType, ClickType clickTypeIn, Player player) {
         // this will prevent the player from interacting with the item that opened the inventory
-        if (slotId >= 0 && getSlot(slotId) != null && getSlot(slotId).getStack() == player.getHeldItemMainhand()) {
-            return ItemStack.EMPTY;
+        if (slotId >= 0 && getSlot(slotId) != null && getSlot(slotId).getItem() == player.getMainHandItem()) {
+            return;
         }
-        return super.slotClick(slotId, dragType, clickTypeIn, player);
+        super.clicked(slotId, dragType, clickTypeIn, player);
     }
 
-    private int addSlotRange(PlayerInventory playerInventory, int index, int x, int y, int amount, int dx) {
+    private int addSlotRange(Inventory playerInventory, int index, int x, int y, int amount, int dx) {
         for (int i = 0; i < amount; i++) {
             addSlot(new Slot(playerInventory, index, x, y));
             x += dx;
@@ -96,7 +96,7 @@ public class EnchantableItemContainer extends Container {
         return index;
     }
 
-    private int addSlotBox(PlayerInventory playerInventory, int index, int x, int y, int horAmount, int dx, int verAmount, int dy) {
+    private int addSlotBox(Inventory playerInventory, int index, int x, int y, int horAmount, int dx, int verAmount, int dy) {
         for (int j = 0; j < verAmount; j++) {
             index = addSlotRange(playerInventory, index, x, y, horAmount, dx);
             y += dy;
@@ -104,7 +104,7 @@ public class EnchantableItemContainer extends Container {
         return index;
     }
 
-    private void addPlayerSlots(PlayerInventory playerInventory) {
+    private void addPlayerSlots(Inventory playerInventory) {
         // Player inventory
         addSlotBox(playerInventory, 9, 10, 70, 9, 18, 3, 18);
 

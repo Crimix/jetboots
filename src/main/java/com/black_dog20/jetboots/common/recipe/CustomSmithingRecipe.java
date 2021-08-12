@@ -6,42 +6,46 @@ import com.black_dog20.jetboots.common.items.equipment.GuardianJacketItem;
 import com.black_dog20.jetboots.common.items.equipment.GuardianPantsItem;
 import com.black_dog20.jetboots.common.items.equipment.GuardianSwordItem;
 import com.black_dog20.jetboots.common.items.equipment.JetBootsItem;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.item.crafting.SmithingRecipe;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import com.black_dog20.jetboots.common.items.equipment.RocketBootsItem;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.UpgradeRecipe;
+import net.minecraft.world.level.Level;
 
-public class CustomSmithingRecipe extends SmithingRecipe {
+import java.util.Map;
+import java.util.function.Predicate;
+
+public class CustomSmithingRecipe extends UpgradeRecipe {
+
+    private static final Map<UpgradeItem.Type, Predicate<ItemStack>> MATCHER = Map.of(
+            UpgradeItem.Type.HELMET, createTypeMatcher(GuardianHelmetItem.class),
+            UpgradeItem.Type.JACKET, createTypeMatcher(GuardianJacketItem.class),
+            UpgradeItem.Type.PANTS, createTypeMatcher(GuardianPantsItem.class),
+            UpgradeItem.Type.BOOTS, createTypeMatcher(JetBootsItem.class),
+            UpgradeItem.Type.ROCKET_BOOTS, createTypeMatcher(RocketBootsItem.class),
+            UpgradeItem.Type.SWORD, createTypeMatcher(GuardianSwordItem.class)
+    );
 
     public CustomSmithingRecipe(ResourceLocation recipeId) {
         super(recipeId, Ingredient.EMPTY, Ingredient.EMPTY, ItemStack.EMPTY);
     }
 
     @Override
-    public boolean matches(IInventory inv, World world) {
-        ItemStack input = inv.getStackInSlot(0);
-        ItemStack addition = inv.getStackInSlot(1);
+    public boolean matches(Container inv, Level world) {
+        ItemStack input = inv.getItem(0);
+        ItemStack addition = inv.getItem(1);
 
-        if(addition.getItem() instanceof UpgradeItem && addition.getCount() == 1) {
-            UpgradeItem upgradeItem = (UpgradeItem) addition.getItem();
-
-            if(upgradeItem.hasBeenAppliedAlready(input))
+        if (addition.getItem() instanceof UpgradeItem upgradeItem && addition.getCount() == 1) {
+            if (upgradeItem.hasBeenAppliedAlready(input))
                 return false;
 
-            switch (upgradeItem.getType()) {
-                case HELMET:
-                    return input.getItem() instanceof GuardianHelmetItem && input.getCount() == 1;
-                case JACKET:
-                    return input.getItem() instanceof GuardianJacketItem && input.getCount() == 1;
-                case PANTS:
-                    return input.getItem() instanceof GuardianPantsItem && input.getCount() == 1;
-                case BOOTS:
-                    return input.getItem() instanceof JetBootsItem && input.getCount() == 1;
-                case SWORD:
-                    return input.getItem() instanceof GuardianSwordItem && input.getCount() == 1;
+            for (UpgradeItem.Type type : upgradeItem.getTypes()) {
+                if (MATCHER.getOrDefault(type, (i) -> false).test(input)) {
+                    return true;
+                }
             }
         }
 
@@ -49,26 +53,30 @@ public class CustomSmithingRecipe extends SmithingRecipe {
     }
 
     @Override
-    public ItemStack getCraftingResult(IInventory inv) {
-        ItemStack stack = inv.getStackInSlot(0).copy();
-        UpgradeItem addition = (UpgradeItem) inv.getStackInSlot(1).getItem();
+    public ItemStack assemble(Container inv) {
+        ItemStack stack = inv.getItem(0).copy();
+        UpgradeItem addition = (UpgradeItem) inv.getItem(1).getItem();
 
         return addition.applyUpgrade(stack);
     }
 
     @Override
-    public ItemStack getRecipeOutput() {
+    public ItemStack getResultItem() {
         return ItemStack.EMPTY;
     }
 
     @Override
-    public boolean isValidAdditionItem(ItemStack addition) {
+    public boolean isAdditionIngredient(ItemStack addition) {
         return addition.getItem() instanceof UpgradeItem;
     }
 
     @Override
-    public IRecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<?> getSerializer() {
         return ModRecipeSerializers.CUSTOM_SMITHING.get();
+    }
+
+    private static Predicate<ItemStack> createTypeMatcher(Class<?> clazz) {
+        return stack -> clazz.isInstance(stack.getItem()) && stack.getCount() == 1;
     }
 
 }

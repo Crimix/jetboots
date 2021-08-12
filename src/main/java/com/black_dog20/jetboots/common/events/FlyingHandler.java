@@ -1,6 +1,7 @@
 package com.black_dog20.jetboots.common.events;
 
 import com.black_dog20.bml.event.ArmorEvent;
+import com.black_dog20.bml.utils.player.MovementUtil;
 import com.black_dog20.jetboots.Jetboots;
 import com.black_dog20.jetboots.common.items.ModItems;
 import com.black_dog20.jetboots.common.network.PacketHandler;
@@ -8,38 +9,37 @@ import com.black_dog20.jetboots.common.network.packets.PacketSyncPartical;
 import com.black_dog20.jetboots.common.network.packets.PacketSyncSound;
 import com.black_dog20.jetboots.common.network.packets.PacketSyncStopSound;
 import com.black_dog20.jetboots.common.util.EnergyUtil;
-import com.black_dog20.jetboots.common.util.JetBootsProperties;
 import com.black_dog20.jetboots.common.util.ModUtils;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.vector.Vector3d;
+import com.black_dog20.jetboots.common.util.properties.JetBootsProperties;
+import com.black_dog20.jetboots.common.util.properties.RocketBootsProperties;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.network.PacketDistributor;
-
-import static com.black_dog20.jetboots.common.util.NBTTags.*;
+import net.minecraftforge.fmllegacy.network.PacketDistributor;
 
 @Mod.EventBusSubscriber(modid = Jetboots.MOD_ID)
 public class FlyingHandler {
 
     @SubscribeEvent
     public static void onEquipJetboots(ArmorEvent.Equip event) {
-        PlayerEntity player = event.player;
+        Player player = event.player;
         if (event.isArmorEqualTo(ModItems.JET_BOOTS.get())) {
-            if (ModUtils.canFlyWithBoots(player)) {
-                player.abilities.allowFlying = true;
-                player.sendPlayerAbilities();
+            if (ModUtils.canFlyWithJetboots(player)) {
+                player.getAbilities().mayfly = true;
+                player.onUpdateAbilities();
             }
         }
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onJetbootsTick(ArmorEvent.Tick event) {
-        PlayerEntity player = event.player;
+        Player player = event.player;
         ItemStack jetboots = event.armor;
         if (event.isArmorEqualTo(ModItems.JET_BOOTS.get())) {
             // To render elytra flight correct
@@ -50,107 +50,114 @@ public class FlyingHandler {
                 return;
             }
 
-            if (ModUtils.canFlyWithBoots(player)) {
+            if (ModUtils.canFlyWithJetboots(player)) {
                 // Enable allow flying if not using elytra flight
-                if (!player.abilities.allowFlying && !ModUtils.useElytraFlight(player, jetboots) && !player.isElytraFlying()) {
-                    player.abilities.allowFlying = true;
-                    player.sendPlayerAbilities();
+                if (!player.getAbilities().mayfly && !ModUtils.useElytraFlight(player, jetboots) && !player.isFallFlying()) {
+                    player.getAbilities().mayfly = true;
+                    player.onUpdateAbilities();
                 }
 
                 if (ModUtils.useElytraFlight(player, jetboots)) {
                     if (event.side == LogicalSide.SERVER)
                         drawpower(player, jetboots);
                     doElytraFlight(player, jetboots);
-                } else if (player.isElytraFlying()) {
+                } else if (player.isFallFlying()) {
                     stopElytraFlight(player);
-                } else if (player.abilities.isFlying && event.side == LogicalSide.SERVER) {
+                } else if (player.getAbilities().flying && event.side == LogicalSide.SERVER) {
                     drawpower(player,jetboots);
                 }
                 sendSoundAndPartical(event, player, jetboots);
             } else {
-                player.abilities.allowFlying = false;
-                player.abilities.isFlying = false;
-                player.sendPlayerAbilities();
-                if (player.isElytraFlying())
+                player.getAbilities().mayfly = false;
+                player.getAbilities().flying = false;
+                player.onUpdateAbilities();
+                if (player.isFallFlying())
                     stopElytraFlight(player);
                 if (event.side == LogicalSide.SERVER)
-                    PacketHandler.NETWORK.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> player), new PacketSyncStopSound(player.getUniqueID()));
+                    PacketHandler.NETWORK.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> player), new PacketSyncStopSound(player.getUUID()));
             }
         }
     }
 
     @SubscribeEvent
     public static void onUnequipJetboots(ArmorEvent.Unequip event) {
-        PlayerEntity player = event.player;
+        Player player = event.player;
         if (event.isArmorEqualTo(ModItems.JET_BOOTS.get())) {
             stopElytraFlight(player);
-            PacketHandler.NETWORK.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> player), new PacketSyncStopSound(player.getUniqueID()));
-            player.abilities.allowFlying = false;
-            player.abilities.isFlying = false;
-            player.sendPlayerAbilities();
+            PacketHandler.NETWORK.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> player), new PacketSyncStopSound(player.getUUID()));
+            if (!player.isCreative()) {
+                player.getAbilities().mayfly = false;
+                player.getAbilities().flying = false;
+            }
+            player.onUpdateAbilities();
 
         }
     }
 
-    private static void sendSoundAndPartical(ArmorEvent.Tick event, PlayerEntity player, ItemStack jetboots) {
+    private static void sendSoundAndPartical(ArmorEvent.Tick event, Player player, ItemStack jetboots) {
         if (event.side == LogicalSide.SERVER) {
-            if (ModUtils.isFlying(player)) {
-                PacketHandler.NETWORK.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> player), new PacketSyncPartical(player.getUniqueID(), player.abilities.isFlying));
+            if (ModUtils.isJetbootsFlying(player) && ModUtils.canFlyWithJetboots(player)) {
+                PacketHandler.NETWORK.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> player), new PacketSyncPartical(player.getUUID(), player.getAbilities().flying));
                 if (!JetBootsProperties.hasActiveMuffledUpgrade(jetboots)) {
                     if (!player.isInWater()) {
-                        PacketHandler.NETWORK.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> player), new PacketSyncSound(player.getUniqueID()));
+                        PacketHandler.NETWORK.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> player), new PacketSyncSound(player.getUUID()));
                     } else {
-                        PacketHandler.NETWORK.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> player), new PacketSyncStopSound(player.getUniqueID()));
+                        PacketHandler.NETWORK.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> player), new PacketSyncStopSound(player.getUUID()));
                     }
                 }
             } else {
-                PacketHandler.NETWORK.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> player), new PacketSyncStopSound(player.getUniqueID()));
+                PacketHandler.NETWORK.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> player), new PacketSyncStopSound(player.getUUID()));
             }
         }
     }
 
-    private static void stopElytraFlight(PlayerEntity player) {
+    private static void stopElytraFlight(Player player) {
         player.stopFallFlying(); // Stop elytra flight pose
-        player.abilities.allowFlying = true;
-        if (player.getPersistentData().getBoolean(WAS_FLYING_BEFORE)) {
-            player.abilities.isFlying = true;
-            player.getPersistentData().remove(WAS_FLYING_BEFORE);
+        player.getAbilities().mayfly = true;
+        if (ModUtils.isBlocksOverGround(player, 2.9, 4)) {
+            player.getAbilities().flying = true;
         }
-        player.sendPlayerAbilities();
+        player.onUpdateAbilities();
     }
 
-    private static void doElytraFlight(PlayerEntity player, ItemStack jetboots) {
+    private static void doElytraFlight(Player player, ItemStack jetboots) {
         // Disable flying
-        if (player.abilities.allowFlying || player.abilities.isFlying) {
-            player.getPersistentData().putBoolean(WAS_FLYING_BEFORE, player.abilities.isFlying);
-            player.abilities.allowFlying = false;
-            player.abilities.isFlying = false;
-            player.sendPlayerAbilities();
+        if (player.getAbilities().mayfly || player.getAbilities().flying) {
+            player.getAbilities().mayfly = false;
+            player.getAbilities().flying = false;
+            player.onUpdateAbilities();
         }
         player.startFallFlying(); // Start elytra flight pose
-        Vector3d vec3d = player.getLookVec();
-        double d0 = 1.5D;
-        double d1 = 0.1D;
-        double d2 = 0.5D;
-        double d3 = 3D;
-        Vector3d vec3d1 = player.getMotion();
         double speed = getSpeed(player, jetboots);
-        player.setMotion(vec3d1.add(vec3d.x * d1 + (vec3d.x * speed - vec3d1.x) * d2, vec3d.y * d1 + (vec3d.y * speed - vec3d1.y) * d2, vec3d.z * d1 + (vec3d.z * speed - vec3d1.z) * d2));
+        MovementUtil.speedUpElytraFlight(player, speed,  0.1D, 0.5D);
     }
 
-    private static void drawpower(PlayerEntity player, ItemStack jetboots) {
-        if(!player.isCreative()) {
+    private static void drawpower(Player player, ItemStack jetboots) {
+        if (!player.isCreative()) {
             jetboots.getCapability(CapabilityEnergy.ENERGY, null)
                     .ifPresent(e -> EnergyUtil.extractOrReceive(e, EnergyUtil.getEnergyWhileFlying(jetboots)));
         }
     }
 
-    private static double getSpeed(PlayerEntity player, ItemStack jetboots) {
+    private static double getSpeed(Player player, ItemStack jetboots) {
         boolean inWater = player.isInWater();
 
         if (JetBootsProperties.hasThrusterUpgrade(jetboots) && JetBootsProperties.getSpeed(jetboots))
             return inWater ? 1.5D : 3D;
         else
             return inWater ? 0.5D : 1.5D;
+    }
+
+    @SubscribeEvent
+    public static void onFall(LivingFallEvent event) {
+        if (event.getEntityLiving() instanceof Player player) {
+            if (ModUtils.hasJetBoots(player) && JetBootsProperties.hasShockUpgrade(ModUtils.getJetBoots(player))) {
+                event.setCanceled(true);
+            }
+
+            if (ModUtils.hasRocketBoots(player) && RocketBootsProperties.hasShockUpgrade(ModUtils.getRocketBoots(player))) {
+                event.setCanceled(true);
+            }
+        }
     }
 }

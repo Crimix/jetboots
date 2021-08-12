@@ -1,15 +1,20 @@
 package com.black_dog20.jetboots.common.util;
 
 import com.black_dog20.bml.utils.text.TextComponentBuilder;
+import com.black_dog20.jetboots.common.items.ModItems;
 import com.black_dog20.jetboots.common.items.equipment.GuardianHelmetItem;
 import com.black_dog20.jetboots.common.items.equipment.JetBootsItem;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
+import com.black_dog20.jetboots.common.items.equipment.RocketBootsItem;
+import com.black_dog20.jetboots.common.util.properties.GuardinanHelmetProperties;
+import com.black_dog20.jetboots.common.util.properties.JetBootsProperties;
+import com.black_dog20.jetboots.common.util.properties.RocketBootsProperties;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
@@ -19,21 +24,25 @@ import static com.black_dog20.jetboots.common.util.TranslationHelper.Translation
 
 public class ModUtils {
 
-    public static boolean isFlying(PlayerEntity player) {
-        return hasJetBoots(player) && (player.abilities.isFlying || player.isElytraFlying());
+    public static boolean isJetbootsFlying(Player player) {
+        return hasJetBoots(player) && (player.getAbilities().flying || player.isFallFlying());
     }
 
-    public static boolean hasJetBoots(PlayerEntity player) {
-        return player.getItemStackFromSlot(EquipmentSlotType.FEET).getItem() instanceof JetBootsItem;
+    public static boolean hasJetBoots(Player player) {
+        return player.getItemBySlot(EquipmentSlot.FEET).getItem() instanceof JetBootsItem;
     }
 
-    public static ItemStack getJetBoots(PlayerEntity player) {
+    public static ItemStack getJetBoots(Player player) {
         if (!hasJetBoots(player))
             return ItemStack.EMPTY;
-        return player.getItemStackFromSlot(EquipmentSlotType.FEET);
+        return player.getItemBySlot(EquipmentSlot.FEET);
     }
 
-    public static boolean canFlyWithBoots(PlayerEntity player) {
+    public static boolean canFlyWithJetboots(Player player) {
+        if (player.isCreative()){
+            return true;
+        }
+
         if (!hasJetBoots(player))
             return false;
         else {
@@ -49,16 +58,16 @@ public class ModUtils {
         }
     }
 
-    public static boolean canUseElytraFlight(PlayerEntity player) {
+    public static boolean canUseElytraFlight(Player player) {
         if (!hasJetBoots(player))
             return false;
         else {
             ItemStack jetboots = getJetBoots(player);
-            return canFlyWithBoots(player) && useElytraFlight(player, jetboots);
+            return canFlyWithJetboots(player) && useElytraFlight(player, jetboots);
         }
     }
 
-    public static boolean useElytraFlight(PlayerEntity player, ItemStack jetboots) {
+    public static boolean useElytraFlight(Player player, ItemStack jetboots) {
         return startUseElytraFlight(jetboots) && (isTwoBlocksOverGround(player) || (player.isInWater() && JetBootsProperties.hasUnderWaterUpgrade(jetboots)));
     }
 
@@ -66,33 +75,57 @@ public class ModUtils {
         return JetBootsProperties.hasEngineUpgrade(jetboots) && JetBootsProperties.getMode(jetboots);
     }
 
-    private static boolean isTwoBlocksOverGround(PlayerEntity player) {
+    private static boolean isTwoBlocksOverGround(Player player) {
+        return isBlocksOverGround(player, 1.9, 3);
+    }
+
+    public static boolean isBlocksOverGround(Player player, double target, int max) {
         if (player.isInWater()) {
             return true;
         }
 
-        BlockPos blockPos = new BlockPos(player.getPosition());
-        for (int i = 0; i < 3; i++) {
-            if (player.world.isAirBlock(blockPos.down()))
-                blockPos = blockPos.down();
+        BlockPos blockPos = new BlockPos(player.blockPosition());
+        for (int i = 0; i < max; i++) {
+            if (player.level.isEmptyBlock(blockPos.below()))
+                blockPos = blockPos.below();
             else
                 break;
         }
 
-        return blockPos.distanceSq(player.getPosX(), player.getPosY(), player.getPosZ(), false) > 1.9;
+        return blockPos.distSqr(player.getX(), player.getY(), player.getZ(), false) > target;
     }
 
-    public static ITextComponent getFlightModeText(PlayerEntity player) {
+    public static boolean isBetweenBlocksOverGround(Player player, double minTarget, double maxTarget) {
+        if (player.isInWater()) {
+            return true;
+        }
+
+        int max = (int) maxTarget + 1;
+
+        BlockPos blockPos = new BlockPos(player.blockPosition());
+        for (int i = 0; i < max; i++) {
+            if (player.level.isEmptyBlock(blockPos.below()))
+                blockPos = blockPos.below();
+            else
+                break;
+        }
+
+        double distance = blockPos.distSqr(player.getX(), player.getY(), player.getZ(), false);
+
+        return minTarget < distance && distance < maxTarget;
+    }
+
+    public static Component getFlightModeText(Player player) {
         ItemStack stack = ModUtils.getJetBoots(player);
-        return getFlightModeText(stack, TextFormatting.WHITE);
+        return getFlightModeText(stack, ChatFormatting.WHITE);
     }
 
-    public static ITextComponent getFlightModeText(ItemStack stack, TextFormatting color) {
+    public static Component getFlightModeText(ItemStack stack, ChatFormatting color) {
         if (!stack.isEmpty()) {
             Supplier<Boolean> elytraOn = () -> JetBootsProperties.getMode(stack);
 
-            ITextComponent elytra = ELYTRA.get(TextFormatting.LIGHT_PURPLE);
-            ITextComponent normal = NORMAL.get(TextFormatting.GREEN);
+            Component elytra = ELYTRA.get(ChatFormatting.LIGHT_PURPLE);
+            Component normal = NORMAL.get(ChatFormatting.GREEN);
             return TextComponentBuilder.of(FLIGHT_MODE)
                     .format(color)
                     .with(":")
@@ -101,20 +134,20 @@ public class ModUtils {
                     .with(elytra, normal, elytraOn)
                     .build();
         }
-        return new StringTextComponent("");
+        return new TextComponent("");
     }
 
-    public static ITextComponent getFlightSpeedText(PlayerEntity player) {
+    public static Component getFlightSpeedText(Player player) {
         ItemStack stack = ModUtils.getJetBoots(player);
-        return getFlightSpeedText(stack, TextFormatting.WHITE);
+        return getFlightSpeedText(stack, ChatFormatting.WHITE);
     }
 
-    public static ITextComponent getFlightSpeedText(ItemStack stack, TextFormatting color) {
+    public static Component getFlightSpeedText(ItemStack stack, ChatFormatting color) {
         if (!stack.isEmpty()) {
             Supplier<Boolean> superSpeedOn = () -> JetBootsProperties.getSpeed(stack);
 
-            ITextComponent superSpeed = SUPER.get(TextFormatting.RED);
-            ITextComponent normal = NORMAL.get(TextFormatting.GREEN);
+            Component superSpeed = SUPER.get(ChatFormatting.RED);
+            Component normal = NORMAL.get(ChatFormatting.GREEN);
             return TextComponentBuilder.of(SPEED_MODE)
                     .format(color)
                     .with(":")
@@ -123,56 +156,88 @@ public class ModUtils {
                     .with(superSpeed, normal, superSpeedOn)
                     .build();
         }
-        return new StringTextComponent("");
+        return new TextComponent("");
     }
 
-    public static boolean hasGuardianHelmet(PlayerEntity player) {
-        return player.getItemStackFromSlot(EquipmentSlotType.HEAD).getItem() instanceof GuardianHelmetItem;
+    public static boolean hasGuardianHelmet(Player player) {
+        return player.getItemBySlot(EquipmentSlot.HEAD).getItem() instanceof GuardianHelmetItem;
     }
 
-    public static ItemStack getGuardianHelmet(PlayerEntity player) {
+    public static ItemStack getGuardianHelmet(Player player) {
         if (!hasGuardianHelmet(player))
             return ItemStack.EMPTY;
-        return player.getItemStackFromSlot(EquipmentSlotType.HEAD);
+        return player.getItemBySlot(EquipmentSlot.HEAD);
     }
 
-    public static ITextComponent getHelmetModeText(PlayerEntity player) {
+    public static Component getHelmetModeText(Player player) {
         ItemStack stack = ModUtils.getGuardianHelmet(player);
         return getHelmetModeText(stack);
     }
 
-    public static ITextComponent getHelmetModeText(ItemStack helmet) {
+    public static Component getHelmetModeText(ItemStack helmet) {
         if (!helmet.isEmpty()) {
             Supplier<Boolean> materializedOn = () -> GuardinanHelmetProperties.getMode(helmet);
 
-            ITextComponent materialized = MATERIALIZED.get(TextFormatting.LIGHT_PURPLE);
-            ITextComponent dematerialized = DEMATERIALIZED.get(TextFormatting.BLUE);
+            Component materialized = MATERIALIZED.get(ChatFormatting.LIGHT_PURPLE);
+            Component dematerialized = DEMATERIALIZED.get(ChatFormatting.BLUE);
             return TextComponentBuilder.of(HELMET_MODE)
                     .with(":")
                     .space()
                     .with(materialized, dematerialized, materializedOn)
                     .build();
         }
-        return new StringTextComponent("");
+        return new TextComponent("");
     }
 
-    public static ITextComponent getHelmetNightVisionText(PlayerEntity player) {
+    public static Component getHelmetNightVisionText(Player player) {
         ItemStack stack = ModUtils.getGuardianHelmet(player);
         return getHelmetNightVisionText(stack);
     }
 
-    public static ITextComponent getHelmetNightVisionText(ItemStack helmet) {
+    public static Component getHelmetNightVisionText(ItemStack helmet) {
         if (!helmet.isEmpty()) {
             Supplier<Boolean> nightVisionOn = () -> GuardinanHelmetProperties.getMode(helmet);
 
-            ITextComponent on = ON.get(TextFormatting.GREEN);
-            ITextComponent off = OFF.get(TextFormatting.RED);
+            Component on = ON.get(ChatFormatting.GREEN);
+            Component off = OFF.get(ChatFormatting.RED);
             return TextComponentBuilder.of(HELMET_NIGHT_VISION)
                     .with(":")
                     .space()
                     .with(on, off, nightVisionOn)
                     .build();
         }
-        return new StringTextComponent("");
+        return new TextComponent("");
+    }
+
+    public static boolean hasRocketBoots(Player player) {
+        return player.getItemBySlot(EquipmentSlot.FEET).getItem() instanceof RocketBootsItem;
+    }
+
+    public static ItemStack getRocketBoots(Player player) {
+        if (!hasRocketBoots(player))
+            return ItemStack.EMPTY;
+        return player.getItemBySlot(EquipmentSlot.FEET);
+    }
+
+    public static Component getEngineStateText(Player player) {
+        ItemStack stack = ModUtils.getRocketBoots(player);
+        return getEngineStateText(stack, ChatFormatting.WHITE);
+    }
+
+    public static Component getEngineStateText(ItemStack stack, ChatFormatting color) {
+        if (!stack.isEmpty()) {
+            Supplier<Boolean> isOn = () -> RocketBootsProperties.getEngineState(stack);
+
+            Component on = ON.get(ChatFormatting.GREEN);
+            Component off = OFF.get(ChatFormatting.RED);
+            return TextComponentBuilder.of(ModItems.ROCKET_BOOTS.get().getName(stack))
+                    .format(color)
+                    .with(":")
+                    .format(color)
+                    .space()
+                    .with(on, off, isOn)
+                    .build();
+        }
+        return new TextComponent("");
     }
 }

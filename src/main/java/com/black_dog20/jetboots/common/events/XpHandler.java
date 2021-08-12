@@ -1,16 +1,18 @@
 package com.black_dog20.jetboots.common.events;
 
+import com.black_dog20.bml.api.ILevelableItem;
 import com.black_dog20.bml.event.PlayerMoveEvent;
+import com.black_dog20.bml.utils.leveling.ItemLevelProperties;
 import com.black_dog20.bml.utils.math.MathUtil;
 import com.black_dog20.jetboots.Config;
 import com.black_dog20.jetboots.Jetboots;
-import com.black_dog20.jetboots.api.ILevelableItem;
-import com.black_dog20.jetboots.common.util.LevelProperties;
+import com.black_dog20.jetboots.common.items.BaseGuardianArmorItem;
+import com.black_dog20.jetboots.common.items.equipment.GuardianSwordItem;
 import com.black_dog20.jetboots.common.util.ModUtils;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.EntityDamageSource;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.damagesource.EntityDamageSource;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -20,39 +22,39 @@ import net.minecraftforge.fml.common.Mod;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static com.black_dog20.jetboots.common.util.NBTTags.*;
+import static com.black_dog20.jetboots.common.util.NBTTags.TAG_FLIGHT_XP_COOLDOWN;
 
 @Mod.EventBusSubscriber(modid = Jetboots.MOD_ID)
 public class XpHandler {
 
     @SubscribeEvent
     public static void onPlayerMoveFlying(PlayerMoveEvent event) {
-        PlayerEntity player = event.getPlayer();
-        if(player.world.isRemote)
+        Player player = event.getPlayer();
+        if (player.level.isClientSide)
             return;
-        if (!ModUtils.hasJetBoots(player) && ModUtils.isFlying(player))
+        if (!ModUtils.hasJetBoots(player) && ModUtils.isJetbootsFlying(player))
             return;
         if (event.getDistance() < 0.9)
             return;
-        if(getRemainingCooldown(player) > 0)
+        if (getRemainingCooldown(player) > 0)
             return;
         ItemStack jetboots = ModUtils.getJetBoots(player);
-        LevelProperties.addXp(player, jetboots, 8);
+        ItemLevelProperties.addXp(player, jetboots, Config.FLIGHT_XP.get());
         setCooldown(player);
 
     }
 
-    private static void setCooldown(PlayerEntity player) {
-        CompoundNBT compound = player.getPersistentData();
+    private static void setCooldown(Player player) {
+        CompoundTag compound = player.getPersistentData();
         compound.putLong(TAG_FLIGHT_XP_COOLDOWN, System.currentTimeMillis() / 1000);
     }
 
-    public static long getCooldown(PlayerEntity player) {
-        CompoundNBT compound = player.getPersistentData();
+    public static long getCooldown(Player player) {
+        CompoundTag compound = player.getPersistentData();
         return compound.getLong(TAG_FLIGHT_XP_COOLDOWN);
     }
 
-    public static long getRemainingCooldown(PlayerEntity player) {
+    public static long getRemainingCooldown(Player player) {
         long currentTime = System.currentTimeMillis() / 1000;
         long cooldownStart = getCooldown(player);
         long remaining = (Math.max(Config.TICKS_BETWEEN_FLIGHT_XP_GAIN.get(), 20) / 20) - (currentTime - cooldownStart);
@@ -61,39 +63,37 @@ public class XpHandler {
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onPlayerHurt(LivingHurtEvent event) {
-        if (event.getAmount() > 0 && !event.getSource().isUnblockable() && event.getEntityLiving() instanceof PlayerEntity) {
-            PlayerEntity player = (PlayerEntity) event.getEntityLiving();
-            if(player.world.isRemote)
+        if (event.getAmount() > 0 && !event.getSource().isBypassArmor() && event.getEntityLiving() instanceof Player player) {
+            if (player.level.isClientSide)
                 return;
 
-            Set<ItemStack> levelableItems = player.inventory.armorInventory.stream()
+            Set<ItemStack> levelableItems = player.getInventory().armor.stream()
+                    .filter(stack -> stack.getItem() instanceof BaseGuardianArmorItem)
                     .filter(stack -> stack.getItem() instanceof ILevelableItem)
                     .collect(Collectors.toSet());
 
-            int xp = (int) Math.ceil(MathUtil.clamp(event.getAmount(), 3.0f, 10.0f));
+            int xp = (int) Math.ceil(MathUtil.clamp(event.getAmount() * Config.HURT_XP_MODIFIER.get(), Config.HURT_XP_MIN.get(), Config.HURT_XP_MAX.get()));
 
             for (ItemStack stack : levelableItems) {
-                LevelProperties.addXp(player, stack, xp);
+                ItemLevelProperties.addXp(player, stack, xp);
             }
         }
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onPlayerAttackEntity(LivingAttackEvent event) {
-        if (event.getAmount() > 0 && !event.getSource().isUnblockable() && event.getSource().damageType.equals("player") && event.getSource() instanceof EntityDamageSource) {
-            EntityDamageSource damageSource = (EntityDamageSource) event.getSource();
-            if (damageSource.getTrueSource() == null)
+        if (event.getAmount() > 0 && !event.getSource().isBypassArmor() && event.getSource().msgId.equals("player") && event.getSource() instanceof EntityDamageSource damageSource) {
+            if (damageSource.getEntity() == null)
                 return;
-            if (!(damageSource.getTrueSource() instanceof PlayerEntity))
+            if (!(damageSource.getEntity() instanceof Player player))
                 return;
-            PlayerEntity player = (PlayerEntity) damageSource.getTrueSource();
-            if(player.world.isRemote)
+            if (player.level.isClientSide)
                 return;
-            ItemStack weapon = player.getHeldItemMainhand();
+            ItemStack weapon = player.getMainHandItem();
 
-            if(weapon.getItem() instanceof ILevelableItem) {
-                int xp = (int) Math.ceil(MathUtil.clamp(event.getAmount(), 1.0f, 8.0f));
-                LevelProperties.addXp(player, weapon, xp);
+            if (weapon.getItem() instanceof ILevelableItem && weapon.getItem() instanceof GuardianSwordItem) {
+                int xp = (int) Math.ceil(MathUtil.clamp(event.getAmount() * Config.ATTACK_XP_MODIFIER.get(), Config.ATTACK_XP_MIN.get(), Config.ATTACK_XP_MAX.get()));
+                ItemLevelProperties.addXp(player, weapon, xp);
             }
         }
     }

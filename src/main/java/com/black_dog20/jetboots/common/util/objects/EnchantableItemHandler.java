@@ -1,11 +1,11 @@
-package com.black_dog20.jetboots.common.util;
+package com.black_dog20.jetboots.common.util.objects;
 
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static com.black_dog20.jetboots.common.util.NBTTags.*;
+import static com.black_dog20.jetboots.common.util.NBTTags.TAG_ENCHANTABLE_CONTAINER;
 
 public class EnchantableItemHandler extends ItemStackHandler {
     private static int SIZE = 3;
@@ -41,7 +41,7 @@ public class EnchantableItemHandler extends ItemStackHandler {
 
         Set<Enchantment> newEnchantments = EnchantmentHelper.getEnchantments(stack).keySet();
         boolean canBeAppliedToItem = newEnchantments.stream()
-                .allMatch(e -> e.type.canEnchantItem(container.getItem()));
+                .allMatch(e -> e.category.canEnchant(container.getItem()));
 
         if (!canBeAppliedToItem) {
             return false;
@@ -50,7 +50,7 @@ public class EnchantableItemHandler extends ItemStackHandler {
         Set<Enchantment> currentEnchantments = getEnchantmentMap().keySet();
 
         return newEnchantments.stream()
-                .allMatch(e -> EnchantmentHelper.areAllCompatibleWith(currentEnchantments, e));
+                .allMatch(e -> EnchantmentHelper.isEnchantmentCompatible(currentEnchantments, e));
     }
 
     private Map<Enchantment, Integer> getEnchantmentMap() {
@@ -93,7 +93,7 @@ public class EnchantableItemHandler extends ItemStackHandler {
     }
 
     private void load() {
-        CompoundNBT compoundNBT = container.getOrCreateTag();
+        CompoundTag compoundNBT = container.getOrCreateTag();
         if (compoundNBT.contains(TAG_ENCHANTABLE_CONTAINER)) {
             super.deserializeNBT(compoundNBT.getCompound(TAG_ENCHANTABLE_CONTAINER));
         }
@@ -104,15 +104,15 @@ public class EnchantableItemHandler extends ItemStackHandler {
     }
 
     @Override
-    public CompoundNBT serializeNBT() {
-        CompoundNBT nbt = super.serializeNBT();
+    public CompoundTag serializeNBT() {
+        CompoundTag nbt = super.serializeNBT();
         container.getOrCreateTag().put(TAG_ENCHANTABLE_CONTAINER, nbt);
         return nbt;
     }
 
     @Override
-    public void deserializeNBT(CompoundNBT nbt) {
-        CompoundNBT compoundNBT = container.getOrCreateTag();
+    public void deserializeNBT(CompoundTag nbt) {
+        CompoundTag compoundNBT = container.getOrCreateTag();
         if (compoundNBT.contains(TAG_ENCHANTABLE_CONTAINER)) {
             super.deserializeNBT(compoundNBT.getCompound(TAG_ENCHANTABLE_CONTAINER));
         }

@@ -2,7 +2,7 @@ package com.black_dog20.jetboots.common.util;
 
 import com.black_dog20.bml.utils.item.NBTItemBuilder;
 import com.black_dog20.bml.utils.item.NBTUtil;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.function.Function;
 

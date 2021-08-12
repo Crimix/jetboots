@@ -6,8 +6,8 @@ import com.black_dog20.jetboots.common.compat.ModCompat;
 import com.black_dog20.jetboots.common.items.ModItems;
 import com.black_dog20.jetboots.common.network.PacketHandler;
 import com.black_dog20.jetboots.common.recipe.ModRecipeSerializers;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -24,9 +24,9 @@ public class Jetboots {
     public static final String MOD_ID = "jetboots";
     private static final Logger LOGGER = LogManager.getLogger();
 
-    public static ItemGroup itemGroup = new ItemGroup(Jetboots.MOD_ID) {
+    public static CreativeModeTab itemGroup = new CreativeModeTab(Jetboots.MOD_ID) {
         @Override
-        public ItemStack createIcon() {
+        public ItemStack makeIcon() {
             return new ItemStack(ModItems.JET_BOOTS.get());
         }
     };
