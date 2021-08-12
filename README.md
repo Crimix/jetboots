@@ -1,4 +1,5 @@
-[![](http://cf.way2muchnoise.eu/full_jet-boots_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/jet-boots)
+[![](http://cf.way2muchnoise.eu/full_373208_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/jet-boots)
+[![](http://cf.way2muchnoise.eu/versions/373208.svg)](https://www.curseforge.com/minecraft/mc-mods/jet-boots)
 # Jet Boots
 [Jet Boots](https://www.curseforge.com/minecraft/mc-mods/jet-boots) is a rethinking of the classical flying, normally it is jetpacks or rings, but this time it is **boots**.
 The boots have two flight modes and two speeds.
