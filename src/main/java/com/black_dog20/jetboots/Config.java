@@ -132,19 +132,19 @@ public class Config {
                 .defineInRange("flightXp", 8, 1, 100);
         HURT_XP_MIN = SERVER_BUILDER.comment("Lower bound for xp awarded for taking damage")
                 .defineInRange("hurtXpMin", 3F, 1F, 100F);
-        HURT_XP_MODIFIER = SERVER_BUILDER.comment("Modifier that the damage amount on hurt gets multiplied with", "Will used in the following way, clamp(damage * modifier, min, max", "Gets added to all levelable armor")
+        HURT_XP_MODIFIER = SERVER_BUILDER.comment("Modifier that the damage amount on hurt gets multiplied with", "Will used in the following way, clamp(damage * modifier, min, max)", "Gets added to all levelable armor")
                 .defineInRange("hurtXpModifier", 1F, 1F, 100F);
         HURT_XP_MAX = SERVER_BUILDER.comment("Upper bound for xp awarded for taking damage")
                 .defineInRange("hurtXpMax", 10F, 1F, 300F);
         ATTACK_XP_MIN = SERVER_BUILDER.comment("Lower bound for xp awarded for dealing damage")
                 .defineInRange("attackXpMin", 1F, 1F, 100F);
-        ATTACK_XP_MODIFIER = SERVER_BUILDER.comment("Modifier that the damage amount on attack gets multiplied with", "Will used in the following way, clamp(damage * modifier, min, max", "Gets added to The Godslayer")
+        ATTACK_XP_MODIFIER = SERVER_BUILDER.comment("Modifier that the damage amount on attack gets multiplied with", "Will used in the following way, clamp(damage * modifier, min, max)", "Gets added to The Godslayer")
                 .defineInRange("attackXpModifier", 1F, 1F, 100F);
         ATTACK_XP_MAX = SERVER_BUILDER.comment("Upper bound for xp awarded for dealing damage")
                 .defineInRange("attackXpMax", 8F, 1F, 300F);
         ROCKET_XP_MIN = SERVER_BUILDER.comment("Lower bound for xp awarded for flying with rocket boots")
                 .defineInRange("rocketXpMin", 1, 1, 100);
-        ROCKET_XP_MODIFIER = SERVER_BUILDER.comment("Modifier that the flight ticks gets multiplied with", "Will used in the following way, clamp(ticks * modifier, min, max", "Gets added Rocket Boots")
+        ROCKET_XP_MODIFIER = SERVER_BUILDER.comment("Modifier that the flight ticks gets multiplied with", "Will used in the following way, clamp(ticks * modifier, min, max)", "Gets added Rocket Boots")
                 .defineInRange("rocketXpModifier", 0.1F, 0.1F, 10F);
         ROCKET_XP_MAX = SERVER_BUILDER.comment("Upper bound for xp awarded for flying with rocket boots")
                 .defineInRange("rocketXpMax", 15, 1, 300);

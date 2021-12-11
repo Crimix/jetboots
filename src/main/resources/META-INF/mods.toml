@@ -18,7 +18,7 @@ description='''Flying has never been this fun'''
 [[dependencies.jetboots]]
     modId="forge"
     mandatory=true
-    versionRange="[37,)"
+    versionRange="[37.1.0,)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.jetboots]]

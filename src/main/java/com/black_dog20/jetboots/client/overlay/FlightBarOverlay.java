@@ -30,9 +30,11 @@ public class FlightBarOverlay extends GameOverlay.Post {
 
         final int barWidth = 182;
 
+        int topModifyer = player.getArmorValue() > 0 ? 9 : 0;
+
         int x = (width / 2) - (barWidth / 2);
         int filled = (int) (charge * (float) (barWidth + 1));
-        int top = height - 32 + 3 - 18;
+        int top = height - 32 + 3 - 18 - topModifyer;
 
         Gui gui = Minecraft.getInstance().gui;
 

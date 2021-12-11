@@ -1,12 +1,12 @@
 # Jet Boots Changelog
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
-## [1.17.1, 1.2.0-b1] - 2021-08-xx
+## [1.17.1, 1.2.0] - 2021-12-11
 - Port to 1.17.1
-- Will be in beta until full Forge release, expect things to break
+- Disabled Refined Storage mod compatibly for now as RS has not been ported for 1.17+ yet.
 - Added much more config options for controlling the leveling of items and how OP they will become.
   Part of this fixes [#24](https://github.com/Crimix/jetboots/issues/24).
-- Added Rocket Boots, that work like a limited jetpack, there is no hover and the it can fly for a limited time and will replenish that time when not in use.
+- Added Rocket Boots, that work like a limited jetpack, there is no hover and you can only fly for a limited time and which will replenish over time when not in use.  
   These are now considered tier 1 of flight in this mod.   
   They will level up and get more flight time and as the rest of the items this is configurable.  
   This part fixes the rest of [#24](https://github.com/Crimix/jetboots/issues/24).
