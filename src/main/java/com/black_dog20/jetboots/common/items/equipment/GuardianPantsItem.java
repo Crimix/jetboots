@@ -9,7 +9,6 @@ import com.black_dog20.jetboots.api.events.ExtraTooltipEvent;
 import com.black_dog20.jetboots.common.capabilities.GuardianCapabilities;
 import com.black_dog20.jetboots.common.items.BaseGuardianArmorItem;
 import com.black_dog20.jetboots.common.items.materials.GuardianMaterial;
-import com.black_dog20.jetboots.common.util.properties.GuardinanHelmetProperties;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.ChatFormatting;
@@ -56,15 +55,15 @@ public class GuardianPantsItem extends BaseGuardianArmorItem {
     }
 
     private double getCustomDamageReduceAmount(ItemStack stack) {
-        return GuardinanHelmetProperties.getMode(stack) ? ItemLevelProperties.calculateValue(Config.PANTS_BASE_DAMAGE_REDUCE_AMOUNT.get(), Config.PANTS_MAX_DAMAGE_REDUCE_AMOUNT.get(), stack) : 0;
+        return ItemLevelProperties.calculateValue(Config.PANTS_BASE_DAMAGE_REDUCE_AMOUNT.get(), Config.PANTS_MAX_DAMAGE_REDUCE_AMOUNT.get(), stack);
     }
 
     private double getCustomToughness(ItemStack stack) {
-        return GuardinanHelmetProperties.getMode(stack) ? ItemLevelProperties.calculateValue(Config.PANTS_BASE_TOUGHNESS_AMOUNT.get(), Config.PANTS_MAX_TOUGHNESS_AMOUNT.get(), stack) : 0;
+        return ItemLevelProperties.calculateValue(Config.PANTS_BASE_TOUGHNESS_AMOUNT.get(), Config.PANTS_MAX_TOUGHNESS_AMOUNT.get(), stack);
     }
 
     private double getCustomKnockbackResistance(ItemStack stack) {
-        return GuardinanHelmetProperties.getMode(stack) ? ItemLevelProperties.calculateValue(Config.PANTS_BASE_KNOCKBACK_RESISTANCE_AMOUNT.get(), Config.PANTS_MAX_KNOCKBACK_RESISTANCE_AMOUNT.get(), stack) : 0;
+        return ItemLevelProperties.calculateValue(Config.PANTS_BASE_KNOCKBACK_RESISTANCE_AMOUNT.get(), Config.PANTS_MAX_KNOCKBACK_RESISTANCE_AMOUNT.get(), stack);
     }
 
     @Override

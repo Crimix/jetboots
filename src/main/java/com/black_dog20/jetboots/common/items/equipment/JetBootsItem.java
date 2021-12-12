@@ -12,7 +12,6 @@ import com.black_dog20.jetboots.common.items.BaseGuardianArmorItem;
 import com.black_dog20.jetboots.common.items.materials.GuardianMaterial;
 import com.black_dog20.jetboots.common.util.EnergyUtil;
 import com.black_dog20.jetboots.common.util.ModUtils;
-import com.black_dog20.jetboots.common.util.properties.GuardinanHelmetProperties;
 import com.black_dog20.jetboots.common.util.properties.JetBootsProperties;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
@@ -64,15 +63,15 @@ public class JetBootsItem extends BaseGuardianArmorItem {
     }
 
     private double getCustomDamageReduceAmount(ItemStack stack) {
-        return GuardinanHelmetProperties.getMode(stack) ? ItemLevelProperties.calculateValue(Config.JETBOOTS_BASE_DAMAGE_REDUCE_AMOUNT.get(), Config.JETBOOTS_MAX_DAMAGE_REDUCE_AMOUNT.get(), stack) : 0;
+        return ItemLevelProperties.calculateValue(Config.JETBOOTS_BASE_DAMAGE_REDUCE_AMOUNT.get(), Config.JETBOOTS_MAX_DAMAGE_REDUCE_AMOUNT.get(), stack);
     }
 
     private double getCustomToughness(ItemStack stack) {
-        return GuardinanHelmetProperties.getMode(stack) ? ItemLevelProperties.calculateValue(Config.JETBOOTS_BASE_TOUGHNESS_AMOUNT.get(), Config.JETBOOTS_MAX_TOUGHNESS_AMOUNT.get(), stack) : 0;
+        return ItemLevelProperties.calculateValue(Config.JETBOOTS_BASE_TOUGHNESS_AMOUNT.get(), Config.JETBOOTS_MAX_TOUGHNESS_AMOUNT.get(), stack);
     }
 
     private double getCustomKnockbackResistance(ItemStack stack) {
-        return GuardinanHelmetProperties.getMode(stack) ? ItemLevelProperties.calculateValue(Config.JETBOOTS_BASE_KNOCKBACK_RESISTANCE_AMOUNT.get(), Config.JETBOOTS_MAX_KNOCKBACK_RESISTANCE_AMOUNT.get(), stack) : 0;
+        return ItemLevelProperties.calculateValue(Config.JETBOOTS_BASE_KNOCKBACK_RESISTANCE_AMOUNT.get(), Config.JETBOOTS_MAX_KNOCKBACK_RESISTANCE_AMOUNT.get(), stack);
     }
 
     @Override
