@@ -3,7 +3,7 @@
   "pattern": [
     "geg",
     "oco",
-    "bgb"
+    "bnb"
   ],
   "key": {
     "o": {
@@ -20,6 +20,9 @@
     },
     "b": {
       "tag": "forge:rods/blaze"
+    },
+    "n": {
+      "tag": "forge:ingots/netherite"
     }
   },
   "result": {

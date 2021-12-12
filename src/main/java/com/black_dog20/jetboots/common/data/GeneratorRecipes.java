@@ -78,7 +78,7 @@ public class GeneratorRecipes extends BaseRecipeProvider {
         ShapedRecipeBuilder.shaped(ROCKET_BOOTS.get())
                 .define('i', Tags.Items.INGOTS_IRON)
                 .define('g', OBSIDIAN_INFUSED_GOLD.get())
-                .define('e', Tags.Items.GEMS_EMERALD)
+                .define('e', Tags.Items.GEMS_DIAMOND)
                 .define('c', ARMOR_CORE.get())
                 .define('b', ItemTags.COALS)
                 .pattern("geg")
@@ -93,9 +93,10 @@ public class GeneratorRecipes extends BaseRecipeProvider {
                 .define('e', Tags.Items.GEMS_EMERALD)
                 .define('c', ROCKET_BOOTS.get())
                 .define('b', Tags.Items.RODS_BLAZE)
+                .define('n', Tags.Items.INGOTS_NETHERITE)
                 .pattern("geg")
                 .pattern("oco")
-                .pattern("bgb")
+                .pattern("bnb")
                 .unlockedBy("has_obsidian_infused_gold", has(OBSIDIAN_INFUSED_GOLD.get()))
                 .save(consumer);
 
