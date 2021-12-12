@@ -10,9 +10,9 @@ import com.black_dog20.jetboots.common.items.equipment.RocketBootsItem;
 import com.black_dog20.jetboots.common.util.NBTTags;
 import com.black_dog20.jetboots.common.util.TranslationHelper.Translations;
 import net.minecraft.world.item.Item;
-import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 import java.util.Set;
 

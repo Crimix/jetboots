@@ -153,7 +153,7 @@ public class JetBootsItem extends BaseGuardianArmorItem {
     }
 
     @Override
-    public boolean showDurabilityBar(ItemStack stack) {
+    public boolean isBarVisible(ItemStack stack) {
         IEnergyStorage energy = stack.getCapability(CapabilityEnergy.ENERGY, null)
                 .orElse(null);
         return (energy.getEnergyStored() < energy.getMaxEnergyStored());
@@ -166,22 +166,22 @@ public class JetBootsItem extends BaseGuardianArmorItem {
     }
 
     @Override
-    public double getDurabilityForDisplay(ItemStack stack) {
+    public int getBarWidth(ItemStack stack) {
         IEnergyStorage energy = stack.getCapability(CapabilityEnergy.ENERGY, null)
                 .orElse(null);
         if (energy == null)
             return 0;
 
-        return 1D - (energy.getEnergyStored() / (double) energy.getMaxEnergyStored());
+        double widthPercentage = (1D - (energy.getEnergyStored() / (double) energy.getMaxEnergyStored()));
+        return Math.round(13.0F - (float)widthPercentage * 13.0F) ;
     }
 
     @Override
-    public int getRGBDurabilityForDisplay(ItemStack stack) {
-
+    public int getBarColor(ItemStack stack) {
         IEnergyStorage energy = stack.getCapability(CapabilityEnergy.ENERGY, null)
                 .orElse(null);
         if (energy == null)
-            return super.getRGBDurabilityForDisplay(stack);
+            return super.getBarColor(stack);
 
         return Mth.hsvToRgb(Math.max(0.0F, (float) energy.getEnergyStored() / (float) energy.getMaxEnergyStored()) / 3.0F, 1.0F, 1.0F);
     }
