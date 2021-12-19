@@ -2,7 +2,7 @@
   "required": true,
   "package": "com.black_dog20.jetboots.mixin",
   "compatibilityLevel": "JAVA_8",
-  "refmap": "jetboots.refmap.json",
+  "refmap": "mixins.jetboots.refmap.json",
   "mixins": [
     "PlayerEntityMixin"
   ],

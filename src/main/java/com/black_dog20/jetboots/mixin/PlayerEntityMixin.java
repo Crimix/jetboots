@@ -25,7 +25,7 @@ public abstract class PlayerEntityMixin extends LivingEntity {
     }
 
     @Shadow
-    public void awardStat(ResourceLocation p_195067_1_, int p_195067_2_) {}
+    public void awardStat(ResourceLocation p_36223_, int p_36224_) {}
 
     @Inject(method = "causeFallDamage(FFLnet/minecraft/world/damagesource/DamageSource;)Z", at = @At("HEAD"), cancellable = true)
     private void onLivingFallDamage(float distance, float damageMultiplier, DamageSource damageSource, CallbackInfoReturnable<Boolean> ci) {
