@@ -159,10 +159,8 @@ dependencies {
     compileOnly fg.deobf("mezz.jei:jei-${jei_version}:api")
     runtimeOnly fg.deobf("mezz.jei:jei-${jei_version}")
     implementation fg.deobf("com.black_dog20.bml:bml:${bml_version}")
-    //implementation fg.deobf("curse.maven:refined-storage-243076:${refined_storage_version}")
-    //implementation fg.deobf("curse.maven:mekanism-268560:${mekanism_version}")
-    //implementation fg.deobf("curse.maven:mekanism-tools-268567:${mekanism_tools_version}")
-    //implementation fg.deobf("curse.maven:mekanism-generators-268566:${mekanism_generators_version}")
+    implementation fg.deobf("curse.maven:refined-storage-243076:${refined_storage_version}")
+    implementation fg.deobf("curse.maven:charging-gadgets-399757:${charging_gadgets_version}")
 }
 
 jar {

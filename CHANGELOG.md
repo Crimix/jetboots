@@ -1,9 +1,9 @@
 # Jet Boots Changelog
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
-## [1.18, 1.2.1] - 2021-12-xx
-- Port to 1.18 & 1.18.1
-- Refined Storage mod compatibly is still disabled for now as RS has not been ported for 1.17+ yet.
+## [1.18.1, 1.2.1] - 2021-12-xx
+- Port to 1.18.1
+- Refined Storage mod compatibly has been re-added, it might break as RS is only in beta.
 
 ## [1.17.1, 1.2.1] - 2021-12-12
 - Changed recipe for the Jet Boots to require a Netherite Ingot

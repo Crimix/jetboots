@@ -2,8 +2,14 @@ package com.black_dog20.jetboots.common.data;
 
 import com.black_dog20.bml.datagen.BaseRecipeProvider;
 import com.black_dog20.jetboots.Jetboots;
+import com.black_dog20.jetboots.common.compat.refinedstorage.RefinedStorageCompat;
 import com.black_dog20.jetboots.common.recipe.ModRecipeSerializers;
+import com.refinedmods.refinedstorage.RSItems;
+import com.refinedmods.refinedstorage.item.UpgradeItem;
 import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementRewards;
+import net.minecraft.advancements.RequirementsStrategy;
+import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
@@ -13,13 +19,18 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.crafting.ConditionalAdvancement;
 import net.minecraftforge.common.crafting.ConditionalRecipe;
 import net.minecraftforge.common.crafting.conditions.ModLoadedCondition;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
+import java.util.Collection;
 import java.util.function.Consumer;
+import java.util.stream.Stream;
 
 import static com.black_dog20.jetboots.common.items.ModItems.*;
 
@@ -170,51 +181,51 @@ public class GeneratorRecipes extends BaseRecipeProvider {
         specialRecipe(ModRecipeSerializers.CUSTOM_SMITHING.get())
                 .save(consumer, ID("custom_smithing"));
 
-//        if(ModList.get().isLoaded(RefinedStorageCompat.MOD_ID)) { //TODO When RS is updated
-//            ItemLike[] transmitters = Stream.of(RSItems.WIRELESS_TRANSMITTER.values())
-//                    .flatMap(Collection::stream)
-//                    .map(RegistryObject::get)
-//                    .toArray(ItemLike[]::new);
-//
-//            ResourceLocation wirelessCraftingId = getRecipeId(RefinedStorageCompat.WIRELESS_CRAFTING_UPGRADE.get());
-//            ShapedRecipeBuilder wirelessCraftingUpgradeBuilder = ShapedRecipeBuilder.shaped(RefinedStorageCompat.WIRELESS_CRAFTING_UPGRADE.get())
-//                    .define('d', Tags.Items.GEMS_DIAMOND)
-//                    .define('e', Tags.Items.GEMS_EMERALD)
-//                    .define('g', OBSIDIAN_INFUSED_GOLD.get())
-//                    .define('c', ARMOR_CORE.get())
-//                    .define('t', Ingredient.of(transmitters))
-//                    .pattern("dtd")
-//                    .pattern("gcg")
-//                    .pattern("ded")
-//                    .unlockedBy("has_guardianHelmet", has(GUARDIAN_HELMET.get()));
-//            Advancement.Builder wirelessCraftingAdvancement = Advancement.Builder.advancement()
-//                    .parent(new ResourceLocation("minecraft", "recipes/root"))
-//                    .rewards(AdvancementRewards.Builder.recipe(wirelessCraftingId))
-//                    .requirements(RequirementsStrategy.OR)
-//                    .addCriterion("has_guardianHelmet", has(GUARDIAN_HELMET.get()))
-//                    .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(wirelessCraftingId));
-//            registerCompatRecipe(RefinedStorageCompat.MOD_ID, wirelessCraftingId, wirelessCraftingUpgradeBuilder, wirelessCraftingAdvancement, consumer);
-//
-//            ResourceLocation wirelessRangeID = getRecipeId(RefinedStorageCompat.WIRELESS_RANGE_UPGRADE.get());
-//            ShapedRecipeBuilder wirelessRangeUpgradeBuilder = ShapedRecipeBuilder.shaped(RefinedStorageCompat.WIRELESS_RANGE_UPGRADE.get())
-//                    .define('d', Tags.Items.GEMS_DIAMOND)
-//                    .define('e', Tags.Items.GEMS_EMERALD)
-//                    .define('g', OBSIDIAN_INFUSED_GOLD.get())
-//                    .define('c', ARMOR_CORE.get())
-//                    .define('u', RSItems.UPGRADE_ITEMS.get(UpgradeItem.Type.RANGE).get())
-//                    .pattern("dud")
-//                    .pattern("gcg")
-//                    .pattern("ded")
-//                    .unlockedBy("has_guardianHelmet", has(GUARDIAN_HELMET.get()));
-//
-//            Advancement.Builder wirelessRangeAdvancement = Advancement.Builder.advancement()
-//                    .parent(new ResourceLocation("minecraft", "recipes/root"))
-//                    .rewards(AdvancementRewards.Builder.recipe(wirelessRangeID))
-//                    .requirements(RequirementsStrategy.OR)
-//                    .addCriterion("has_guardianHelmet", has(GUARDIAN_HELMET.get()))
-//                    .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(wirelessRangeID));
-//            registerCompatRecipe(RefinedStorageCompat.MOD_ID, wirelessRangeID, wirelessRangeUpgradeBuilder, wirelessRangeAdvancement, consumer);
-//        }
+        if(ModList.get().isLoaded(RefinedStorageCompat.MOD_ID)) {
+            ItemLike[] transmitters = Stream.of(RSItems.WIRELESS_TRANSMITTER.values())
+                    .flatMap(Collection::stream)
+                    .map(RegistryObject::get)
+                    .toArray(ItemLike[]::new);
+
+            ResourceLocation wirelessCraftingId = getRecipeId(RefinedStorageCompat.WIRELESS_CRAFTING_UPGRADE.get());
+            ShapedRecipeBuilder wirelessCraftingUpgradeBuilder = ShapedRecipeBuilder.shaped(RefinedStorageCompat.WIRELESS_CRAFTING_UPGRADE.get())
+                    .define('d', Tags.Items.GEMS_DIAMOND)
+                    .define('e', Tags.Items.GEMS_EMERALD)
+                    .define('g', OBSIDIAN_INFUSED_GOLD.get())
+                    .define('c', ARMOR_CORE.get())
+                    .define('t', Ingredient.of(transmitters))
+                    .pattern("dtd")
+                    .pattern("gcg")
+                    .pattern("ded")
+                    .unlockedBy("has_guardianHelmet", has(GUARDIAN_HELMET.get()));
+            Advancement.Builder wirelessCraftingAdvancement = Advancement.Builder.advancement()
+                    .parent(new ResourceLocation("minecraft", "recipes/root"))
+                    .rewards(AdvancementRewards.Builder.recipe(wirelessCraftingId))
+                    .requirements(RequirementsStrategy.OR)
+                    .addCriterion("has_guardianHelmet", has(GUARDIAN_HELMET.get()))
+                    .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(wirelessCraftingId));
+            registerCompatRecipe(RefinedStorageCompat.MOD_ID, wirelessCraftingId, wirelessCraftingUpgradeBuilder, wirelessCraftingAdvancement, consumer);
+
+            ResourceLocation wirelessRangeID = getRecipeId(RefinedStorageCompat.WIRELESS_RANGE_UPGRADE.get());
+            ShapedRecipeBuilder wirelessRangeUpgradeBuilder = ShapedRecipeBuilder.shaped(RefinedStorageCompat.WIRELESS_RANGE_UPGRADE.get())
+                    .define('d', Tags.Items.GEMS_DIAMOND)
+                    .define('e', Tags.Items.GEMS_EMERALD)
+                    .define('g', OBSIDIAN_INFUSED_GOLD.get())
+                    .define('c', ARMOR_CORE.get())
+                    .define('u', RSItems.UPGRADE_ITEMS.get(UpgradeItem.Type.RANGE).get())
+                    .pattern("dud")
+                    .pattern("gcg")
+                    .pattern("ded")
+                    .unlockedBy("has_guardianHelmet", has(GUARDIAN_HELMET.get()));
+
+            Advancement.Builder wirelessRangeAdvancement = Advancement.Builder.advancement()
+                    .parent(new ResourceLocation("minecraft", "recipes/root"))
+                    .rewards(AdvancementRewards.Builder.recipe(wirelessRangeID))
+                    .requirements(RequirementsStrategy.OR)
+                    .addCriterion("has_guardianHelmet", has(GUARDIAN_HELMET.get()))
+                    .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(wirelessRangeID));
+            registerCompatRecipe(RefinedStorageCompat.MOD_ID, wirelessRangeID, wirelessRangeUpgradeBuilder, wirelessRangeAdvancement, consumer);
+        }
     }
 
     private void registerCompatRecipe(String modId, ResourceLocation recipeId, ShapedRecipeBuilder builder, Advancement.Builder advancement, Consumer<FinishedRecipe> consumer) {
