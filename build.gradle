@@ -163,6 +163,8 @@ dependencies {
     //implementation fg.deobf("curse.maven:mekanism-268560:${mekanism_version}")
     //implementation fg.deobf("curse.maven:mekanism-tools-268567:${mekanism_tools_version}")
     //implementation fg.deobf("curse.maven:mekanism-generators-268566:${mekanism_generators_version}")
+
+    annotationProcessor 'org.spongepowered:mixin:0.8.4:processor'
 }
 
 jar {
@@ -179,6 +181,8 @@ jar {
 
     }
 }
+
+jar.finalizedBy('reobfJar')
 
 curseforge {
     apiKey = curse_apiKey
