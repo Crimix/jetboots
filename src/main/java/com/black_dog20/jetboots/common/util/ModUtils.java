@@ -10,6 +10,7 @@ import com.black_dog20.jetboots.common.util.properties.JetBootsProperties;
 import com.black_dog20.jetboots.common.util.properties.RocketBootsProperties;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Vec3i;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -92,7 +93,7 @@ public class ModUtils {
                 break;
         }
 
-        return blockPos.distSqr(player.getX(), player.getY(), player.getZ(), false) > target;
+        return blockPos.distSqr(new Vec3i(player.getX(), player.getY(), player.getZ())) > target;
     }
 
     public static boolean isBetweenBlocksOverGround(Player player, double minTarget, double maxTarget) {
@@ -110,7 +111,7 @@ public class ModUtils {
                 break;
         }
 
-        double distance = blockPos.distSqr(player.getX(), player.getY(), player.getZ(), false);
+        double distance = blockPos.distSqr(new Vec3i(player.getX(), player.getY(), player.getZ()));
 
         return minTarget < distance && distance < maxTarget;
     }
