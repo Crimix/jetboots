@@ -1,6 +1,9 @@
 # Jet Boots Changelog
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.18.1, 1.2.3] - 2021-04-03
+- Fixed crash when playing with Refined Storage v1.10.0+
+
 ## [1.18.1, 1.2.2] - 2021-12-19
 - Fixed Mixin crash issue
 

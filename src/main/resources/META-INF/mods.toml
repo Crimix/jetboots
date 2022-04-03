@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[39,)"
+loaderVersion="${loader_version_range}"
 issueTrackerURL="https://github.com/Crimix/jetboots/issues"
 # Review your options at https://choosealicense.com/. All rights reserved is the default copyright stance, and is thus the default here.
 license="All rights reserved"
@@ -8,9 +8,9 @@ license="All rights reserved"
 modId="jetboots"
 authors="black_dog20"
 displayURL="https://www.curseforge.com/minecraft/mc-mods/jet-boots"
-version="${file.jarVersion}"
+version="${version}"
 displayName="Jet Boots"
-updateJSONURL="https://raw.githubusercontent.com/Crimix/jetboots/1.17/update.json"
+updateJSONURL="${update_url}"
 logoFile="jetboots-logo.png"
 credits="To all my friends for putting up with me breaking the server multiple times during testing"
 description='''Flying has never been this fun'''
@@ -18,18 +18,24 @@ description='''Flying has never been this fun'''
 [[dependencies.jetboots]]
     modId="forge"
     mandatory=true
-    versionRange="[39.0.5,)"
+    versionRange="${forge_version_range}"
     ordering="NONE"
     side="BOTH"
 [[dependencies.jetboots]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.18.1,1.19)"
+    versionRange="${minecraft_version_range}"
     ordering="NONE"
     side="BOTH"
 [[dependencies.jetboots]]
     modId="blackdogsmoddinglibrary"
     mandatory=true
-    versionRange="[1.1.4,)"
+    versionRange="${bml_version_range}"
+    ordering="BEFORE"
+    side="BOTH"
+[[dependencies.jetboots]]
+    modId="refinedstorage"
+    mandatory=false
+    versionRange="${refined_storage_version_range}"
     ordering="BEFORE"
     side="BOTH"

@@ -12,8 +12,8 @@ import com.refinedmods.refinedstorage.api.network.node.INetworkNode;
 import com.refinedmods.refinedstorage.api.network.security.Permission;
 import com.refinedmods.refinedstorage.apiimpl.API;
 import com.refinedmods.refinedstorage.inventory.player.PlayerSlot;
+import com.refinedmods.refinedstorage.util.LevelUtils;
 import com.refinedmods.refinedstorage.util.NetworkUtils;
-import com.refinedmods.refinedstorage.util.WorldUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
@@ -44,7 +44,7 @@ public class RefinedStorageCompatUtil {
 
             if (network != null) {
                 if (!network.getSecurityManager().hasPermission(Permission.MODIFY, player)) {
-                    WorldUtils.sendNoPermissionMessage(player);
+                    LevelUtils.sendNoPermissionMessage(player);
                     return;
                 }
 

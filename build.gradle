@@ -10,7 +10,7 @@ buildscript {
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
         classpath 'org.parchmentmc:librarian:1.+'
-        classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
+        classpath 'org.spongepowered:mixingradle:0.7.+'
     }
 }
 
@@ -162,7 +162,9 @@ dependencies {
     implementation fg.deobf("curse.maven:refined-storage-243076:${refined_storage_version}")
     implementation fg.deobf("curse.maven:charging-gadgets-399757:${charging_gadgets_version}")
 
-    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+    if (System.getProperty("idea.sync.active") != "true") {
+        annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor"
+    }
 }
 
 jar {
