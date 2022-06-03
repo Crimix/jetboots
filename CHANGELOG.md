@@ -1,10 +1,14 @@
 # Jet Boots Changelog
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
-## [1.18.2, 1.2.4] - 2021-04-03
+## [1.18.2, 1.2.5] - 2022-06-03
+- Fixed night vision on / off message using the helmet mode instead of night vision mode instead
+- Fixed usage of deprecated register methods in JEI
+
+## [1.18.2, 1.2.4] - 2022-04-03
 - Port to 1.18.2 may be a bit unstable as Forge 1.18.2 is in beta
 
-## [1.18.1, 1.2.3] - 2021-04-03
+## [1.18.1, 1.2.3] - 2022-04-03
 - Fixed crash when playing with Refined Storage v1.10.0+
 
 ## [1.18.1, 1.2.2] - 2021-12-19

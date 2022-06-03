@@ -197,7 +197,7 @@ public class ModUtils {
 
     public static Component getHelmetNightVisionText(ItemStack helmet) {
         if (!helmet.isEmpty()) {
-            Supplier<Boolean> nightVisionOn = () -> GuardinanHelmetProperties.getMode(helmet);
+            Supplier<Boolean> nightVisionOn = () -> GuardinanHelmetProperties.getNightVision(helmet);
 
             Component on = ON.get(ChatFormatting.GREEN);
             Component off = OFF.get(ChatFormatting.RED);
