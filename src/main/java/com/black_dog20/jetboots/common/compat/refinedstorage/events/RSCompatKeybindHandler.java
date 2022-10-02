@@ -9,9 +9,10 @@ import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.client.event.InputEvent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.client.settings.KeyConflictContext;
 import net.minecraftforge.client.settings.KeyModifier;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import org.lwjgl.glfw.GLFW;
 
@@ -24,7 +25,9 @@ public class RSCompatKeybindHandler {
     public static final KeyMapping keyOpenCraftingGrid = new KeyMapping("key.jetboots.open_crafting_grid", KeyConflictContext.IN_GAME, KeyModifier.ALT, InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_C, KEY_CATEGORY.getDescription());
 
     @SubscribeEvent
-    public void onKeyInput(InputEvent.KeyInputEvent event) {
+    public void onKeyInput(TickEvent.ClientTickEvent event) {
+        Level level = Minecraft.getInstance().level;
+        if (event.phase != TickEvent.Phase.START || level == null || Minecraft.getInstance().screen != null) { return; }
         if (Minecraft.getInstance().player != null) {
             Player player = Minecraft.getInstance().player;
 
@@ -33,7 +36,7 @@ public class RSCompatKeybindHandler {
                 if (NBTUtil.getBoolean(helmet, TAG_HAS_WIRELESS_CRAFTING_UPGRADE))
                     RSCompatPacketHandler.sendToServer(new PacketOpenCraftingGrid());
                 else
-                    player.sendMessage(WIRELESS_CRAFTING_UPGRADE_NOT_INSTALLED.get(), player.getUUID());
+                    player.sendSystemMessage(WIRELESS_CRAFTING_UPGRADE_NOT_INSTALLED.get());
             }
         }
     }

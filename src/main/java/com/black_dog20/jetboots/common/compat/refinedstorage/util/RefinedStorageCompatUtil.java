@@ -34,7 +34,7 @@ public class RefinedStorageCompatUtil {
     public static void openNetwork(MinecraftServer server, ItemStack helmet, Player player) {
         ResourceKey<Level> dimension = getDimension(helmet);
         if(!isValid(helmet)) {
-            player.sendMessage(NOT_LINKED_TO_NETWORK.get(), player.getUUID());
+            player.sendSystemMessage(NOT_LINKED_TO_NETWORK.get());
             return;
         }
 
@@ -54,7 +54,7 @@ public class RefinedStorageCompatUtil {
                         .anyMatch(n ->sameDimensionAndInRange(n, network, helmet, player));
 
                 if (!inRange) {
-                    player.sendMessage(RS_OUT_OF_RANGE.get(), player.getUUID());
+                    player.sendSystemMessage(RS_OUT_OF_RANGE.get());
                     return;
                 }
 
@@ -63,7 +63,7 @@ public class RefinedStorageCompatUtil {
             }
         }
 
-        player.sendMessage(RS_NETWORK_NOT_FOUND.get(), player.getUUID());
+        player.sendSystemMessage(RS_NETWORK_NOT_FOUND.get());
     }
 
     private static boolean sameDimensionAndInRange(INetworkNode node, INetwork network, ItemStack helmet, Player player) {

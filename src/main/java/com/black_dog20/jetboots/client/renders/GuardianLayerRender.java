@@ -97,7 +97,7 @@ public class GuardianLayerRender<T extends Player, M extends HumanoidModel<T>> e
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void renderPlayerPre(RenderPlayerEvent.Pre event) {
-        Player playerEntity = event.getPlayer();
+        Player playerEntity = event.getEntity();
         PlayerModel<AbstractClientPlayer> playerModel = event.getRenderer().getModel();
         if (hasHelmet(playerEntity)) {
             headWear.update(playerModel.hat);

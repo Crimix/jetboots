@@ -4,18 +4,16 @@
     {
       "conditions": [
         {
-          "modid": "refinedstorage",
-          "type": "forge:mod_loaded"
+          "type": "forge:mod_loaded",
+          "modid": "refinedstorage"
         }
       ],
       "recipe": {
         "type": "minecraft:crafting_shaped",
-        "pattern": [
-          "dud",
-          "gcg",
-          "ded"
-        ],
         "key": {
+          "c": {
+            "item": "jetboots:armor_core"
+          },
           "d": {
             "tag": "forge:gems/diamond"
           },
@@ -25,13 +23,15 @@
           "g": {
             "item": "jetboots:obsidian_infused_gold"
           },
-          "c": {
-            "item": "jetboots:armor_core"
-          },
           "u": {
             "item": "refinedstorage:range_upgrade"
           }
         },
+        "pattern": [
+          "dud",
+          "gcg",
+          "ded"
+        ],
         "result": {
           "item": "jetboots:wireless_range_upgrade_rs"
         }

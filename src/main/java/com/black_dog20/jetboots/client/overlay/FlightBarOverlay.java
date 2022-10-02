@@ -1,6 +1,5 @@
 package com.black_dog20.jetboots.client.overlay;
 
-import com.black_dog20.bml.client.overlay.GameOverlay;
 import com.black_dog20.bml.utils.math.MathUtil;
 import com.black_dog20.jetboots.common.events.RocketFlightHandler;
 import com.black_dog20.jetboots.common.util.ModUtils;
@@ -9,12 +8,13 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.gui.overlay.ForgeGui;
+import net.minecraftforge.client.gui.overlay.IGuiOverlay;
 
-public class FlightBarOverlay extends GameOverlay.Post {
+public class FlightBarOverlay implements IGuiOverlay {
 
     @Override
-    public void onRender(PoseStack poseStack, int width, int height) {
+    public void render(ForgeGui forgeGui, PoseStack poseStack, float partialTick, int width, int height) {
         Player player = Minecraft.getInstance().player;
         if (player == null || player.isPassenger()) return;
         if (!ModUtils.hasRocketBoots(player)) return;
@@ -47,15 +47,5 @@ public class FlightBarOverlay extends GameOverlay.Post {
         RenderSystem.enableBlend();
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         poseStack.popPose();
-    }
-
-    @Override
-    public boolean doRender(RenderGameOverlayEvent.ElementType elementType) {
-        return RenderGameOverlayEvent.ElementType.ALL.equals(elementType);
-    }
-
-    @Override
-    public boolean doesCancelEvent() {
-        return false;
     }
 }

@@ -1,13 +1,8 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "opo",
-    "djd",
-    "opo"
-  ],
   "key": {
-    "p": {
-      "item": "minecraft:piston"
+    "d": {
+      "tag": "forge:gems/diamond"
     },
     "j": {
       "item": "jetboots:armor_core"
@@ -15,10 +10,15 @@
     "o": {
       "item": "jetboots:obsidian_infused_gold"
     },
-    "d": {
-      "tag": "forge:gems/diamond"
+    "p": {
+      "item": "minecraft:piston"
     }
   },
+  "pattern": [
+    "opo",
+    "djd",
+    "opo"
+  ],
   "result": {
     "item": "jetboots:engine_upgrade"
   }

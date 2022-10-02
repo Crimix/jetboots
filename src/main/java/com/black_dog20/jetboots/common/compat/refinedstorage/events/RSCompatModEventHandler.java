@@ -3,7 +3,7 @@ package com.black_dog20.jetboots.common.compat.refinedstorage.events;
 import com.black_dog20.jetboots.common.compat.refinedstorage.RefinedStorageCompat;
 import com.black_dog20.jetboots.common.compat.refinedstorage.grids.WirelessCraftingUpgradeGridFactory;
 import com.black_dog20.jetboots.common.compat.refinedstorage.network.RSCompatPacketHandler;
-import net.minecraftforge.client.ClientRegistry;
+import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -19,9 +19,12 @@ public class RSCompatModEventHandler {
     }
 
     @SubscribeEvent
-    public void onClientSetup(FMLClientSetupEvent event) {
-        ClientRegistry.registerKeyBinding(RSCompatKeybindHandler.keyOpenCraftingGrid);
+    public static void registerKeyBinding(RegisterKeyMappingsEvent event) {
+        event.register(RSCompatKeybindHandler.keyOpenCraftingGrid);
+    }
 
+    @SubscribeEvent
+    public void onClientSetup(FMLClientSetupEvent event) {
         MinecraftForge.EVENT_BUS.register(new RSCompatKeybindHandler());
         MinecraftForge.EVENT_BUS.register(new RSCompatTooltipsHandler());
     }

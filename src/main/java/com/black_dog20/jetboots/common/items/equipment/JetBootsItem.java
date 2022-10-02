@@ -32,8 +32,8 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
 import javax.annotation.Nullable;
@@ -86,7 +86,7 @@ public class JetBootsItem extends BaseGuardianArmorItem {
 
         KeyMapping sneak = Minecraft.getInstance().options.keyShift;
 
-        stack.getCapability(CapabilityEnergy.ENERGY, null)
+        stack.getCapability(ForgeCapabilities.ENERGY, null)
                 .ifPresent(energy -> tooltip.add(STORED_ENERGY.get(
                         ChatFormatting.GREEN,
                         MathUtil.formatThousands(energy.getEnergyStored()),
@@ -153,7 +153,7 @@ public class JetBootsItem extends BaseGuardianArmorItem {
 
     @Override
     public boolean isBarVisible(ItemStack stack) {
-        IEnergyStorage energy = stack.getCapability(CapabilityEnergy.ENERGY, null)
+        IEnergyStorage energy = stack.getCapability(ForgeCapabilities.ENERGY, null)
                 .orElse(null);
         return (energy.getEnergyStored() < energy.getMaxEnergyStored());
     }
@@ -166,7 +166,7 @@ public class JetBootsItem extends BaseGuardianArmorItem {
 
     @Override
     public int getBarWidth(ItemStack stack) {
-        IEnergyStorage energy = stack.getCapability(CapabilityEnergy.ENERGY, null)
+        IEnergyStorage energy = stack.getCapability(ForgeCapabilities.ENERGY, null)
                 .orElse(null);
         if (energy == null)
             return 0;
@@ -177,7 +177,7 @@ public class JetBootsItem extends BaseGuardianArmorItem {
 
     @Override
     public int getBarColor(ItemStack stack) {
-        IEnergyStorage energy = stack.getCapability(CapabilityEnergy.ENERGY, null)
+        IEnergyStorage energy = stack.getCapability(ForgeCapabilities.ENERGY, null)
                 .orElse(null);
         if (energy == null)
             return super.getBarColor(stack);

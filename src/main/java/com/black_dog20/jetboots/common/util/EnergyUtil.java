@@ -8,7 +8,7 @@ import com.black_dog20.jetboots.common.items.equipment.JetBootsItem;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.energy.IEnergyStorage;
 
 import java.util.Optional;
@@ -33,7 +33,7 @@ public class EnergyUtil {
     }
 
     public static int getBatteryPercentage(ItemStack jetboots) {
-        IEnergyStorage energy = jetboots.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
+        IEnergyStorage energy = jetboots.getCapability(ForgeCapabilities.ENERGY, null).orElse(null);
         if (energy != null)
             return Math.min((int) (((float) energy.getEnergyStored() / energy.getMaxEnergyStored()) * 100), 100);
         return 0;

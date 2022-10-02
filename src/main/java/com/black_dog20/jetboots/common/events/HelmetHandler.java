@@ -12,8 +12,8 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
-import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -32,8 +32,7 @@ public class HelmetHandler {
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onPlayerAttack(LivingAttackEvent event) {
-        if (event.getEntityLiving() instanceof Player) {
-            Player player = (Player) event.getEntityLiving();
+        if (event.getEntity() instanceof Player player) {
 
             if (ModUtils.hasGuardianHelmet(player)) {
                 ItemStack helmet = ModUtils.getGuardianHelmet(player);
@@ -46,8 +45,7 @@ public class HelmetHandler {
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onPlayerHurt(LivingHurtEvent event) {
-        if (event.getEntityLiving() instanceof Player) {
-            Player player = (Player) event.getEntityLiving();
+        if (event.getEntity() instanceof Player player) {
 
             if (ModUtils.hasGuardianHelmet(player)) {
                 ItemStack helmet = ModUtils.getGuardianHelmet(player);
@@ -59,9 +57,9 @@ public class HelmetHandler {
     }
 
     @SubscribeEvent
-    public static void onLivingUpdatePlayer(LivingEvent.LivingUpdateEvent event) {
-        if (event.getEntity() instanceof Player && !event.getEntity().level.isClientSide) {
-            Player player = (Player) event.getEntity();
+    public static void onLivingUpdatePlayer(TickEvent.PlayerTickEvent event) {
+        if (!event.player.level.isClientSide) {
+            Player player = event.player;
 
             if (ModUtils.hasGuardianHelmet(player) && GuardinanHelmetProperties.getMode(ModUtils.getGuardianHelmet(player))) {
                 if (player.isInWater()) {
@@ -77,8 +75,8 @@ public class HelmetHandler {
 
     @SubscribeEvent
     public static void playerBreakSpeed(PlayerEvent.BreakSpeed event) {
-        if (event.getEntity() instanceof Player) {
-            Player player = (Player) event.getEntity();
+        if (event.getEntity() != null) {
+            Player player = event.getEntity();
             ItemStack tool = player.getMainHandItem();
             float toolSpeed = tool.getItem().getDestroySpeed(tool, event.getState());
             if (ModUtils.hasGuardianHelmet(player) && player.isInWater()) {

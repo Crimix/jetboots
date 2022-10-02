@@ -8,7 +8,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 public class ModContainers {
-    public static final DeferredRegister<MenuType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, Jetboots.MOD_ID);
+    public static final DeferredRegister<MenuType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.MENU_TYPES, Jetboots.MOD_ID);
 
     public static final RegistryObject<MenuType<EnchantableItemContainer>> ENCHANTABLE_ITEM_CONTAINER = CONTAINERS.register("enchantable_item_container", () -> IForgeMenuType.create((windowId, inv, data) -> new EnchantableItemContainer(windowId, inv, inv.player)));
 }

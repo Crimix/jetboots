@@ -7,8 +7,8 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
 public class EnchantableItemContainer extends AbstractContainerMenu {
@@ -20,7 +20,7 @@ public class EnchantableItemContainer extends AbstractContainerMenu {
 
         container = player.getMainHandItem();
 
-        inventory = container.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY);
+        inventory = container.getCapability(ForgeCapabilities.ITEM_HANDLER);
 
         inventory.ifPresent(i -> {
             addSlots(i);

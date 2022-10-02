@@ -25,15 +25,15 @@ public class RSCompatEventHandler {
                 return;
             }
 
-            INetwork network = NetworkUtils.getNetworkFromNode(NetworkUtils.getNodeFromBlockEntity(event.getWorld().getBlockEntity(event.getPos())));
+            INetwork network = NetworkUtils.getNetworkFromNode(NetworkUtils.getNodeFromBlockEntity(event.getLevel().getBlockEntity(event.getPos())));
             if (network != null) {
-                if (!event.getWorld().isClientSide) {
+                if (!event.getLevel().isClientSide) {
                     NBTItemBuilder.init(stack)
                             .addTag(TAG_NODE_X, network.getPosition().getX())
                             .addTag(TAG_NODE_Y, network.getPosition().getY())
                             .addTag(TAG_NODE_Z, network.getPosition().getZ())
-                            .addTag(TAG_NODE_DIM, DimensionUtil.getDimensionResourceLocation(event.getWorld()).toString());
-                    event.getPlayer().sendMessage(NETWORK_LINKED.get(), event.getPlayer().getUUID());
+                            .addTag(TAG_NODE_DIM, DimensionUtil.getDimensionResourceLocation(event.getLevel()).toString());
+                    event.getEntity().sendSystemMessage(NETWORK_LINKED.get());
                 }
                 event.setCancellationResult(InteractionResult.CONSUME);
                 event.setCanceled(true);

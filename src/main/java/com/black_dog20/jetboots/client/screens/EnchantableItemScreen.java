@@ -19,11 +19,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 
 import java.util.Optional;
 
@@ -44,7 +43,7 @@ public class EnchantableItemScreen extends AbstractContainerScreen<EnchantableIt
         super.init();
         ItemStack container = inventory.getSelected();
         if (container.getItem() == ModItems.JET_BOOTS.get()) {
-            Button icon = new SmallButton(width / 2 + 70, height / 2 - 80, 10, 10, new TextComponent("I"), this::onIconPress);
+            Button icon = new SmallButton(width / 2 + 70, height / 2 - 80, 10, 10, Component.literal("I"), this::onIconPress);
             addRenderableWidget(icon);
 
             if (JetBootsProperties.hasMuffledUpgrade(container)) {
@@ -55,7 +54,7 @@ public class EnchantableItemScreen extends AbstractContainerScreen<EnchantableIt
     }
 
     private void onIconPress(Button p_onPress_1) {
-        Minecraft.getInstance().player.chat("/bml overlayConfig");
+        Minecraft.getInstance().player.commandSigned("bml overlayConfig", null);
         this.removed();
     }
 
@@ -94,7 +93,7 @@ public class EnchantableItemScreen extends AbstractContainerScreen<EnchantableIt
                 });
 
         Optional.ofNullable(container)
-                .ifPresent(i -> i.getCapability(CapabilityEnergy.ENERGY, null)
+                .ifPresent(i -> i.getCapability(ForgeCapabilities.ENERGY, null)
                         .ifPresent(energy -> {
                             Component energyText = TranslationUtil.translate(STORED_ENERGY, ChatFormatting.GREEN,
                                     MathUtil.formatThousands(energy.getEnergyStored()),

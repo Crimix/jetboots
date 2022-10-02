@@ -29,7 +29,7 @@ public class XpHandler {
 
     @SubscribeEvent
     public static void onPlayerMoveFlying(PlayerMoveEvent event) {
-        Player player = event.getPlayer();
+        Player player = event.getEntity();
         if (player.level.isClientSide)
             return;
         if (!ModUtils.hasJetBoots(player) && ModUtils.isJetbootsFlying(player))
@@ -63,7 +63,7 @@ public class XpHandler {
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onPlayerHurt(LivingHurtEvent event) {
-        if (event.getAmount() > 0 && !event.getSource().isBypassArmor() && event.getEntityLiving() instanceof Player player) {
+        if (event.getAmount() > 0 && !event.getSource().isBypassArmor() && event.getEntity() instanceof Player player) {
             if (player.level.isClientSide)
                 return;
 

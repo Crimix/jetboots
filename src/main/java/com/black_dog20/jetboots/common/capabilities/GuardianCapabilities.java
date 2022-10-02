@@ -4,9 +4,9 @@ import com.black_dog20.jetboots.common.util.objects.EnchantableItemHandler;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nonnull;
@@ -26,7 +26,7 @@ public class GuardianCapabilities implements ICapabilityProvider {
         if (cap == null)
             return LazyOptional.empty();
 
-        if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+        if (cap == ForgeCapabilities.ITEM_HANDLER)
             return optional.cast();
         else
             return LazyOptional.empty();

@@ -1,21 +1,21 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "bob",
-    "oco",
-    "b b"
-  ],
   "key": {
-    "o": {
-      "item": "jetboots:obsidian_infused_gold"
-    },
     "b": {
       "tag": "forge:dyes/blue"
     },
     "c": {
       "item": "jetboots:armor_core"
+    },
+    "o": {
+      "item": "jetboots:obsidian_infused_gold"
     }
   },
+  "pattern": [
+    "bob",
+    "oco",
+    "b b"
+  ],
   "result": {
     "item": "jetboots:guardian_pants"
   }
