@@ -1,24 +1,24 @@
 {
   "type": "minecraft:crafting_shaped",
+  "key": {
+    "d": {
+      "tag": "forge:gems/diamond"
+    },
+    "i": {
+      "item": "minecraft:iron_bars"
+    },
+    "j": {
+      "item": "jetboots:armor_core"
+    },
+    "l": {
+      "tag": "forge:gems/lapis"
+    }
+  },
   "pattern": [
     "djd",
     "iii",
     "lll"
   ],
-  "key": {
-    "l": {
-      "tag": "forge:gems/lapis"
-    },
-    "j": {
-      "item": "jetboots:armor_core"
-    },
-    "i": {
-      "item": "minecraft:iron_bars"
-    },
-    "d": {
-      "tag": "forge:gems/diamond"
-    }
-  },
   "result": {
     "item": "jetboots:underwater_upgrade"
   }

@@ -1,27 +1,27 @@
 {
   "type": "minecraft:crafting_shaped",
+  "key": {
+    "b": {
+      "tag": "minecraft:coals"
+    },
+    "c": {
+      "item": "jetboots:armor_core"
+    },
+    "e": {
+      "tag": "forge:gems/diamond"
+    },
+    "g": {
+      "item": "jetboots:obsidian_infused_gold"
+    },
+    "i": {
+      "tag": "forge:ingots/iron"
+    }
+  },
   "pattern": [
     "geg",
     "ici",
     "bgb"
   ],
-  "key": {
-    "i": {
-      "tag": "forge:ingots/iron"
-    },
-    "g": {
-      "item": "jetboots:obsidian_infused_gold"
-    },
-    "e": {
-      "tag": "forge:gems/diamond"
-    },
-    "c": {
-      "item": "jetboots:armor_core"
-    },
-    "b": {
-      "tag": "minecraft:coals"
-    }
-  },
   "result": {
     "item": "jetboots:rocket_boots"
   }

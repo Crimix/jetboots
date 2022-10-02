@@ -9,9 +9,10 @@ import com.black_dog20.jetboots.common.network.packets.PacketUpdateFlightSpeed;
 import com.black_dog20.jetboots.common.network.packets.PacketUpdateHelmetMode;
 import com.black_dog20.jetboots.common.network.packets.PacketUpdateHelmetVision;
 import net.minecraft.client.Minecraft;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.InputEvent.KeyInputEvent;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -20,8 +21,9 @@ import net.minecraftforge.fml.common.Mod;
 public class KeyEventHandler {
 
     @SubscribeEvent
-    public static void onEvent(KeyInputEvent event) {
-        if (Minecraft.getInstance().screen == null) {
+    public static void onEvent(TickEvent.ClientTickEvent event) {
+        Level level = Minecraft.getInstance().level;
+        if (event.phase != TickEvent.Phase.START || level == null || Minecraft.getInstance().screen != null) { return; }
             if (Keybinds.keyMode.consumeClick()) {
                 PacketHandler.sendToServer(new PacketUpdateFlightMode());
             } else if (Keybinds.keySpeed.consumeClick()) {
@@ -33,6 +35,5 @@ public class KeyEventHandler {
             } else if (Keybinds.keyRocketBoots.consumeClick()) {
                  PacketHandler.sendToServer(new PacketUpdateEngineState());
             }
-        }
     }
 }

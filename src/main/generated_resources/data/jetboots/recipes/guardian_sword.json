@@ -1,27 +1,27 @@
 {
   "type": "minecraft:crafting_shaped",
+  "key": {
+    "b": {
+      "tag": "forge:gems/diamond"
+    },
+    "e": {
+      "tag": "forge:gems/emerald"
+    },
+    "g": {
+      "item": "jetboots:obsidian_infused_gold"
+    },
+    "i": {
+      "item": "minecraft:iron_sword"
+    },
+    "o": {
+      "tag": "forge:ingots/netherite"
+    }
+  },
   "pattern": [
     "geg",
     "oio",
     "bgb"
   ],
-  "key": {
-    "o": {
-      "tag": "forge:ingots/netherite"
-    },
-    "g": {
-      "item": "jetboots:obsidian_infused_gold"
-    },
-    "e": {
-      "tag": "forge:gems/emerald"
-    },
-    "i": {
-      "item": "minecraft:iron_sword"
-    },
-    "b": {
-      "tag": "forge:gems/diamond"
-    }
-  },
   "result": {
     "item": "jetboots:guardian_sword"
   }

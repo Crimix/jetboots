@@ -13,8 +13,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.client.gui.ForgeIngameGui;
+import net.minecraftforge.client.event.RenderGuiOverlayEvent;
+import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -26,15 +26,17 @@ public class ClientHandler {
 
     @SubscribeEvent
     public void onStopTracking(PlayerEvent.StopTracking event) {
-        ClientHelper.stop(event.getPlayer());
+        if (event.getTarget() instanceof Player player) {
+            ClientHelper.stop(player);
+        }
     }
 
     @SubscribeEvent
-    public static void overlayEvent(RenderGameOverlayEvent.PreLayer event) {
+    public static void overlayEvent(RenderGuiOverlayEvent.Pre event) {
         Player player = Minecraft.getInstance().player;
         if (player != null && ModUtils.hasGuardianHelmet(player)) {
             if (GuardinanHelmetProperties.getMode(ModUtils.getGuardianHelmet(player))) {
-                if (event.getOverlay() == ForgeIngameGui.AIR_LEVEL_ELEMENT)
+                if (event.getOverlay().id().equals(VanillaGuiOverlay.AIR_LEVEL.id()))
                     event.setCanceled(true);
             }
         }

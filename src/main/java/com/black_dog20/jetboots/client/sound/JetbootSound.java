@@ -2,6 +2,7 @@ package com.black_dog20.jetboots.client.sound;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
+import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
@@ -20,7 +21,7 @@ public class JetbootSound extends AbstractTickableSoundInstance {
     private final Player player;
 
     public JetbootSound(Player player) {
-        super(ModSounds.JETBOOTS.get(), SoundSource.PLAYERS);
+        super(ModSounds.JETBOOTS.get(), SoundSource.PLAYERS, SoundInstance.createUnseededRandom());
         this.player = player;
         this.looping = true;
         this.delay = 0;

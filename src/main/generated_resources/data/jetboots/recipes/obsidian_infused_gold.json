@@ -1,10 +1,10 @@
 {
   "type": "minecraft:smithing",
-  "base": {
-    "tag": "forge:ingots/gold"
-  },
   "addition": {
     "tag": "forge:obsidian"
+  },
+  "base": {
+    "tag": "forge:ingots/gold"
   },
   "result": {
     "item": "jetboots:obsidian_infused_gold"

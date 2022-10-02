@@ -14,7 +14,7 @@ import com.black_dog20.jetboots.common.util.properties.JetBootsProperties;
 import com.black_dog20.jetboots.common.util.properties.RocketBootsProperties;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -134,7 +134,7 @@ public class FlyingHandler {
 
     private static void drawpower(Player player, ItemStack jetboots) {
         if (!player.isCreative()) {
-            jetboots.getCapability(CapabilityEnergy.ENERGY, null)
+            jetboots.getCapability(ForgeCapabilities.ENERGY, null)
                     .ifPresent(e -> EnergyUtil.extractOrReceive(e, EnergyUtil.getEnergyWhileFlying(jetboots)));
         }
     }
@@ -150,7 +150,7 @@ public class FlyingHandler {
 
     @SubscribeEvent
     public static void onFall(LivingFallEvent event) {
-        if (event.getEntityLiving() instanceof Player player) {
+        if (event.getEntity() instanceof Player player) {
             if (ModUtils.hasJetBoots(player) && JetBootsProperties.hasShockUpgrade(ModUtils.getJetBoots(player))) {
                 event.setCanceled(true);
             }

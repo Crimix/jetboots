@@ -15,12 +15,12 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.client.gui.ForgeIngameGui;
-import net.minecraftforge.client.gui.IIngameOverlay;
+import net.minecraftforge.client.gui.overlay.NamedGuiOverlay;
+import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 
 import java.util.Optional;
 
-public class BatteryIconOverlay extends ConfigurablePercentageScaledOverlay.PostLayer {
+public class BatteryIconOverlay extends ConfigurablePercentageScaledOverlay.Post {
 
     private static final ResourceLocation BATTERY_FULL = new ResourceLocation(Jetboots.MOD_ID, "textures/gui/battery_icon_full.png");
     private static final ResourceLocation BATTERY_ABOVE_HALF = new ResourceLocation(Jetboots.MOD_ID, "textures/gui/battery_icon_above_half.png");
@@ -98,7 +98,7 @@ public class BatteryIconOverlay extends ConfigurablePercentageScaledOverlay.Post
     }
 
     @Override
-    public boolean doRender(IIngameOverlay iIngameOverlay) {
+    public boolean doRender(NamedGuiOverlay overlay) {
         if(!Config.BATTERY_ICON_STATE.get()) {
             return false;
         }
@@ -107,7 +107,7 @@ public class BatteryIconOverlay extends ConfigurablePercentageScaledOverlay.Post
         boolean showDebugInfo = minecraft.options.renderDebug;
         boolean chatOpen = minecraft.screen instanceof ChatScreen;
         return !showDebugInfo && !playerListShown && !chatOpen &&
-                iIngameOverlay == ForgeIngameGui.CROSSHAIR_ELEMENT;
+                overlay.id().equals(VanillaGuiOverlay.CROSSHAIR.id());
     }
 
     @Override

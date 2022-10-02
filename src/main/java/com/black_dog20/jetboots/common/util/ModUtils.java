@@ -12,11 +12,10 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.energy.IEnergyStorage;
 
 import java.util.function.Supplier;
@@ -51,7 +50,7 @@ public class ModUtils {
             if (player.isInWater() && !JetBootsProperties.hasUnderWaterUpgrade(jetboots)) {
                 return false;
             }
-            IEnergyStorage energy = jetboots.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
+            IEnergyStorage energy = jetboots.getCapability(ForgeCapabilities.ENERGY, null).orElse(null);
             if (energy != null) {
                 return energy.getEnergyStored() + EnergyUtil.getEnergyWhileFlying(jetboots) >= 0; //Needs to be plus as the return of getEnergyWhileFlying is negative
             } else
@@ -135,7 +134,7 @@ public class ModUtils {
                     .with(elytra, normal, elytraOn)
                     .build();
         }
-        return new TextComponent("");
+        return Component.literal("");
     }
 
     public static Component getFlightSpeedText(Player player) {
@@ -157,7 +156,7 @@ public class ModUtils {
                     .with(superSpeed, normal, superSpeedOn)
                     .build();
         }
-        return new TextComponent("");
+        return Component.literal("");
     }
 
     public static boolean hasGuardianHelmet(Player player) {
@@ -187,7 +186,7 @@ public class ModUtils {
                     .with(materialized, dematerialized, materializedOn)
                     .build();
         }
-        return new TextComponent("");
+        return Component.literal("");
     }
 
     public static Component getHelmetNightVisionText(Player player) {
@@ -207,7 +206,7 @@ public class ModUtils {
                     .with(on, off, nightVisionOn)
                     .build();
         }
-        return new TextComponent("");
+        return Component.literal("");
     }
 
     public static boolean hasRocketBoots(Player player) {
@@ -239,6 +238,6 @@ public class ModUtils {
                     .with(on, off, isOn)
                     .build();
         }
-        return new TextComponent("");
+        return Component.literal("");
     }
 }

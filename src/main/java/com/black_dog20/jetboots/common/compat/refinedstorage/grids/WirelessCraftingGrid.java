@@ -8,11 +8,11 @@ import com.refinedmods.refinedstorage.api.network.security.Permission;
 import com.refinedmods.refinedstorage.api.util.Action;
 import com.refinedmods.refinedstorage.api.util.IStackList;
 import com.refinedmods.refinedstorage.blockentity.grid.WirelessGrid;
+import com.refinedmods.refinedstorage.container.transfer.TransferManager;
 import com.refinedmods.refinedstorage.inventory.player.PlayerSlot;
 import com.refinedmods.refinedstorage.util.StackUtils;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;
@@ -34,9 +34,15 @@ public class WirelessCraftingGrid extends WirelessGrid {
     private Set<ICraftingGridListener> listeners = new HashSet<>();
 
     private AbstractContainerMenu craftingContainer = new AbstractContainerMenu(null, 0) {
+        protected final TransferManager transferManager = new TransferManager(this);
         @Override
         public boolean stillValid(Player player) {
             return false;
+        }
+
+        @Override
+        public ItemStack quickMoveStack(Player pPlayer, int pIndex) {
+            return transferManager.transfer(pIndex);
         }
 
         @Override
@@ -63,7 +69,7 @@ public class WirelessCraftingGrid extends WirelessGrid {
 
     @Override
     public Component getTitle() {
-        return new TranslatableComponent("gui.refinedstorage.crafting_grid");
+        return Component.translatable("gui.refinedstorage.crafting_grid");
     }
 
     @Override

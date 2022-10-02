@@ -1,22 +1,17 @@
 buildscript {
     repositories {
-        mavenCentral()
-        maven { url = 'https://maven.minecraftforge.net' }
-        maven { url = 'https://maven.parchmentmc.org' }
-        maven { url = "https://oss.sonatype.org/content/repositories/snapshots/" }
-        maven { url "https://plugins.gradle.org/m2/" }
         maven { url='https://repo.spongepowered.org/repository/maven-public/' }
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
-        classpath 'org.parchmentmc:librarian:1.+'
         classpath 'org.spongepowered:mixingradle:0.7.+'
     }
 }
 
-apply plugin: 'net.minecraftforge.gradle'
-apply plugin: 'org.parchmentmc.librarian.forgegradle'
-//Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
+plugins {
+    id 'net.minecraftforge.gradle' version '5.1.+'
+    id 'org.parchmentmc.librarian.forgegradle' version '1.+'
+}
+
 apply plugin: 'org.spongepowered.mixin'
 apply from: 'https://raw.githubusercontent.com/Crimix/bml/1.18/common.gradle'
 
@@ -156,8 +151,8 @@ repositories {
 dependencies {
     minecraft "net.minecraftforge:forge:${project.mc_version}-${project.forge_version}"
 
-    compileOnly fg.deobf("mezz.jei:jei-${jei_version}:api")
-    runtimeOnly fg.deobf("mezz.jei:jei-${jei_version}")
+    compileOnly fg.deobf("mezz.jei:jei-${mc_version}-common-api:${jei_version}")
+    compileOnly fg.deobf("mezz.jei:jei-${mc_version}-forge:${jei_version}")
     implementation fg.deobf("com.black_dog20.bml:bml:${bml_version}")
     implementation fg.deobf("curse.maven:refined-storage-243076:${refined_storage_version}")
     implementation fg.deobf("curse.maven:charging-gadgets-399757:${charging_gadgets_version}")
@@ -189,11 +184,11 @@ curseforge {
     project {
         id = '373208'
         changelogType = 'markdown'
-        changelog = 'As always find the changelog here [CHANGELOG](https://github.com/Crimix/jetboots/blob/1.18/CHANGELOG.md)'
+        changelog = "As always find the changelog here [CHANGELOG](${changelog_url})"
         releaseType = 'release'
         addGameVersion 'Forge'
         addGameVersion 'Java 17'
-        addGameVersion '1.18.2'
+        addGameVersion '1.19'
         relations {
             requiredDependency 'bml'
             optionalDependency 'refined-storage'
@@ -206,10 +201,11 @@ modrinth {
     token = modrinth_token
     projectId = "Vuc82vJD"
     uploadFile = jar
-    changelog = 'As always find the changelog here [CHANGELOG](https://github.com/Crimix/jetboots/blob/1.18/CHANGELOG.md)'
+    versionNumber = "${mc_version}-${version}"
+    changelog = "As always find the changelog here [CHANGELOG](${changelog_url})"
     versionType = "release"
     loaders = ["forge"]
-    gameVersions = ["1.18.2"]
+    gameVersions = ["1.19"]
     dependencies {
         required.project "FbqCRYwN"
     }

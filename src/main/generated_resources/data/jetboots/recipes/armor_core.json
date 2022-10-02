@@ -1,18 +1,18 @@
 {
   "type": "minecraft:crafting_shaped",
+  "key": {
+    "d": {
+      "tag": "forge:gems/diamond"
+    },
+    "o": {
+      "item": "jetboots:obsidian_infused_gold"
+    }
+  },
   "pattern": [
     "ooo",
     "odo",
     "ooo"
   ],
-  "key": {
-    "o": {
-      "item": "jetboots:obsidian_infused_gold"
-    },
-    "d": {
-      "tag": "forge:gems/diamond"
-    }
-  },
   "result": {
     "item": "jetboots:armor_core"
   }
