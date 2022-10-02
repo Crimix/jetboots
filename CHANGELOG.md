@@ -1,6 +1,9 @@
 # Jet Boots Changelog
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [1.19.2, 1.2.5] - 2022-10-02
+- Ported to 1.19.2
+
 ## [1.18.2, 1.2.5] - 2022-06-03
 - Fixed night vision on / off message using the helmet mode instead of night vision mode instead
 - Fixed usage of deprecated register methods in JEI
