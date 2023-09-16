@@ -25,6 +25,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 
 import java.util.Optional;
+import java.util.function.Supplier;
 
 import static com.black_dog20.jetboots.common.util.TranslationHelper.Translations.*;
 
@@ -32,6 +33,7 @@ public class EnchantableItemScreen extends AbstractContainerScreen<EnchantableIt
 
     private final ResourceLocation GUI = new ResourceLocation(Jetboots.MOD_ID, "textures/gui/container_gui.png");
     private final Inventory inventory;
+    private static final Button.CreateNarration DEFAULT_NARRATION = Supplier::get;
 
     public EnchantableItemScreen(EnchantableItemContainer container, Inventory playerInventory, Component title) {
         super(container, playerInventory, title);
@@ -43,18 +45,18 @@ public class EnchantableItemScreen extends AbstractContainerScreen<EnchantableIt
         super.init();
         ItemStack container = inventory.getSelected();
         if (container.getItem() == ModItems.JET_BOOTS.get()) {
-            Button icon = new SmallButton(width / 2 + 70, height / 2 - 80, 10, 10, Component.literal("I"), this::onIconPress);
+            Button icon = new SmallButton(width / 2 + 70, height / 2 - 80, 10, 10, Component.literal("I"), this::onIconPress, DEFAULT_NARRATION);
             addRenderableWidget(icon);
 
             if (JetBootsProperties.hasMuffledUpgrade(container)) {
-                Button muffled = new SmallButton(width / 2 + 40, height / 2 - 40, 40, 10, getMuffledText(!JetBootsProperties.hasActiveMuffledUpgrade(container)), this::onMuffledPress);
+                Button muffled = new SmallButton(width / 2 + 40, height / 2 - 40, 40, 10, getMuffledText(!JetBootsProperties.hasActiveMuffledUpgrade(container)), this::onMuffledPress, DEFAULT_NARRATION);
                 addRenderableWidget(muffled);
             }
         }
     }
 
     private void onIconPress(Button p_onPress_1) {
-        Minecraft.getInstance().player.commandSigned("bml overlayConfig", null);
+        Minecraft.getInstance().player.connection.sendCommand("bml overlayConfig");
         this.removed();
     }
 

@@ -154,7 +154,7 @@ dependencies {
     compileOnly fg.deobf("mezz.jei:jei-${mc_version}-common-api:${jei_version}")
     compileOnly fg.deobf("mezz.jei:jei-${mc_version}-forge:${jei_version}")
     implementation fg.deobf("com.black_dog20.bml:bml:${bml_version}")
-    implementation fg.deobf("curse.maven:refined-storage-243076:${refined_storage_version}")
+    //implementation fg.deobf("curse.maven:refined-storage-243076:${refined_storage_version}")
     implementation fg.deobf("curse.maven:charging-gadgets-399757:${charging_gadgets_version}")
 
     if (System.getProperty("idea.sync.active") != "true") {

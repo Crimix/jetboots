@@ -19,7 +19,7 @@ import java.util.Set;
 import static com.black_dog20.jetboots.common.util.UpgradeFunctionUtil.*;
 
 public class ModItems {
-    public static final Item.Properties ITEM_GROUP = new Item.Properties().tab(Jetboots.itemGroup);
+    public static final Item.Properties ITEM_GROUP = new Item.Properties();
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Jetboots.MOD_ID);
 
     public static final RegistryObject<Item> JET_BOOTS = ITEMS.register("jetboots", () -> new JetBootsItem(ITEM_GROUP.stacksTo(1)));

@@ -6,6 +6,8 @@ import com.black_dog20.jetboots.Jetboots;
 
 public class TranslationHelper extends TranslationUtil {
     public enum Translations implements ITranslation {
+        ITEM_CATEGORY("itemGroup.jetboots"),
+        ITEM_CATEGORY_EXTRAS("itemGroup.jetboots_compat"),
         SHOW_MORE_INFO("tooltip.item.show_upgrades"),
         OPEN_CONTAINER("tooltip.item.open_upgrades"),
         ENGINE_UPGRADE("tooltip.item.engine_upgrade"),

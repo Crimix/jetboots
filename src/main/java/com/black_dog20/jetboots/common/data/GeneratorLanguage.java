@@ -2,25 +2,22 @@ package com.black_dog20.jetboots.common.data;
 
 import com.black_dog20.bml.datagen.BaseLanguageProvider;
 import com.black_dog20.jetboots.Jetboots;
-import com.black_dog20.jetboots.common.compat.refinedstorage.RefinedStorageCompat;
 import com.black_dog20.jetboots.common.items.ModItems;
-import com.black_dog20.jetboots.common.util.TranslationHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.data.DataGenerator;
-import net.minecraftforge.fml.ModList;
 
 import static com.black_dog20.jetboots.common.util.TranslationHelper.Translations.*;
 
 public class GeneratorLanguage extends BaseLanguageProvider {
 
     public GeneratorLanguage(DataGenerator gen) {
-        super(gen, Jetboots.MOD_ID, "en_us");
+        super(gen.getPackOutput(), Jetboots.MOD_ID, "en_us");
     }
 
     @Override
     protected void addTranslations() {
-        add("itemGroup.jetboots", "Jet Boots");
-        add("itemGroup.jetboots_compat", "Jet Boots Extras");
+        addPrefixed(ITEM_CATEGORY, "Jet Boots");
+        addPrefixed(ITEM_CATEGORY_EXTRAS, "Jet Boots Extras");
         add("key.jetboots.engine", "Toggle Jet boots engine mode");
         add("key.jetboots.speed", "Toggle Jet boots speed mode");
         add("key.jetboots.helmet", "Toggle Guardian Helmet mode");
@@ -82,20 +79,20 @@ public class GeneratorLanguage extends BaseLanguageProvider {
         addPrefixed(ON, "On");
         addPrefixed(OFF, "Off");
 
-        if (ModList.get().isLoaded(RefinedStorageCompat.MOD_ID)) {
-            add("key.jetboots.open_crafting_grid", "Open Refined Storage crafting grid");
-            addItem(RefinedStorageCompat.WIRELESS_CRAFTING_UPGRADE, "Wireless crafting grid upgrade (RS)");
-            addItem(RefinedStorageCompat.WIRELESS_RANGE_UPGRADE, "Wireless grid range upgrade (RS)");
-
-            addPrefixed(TranslationHelper.Compat.WIRELESS_CRAFTING_USE, "Use %s to access RS network", ChatFormatting.GRAY);
-            addPrefixed(TranslationHelper.Compat.WIRELESS_CRAFTING_UPGRADE, "Wireless Transmitter (RS)", ChatFormatting.GRAY);
-            addPrefixed(TranslationHelper.Compat.WIRELESS_CRAFTING_UPGRADE_INFO, "Upgrades the helmet to access the RS network\nRight click the helmet on a network to link it", ChatFormatting.GRAY);
-            addPrefixed(TranslationHelper.Compat.WIRELESS_RANGE_UPGRADE, "Wireless Range %s (RS)", ChatFormatting.GRAY);
-            addPrefixed(TranslationHelper.Compat.WIRELESS_RANGE_UPGRADE_INFO, "Upgrades the helmet range to the RS network\nMax 4 times", ChatFormatting.GRAY);
-            addPrefixed(TranslationHelper.Compat.WIRELESS_CRAFTING_UPGRADE_NOT_INSTALLED, "Wireless crafting grid upgrade not installed!");
-            addPrefixed(TranslationHelper.Compat.NETWORK_LINKED, "Helmet linked to network!");
-            addPrefixed(TranslationHelper.Compat.NOT_LINKED_TO_NETWORK, "Not linked to a network!\nRight click the helmet on a network");
-        }
+//        if (ModList.get().isLoaded(RefinedStorageCompat.MOD_ID)) {
+//            add("key.jetboots.open_crafting_grid", "Open Refined Storage crafting grid");
+//            addItem(RefinedStorageCompat.WIRELESS_CRAFTING_UPGRADE, "Wireless crafting grid upgrade (RS)");
+//            addItem(RefinedStorageCompat.WIRELESS_RANGE_UPGRADE, "Wireless grid range upgrade (RS)");
+//
+//            addPrefixed(TranslationHelper.Compat.WIRELESS_CRAFTING_USE, "Use %s to access RS network", ChatFormatting.GRAY);
+//            addPrefixed(TranslationHelper.Compat.WIRELESS_CRAFTING_UPGRADE, "Wireless Transmitter (RS)", ChatFormatting.GRAY);
+//            addPrefixed(TranslationHelper.Compat.WIRELESS_CRAFTING_UPGRADE_INFO, "Upgrades the helmet to access the RS network\nRight click the helmet on a network to link it", ChatFormatting.GRAY);
+//            addPrefixed(TranslationHelper.Compat.WIRELESS_RANGE_UPGRADE, "Wireless Range %s (RS)", ChatFormatting.GRAY);
+//            addPrefixed(TranslationHelper.Compat.WIRELESS_RANGE_UPGRADE_INFO, "Upgrades the helmet range to the RS network\nMax 4 times", ChatFormatting.GRAY);
+//            addPrefixed(TranslationHelper.Compat.WIRELESS_CRAFTING_UPGRADE_NOT_INSTALLED, "Wireless crafting grid upgrade not installed!");
+//            addPrefixed(TranslationHelper.Compat.NETWORK_LINKED, "Helmet linked to network!");
+//            addPrefixed(TranslationHelper.Compat.NOT_LINKED_TO_NETWORK, "Not linked to a network!\nRight click the helmet on a network");
+//        }
     }
 
     @Override

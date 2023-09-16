@@ -7,11 +7,15 @@ import com.black_dog20.jetboots.common.items.equipment.GuardianPantsItem;
 import com.black_dog20.jetboots.common.items.equipment.GuardianSwordItem;
 import com.black_dog20.jetboots.common.items.equipment.JetBootsItem;
 import com.black_dog20.jetboots.common.items.equipment.RocketBootsItem;
+import com.google.gson.JsonObject;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.item.crafting.UpgradeRecipe;
 import net.minecraft.world.level.Level;
 
@@ -29,8 +33,15 @@ public class CustomSmithingRecipe extends UpgradeRecipe {
             UpgradeItem.Type.SWORD, createTypeMatcher(GuardianSwordItem.class)
     );
 
-    public CustomSmithingRecipe(ResourceLocation recipeId) {
-        super(recipeId, Ingredient.EMPTY, Ingredient.EMPTY, ItemStack.EMPTY);
+    final Ingredient base;
+    final Ingredient addition;
+    final ItemStack result;
+
+    public CustomSmithingRecipe(ResourceLocation pId, Ingredient pBase, Ingredient pAddition, ItemStack pResult) {
+        super(pId, pBase, pAddition, pResult);
+        this.base = pBase;
+        this.addition = pAddition;
+        this.result = pResult;
     }
 
     @Override
@@ -77,6 +88,28 @@ public class CustomSmithingRecipe extends UpgradeRecipe {
 
     private static Predicate<ItemStack> createTypeMatcher(Class<?> clazz) {
         return stack -> clazz.isInstance(stack.getItem()) && stack.getCount() == 1;
+    }
+
+    public static class Serializer implements RecipeSerializer<CustomSmithingRecipe> {
+        public CustomSmithingRecipe fromJson(ResourceLocation pRecipeId, JsonObject pJson) {
+            Ingredient ingredient = Ingredient.fromJson(GsonHelper.getAsJsonObject(pJson, "base"));
+            Ingredient ingredient1 = Ingredient.fromJson(GsonHelper.getAsJsonObject(pJson, "addition"));
+            ItemStack itemstack = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(pJson, "result"));
+            return new CustomSmithingRecipe(pRecipeId, ingredient, ingredient1, itemstack);
+        }
+
+        public CustomSmithingRecipe fromNetwork(ResourceLocation pRecipeId, FriendlyByteBuf pBuffer) {
+            Ingredient ingredient = Ingredient.fromNetwork(pBuffer);
+            Ingredient ingredient1 = Ingredient.fromNetwork(pBuffer);
+            ItemStack itemstack = pBuffer.readItem();
+            return new CustomSmithingRecipe(pRecipeId, ingredient, ingredient1, itemstack);
+        }
+
+        public void toNetwork(FriendlyByteBuf pBuffer, CustomSmithingRecipe pRecipe) {
+            pRecipe.base.toNetwork(pBuffer);
+            pRecipe.addition.toNetwork(pBuffer);
+            pBuffer.writeItem(pRecipe.result);
+        }
     }
 
 }
