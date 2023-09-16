@@ -1,5 +1,5 @@
-[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fcurseforge-badge-shields-io-caaw7pcenm0t.runkit.sh%2Fdownloads%3FprojectId%3D373208%26mode%3Dfull)](https://minecraft.curseforge.com/projects/jet-boots)
-[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fcurseforge-badge-shields-io-caaw7pcenm0t.runkit.sh%2Fversions%3FprojectId%3D373208)](https://minecraft.curseforge.com/projects/jet-boots)   
+[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fcurseforge-badge-shields-io-caaw7pcenm0t.runkit.sh%2Fdownloads%3FprojectId%3D373208%26mode%3Dfull)](https://www.curseforge.com/minecraft/mc-mods/jet-boots)
+[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fcurseforge-badge-shields-io-caaw7pcenm0t.runkit.sh%2Fversions%3FprojectId%3D373208)](https://www.curseforge.com/minecraft/mc-mods/jet-boots)   
 [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fmodrinth-badge-shields-io-s1co4c2czdpy.runkit.sh/%2Fdownloads%3FprojectId%3DVuc82vJD%26mode%3Dfull)](https://modrinth.com/mod/jet-boots)
 [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fmodrinth-badge-shields-io-s1co4c2czdpy.runkit.sh%2Fversions%3FprojectId%3DVuc82vJD)](https://modrinth.com/mod/jet-boots)
 # Jet Boots
