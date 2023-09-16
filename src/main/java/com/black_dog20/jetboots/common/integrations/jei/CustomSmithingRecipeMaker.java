@@ -6,7 +6,8 @@ import com.black_dog20.jetboots.common.items.UpgradeItem;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.UpgradeRecipe;
+import net.minecraft.world.item.crafting.SmithingRecipe;
+import net.minecraft.world.item.crafting.SmithingTransformRecipe;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
@@ -14,8 +15,8 @@ import java.util.List;
 
 public class CustomSmithingRecipeMaker {
 
-    public static List<UpgradeRecipe> getRecipes() {
-        List<UpgradeRecipe> recipes = new ArrayList<>();
+    public static List<SmithingRecipe> getRecipes() {
+        List<SmithingRecipe> recipes = new ArrayList<>();
         ItemStack helmet = new ItemStack(ModItems.GUARDIAN_HELMET.get());
         ItemStack jacket = new ItemStack(ModItems.GUARDIAN_JACKET.get());
         ItemStack pants = new ItemStack(ModItems.GUARDIAN_PANTS.get());
@@ -68,10 +69,10 @@ public class CustomSmithingRecipeMaker {
         return recipes;
     }
 
-    private static UpgradeRecipe create(ItemStack stack, UpgradeItem addition) {
+    private static SmithingTransformRecipe create(ItemStack stack, UpgradeItem addition) {
         ResourceLocation id = new ResourceLocation(Jetboots.MOD_ID, "jei.jetboots_upgrade." + addition.getDescriptionId());
 
-        return new UpgradeRecipe(id, Ingredient.of(stack), Ingredient.of(addition), getOutput(stack, addition));
+        return new SmithingTransformRecipe(id, Ingredient.of(ModItems.JET_BOOTS_TEMPLATE.get()), Ingredient.of(stack), Ingredient.of(addition), getOutput(stack, addition));
     }
 
     private static ItemStack getOutput(ItemStack stack, UpgradeItem addition) {

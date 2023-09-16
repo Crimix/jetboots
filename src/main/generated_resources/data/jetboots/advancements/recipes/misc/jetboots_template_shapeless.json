@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_jetboots": {
+    "has_template": {
       "conditions": {
         "items": [
           {
             "items": [
-              "jetboots:jetboots"
+              "jetboots:jetboots_template"
             ]
           }
         ]
@@ -15,20 +15,21 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "jetboots:thruster_upgrade"
+        "recipe": "jetboots:jetboots_template_shapeless"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_jetboots",
+      "has_template",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "jetboots:thruster_upgrade"
+      "jetboots:jetboots_template_shapeless"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

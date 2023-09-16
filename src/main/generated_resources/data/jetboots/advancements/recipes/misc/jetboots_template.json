@@ -1,13 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_obsidian_infused_gold": {
+    "has_obsidian": {
       "conditions": {
         "items": [
           {
-            "items": [
-              "jetboots:obsidian_infused_gold"
-            ]
+            "tag": "forge:obsidian"
           }
         ]
       },
@@ -15,20 +13,21 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "jetboots:guardian_helmet"
+        "recipe": "jetboots:jetboots_template"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_obsidian_infused_gold",
+      "has_obsidian",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "jetboots:guardian_helmet"
+      "jetboots:jetboots_template"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

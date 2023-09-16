@@ -1,7 +1,6 @@
 package com.black_dog20.jetboots.client.screens;
 
 import com.black_dog20.bml.api.ILevelableItem;
-import com.black_dog20.bml.client.widgets.SmallButton;
 import com.black_dog20.bml.utils.leveling.ItemLevelProperties;
 import com.black_dog20.bml.utils.math.MathUtil;
 import com.black_dog20.bml.utils.text.TextComponentBuilder;
@@ -13,15 +12,16 @@ import com.black_dog20.jetboots.common.network.PacketHandler;
 import com.black_dog20.jetboots.common.network.packets.PacketUpdateMuffledMode;
 import com.black_dog20.jetboots.common.util.properties.JetBootsProperties;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.client.gui.widget.ExtendedButton;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 
 import java.util.Optional;
@@ -45,11 +45,11 @@ public class EnchantableItemScreen extends AbstractContainerScreen<EnchantableIt
         super.init();
         ItemStack container = inventory.getSelected();
         if (container.getItem() == ModItems.JET_BOOTS.get()) {
-            Button icon = new SmallButton(width / 2 + 70, height / 2 - 80, 10, 10, Component.literal("I"), this::onIconPress, DEFAULT_NARRATION);
+            Button icon = new ExtendedButton(width / 2 + 70, height / 2 - 80, 10, 10, Component.literal("I"), this::onIconPress, DEFAULT_NARRATION);
             addRenderableWidget(icon);
 
             if (JetBootsProperties.hasMuffledUpgrade(container)) {
-                Button muffled = new SmallButton(width / 2 + 40, height / 2 - 40, 40, 10, getMuffledText(!JetBootsProperties.hasActiveMuffledUpgrade(container)), this::onMuffledPress, DEFAULT_NARRATION);
+                Button muffled = new ExtendedButton(width / 2 + 40, height / 2 - 40, 40, 10, getMuffledText(!JetBootsProperties.hasActiveMuffledUpgrade(container)), this::onMuffledPress, DEFAULT_NARRATION);
                 addRenderableWidget(muffled);
             }
         }
@@ -75,23 +75,23 @@ public class EnchantableItemScreen extends AbstractContainerScreen<EnchantableIt
     }
 
     @Override
-    public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-        this.renderBackground(matrixStack);
-        super.render(matrixStack, mouseX, mouseY, partialTicks);
-        this.renderTooltip(matrixStack, mouseX, mouseY);
+    public void render(GuiGraphics pGuiGraphics, int mouseX, int mouseY, float partialTicks) {
+        this.renderBackground(pGuiGraphics);
+        super.render(pGuiGraphics, mouseX, mouseY, partialTicks);
+        this.renderTooltip(pGuiGraphics, mouseX, mouseY);
     }
 
     @Override
-    protected void renderLabels(PoseStack matrixStack, int mouseX, int mouseY) {
+    protected void renderLabels(GuiGraphics pGuiGraphics, int mouseX, int mouseY) {
         int fontHeight = this.font.lineHeight;
-        this.font.draw(matrixStack, this.inventory.getDisplayName(), 8, 58, 0xffffff);
-        this.font.draw(matrixStack, this.getTitle(), 8, 6, 0xffffff);
+        pGuiGraphics.drawString(this.font, this.inventory.getDisplayName(), 8, 58, 4210752, false);
+        pGuiGraphics.drawString(this.font, this.getTitle(), 8, 6, 4210752, false);
         ItemStack container = inventory.getSelected();
         Optional.ofNullable(container)
                 .filter(stack -> stack.getItem() instanceof ILevelableItem)
                 .filter(stack -> ItemLevelProperties.getMaxLevel(stack) > 0)
                 .ifPresent(i -> {
-                    this.font.draw(matrixStack, ItemLevelProperties.getLevelProgress(container, ChatFormatting.WHITE), 8, 6 + fontHeight + 2, 0xffffff);
+                    pGuiGraphics.drawString(this.font, ItemLevelProperties.getLevelProgress(container, ChatFormatting.DARK_GRAY), 8, 6 + fontHeight + 2, 4210752, false);
                 });
 
         Optional.ofNullable(container)
@@ -100,16 +100,16 @@ public class EnchantableItemScreen extends AbstractContainerScreen<EnchantableIt
                             Component energyText = TranslationUtil.translate(STORED_ENERGY, ChatFormatting.GREEN,
                                     MathUtil.formatThousands(energy.getEnergyStored()),
                                     MathUtil.formatThousands(energy.getMaxEnergyStored()));
-                            this.font.draw(matrixStack, energyText, 8, 6 + 2 * (fontHeight + 2), 0xffffff);
+                            pGuiGraphics.drawString(this.font, energyText, 8, 6 + 2 * (fontHeight + 2), 4210752, false);
                         }));
     }
 
     @Override
-    protected void renderBg(PoseStack matrixStack,float partialTicks, int mouseX, int mouseY) {
+    protected void renderBg(GuiGraphics pGuiGraphics,float partialTicks, int mouseX, int mouseY) {
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.setShaderTexture(0, GUI);
         int relX = (this.width - this.imageWidth) / 2;
         int relY = (this.height - this.imageHeight) / 2;
-        this.blit(matrixStack, relX, relY, 0, 0, this.imageWidth, this.imageHeight);
+        pGuiGraphics.blit(GUI, relX, relY, 0, 0, this.imageWidth, this.imageHeight);
     }
 }

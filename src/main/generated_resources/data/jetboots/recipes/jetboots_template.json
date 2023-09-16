@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "d": {
+      "tag": "forge:gems/diamond"
+    },
+    "o": {
+      "tag": "forge:obsidian"
+    }
+  },
+  "pattern": [
+    "ooo",
+    "odo",
+    "ooo"
+  ],
+  "result": {
+    "item": "jetboots:jetboots_template"
+  },
+  "show_notification": true
+}

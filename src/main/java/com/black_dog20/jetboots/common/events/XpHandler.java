@@ -10,7 +10,6 @@ import com.black_dog20.jetboots.common.items.BaseGuardianArmorItem;
 import com.black_dog20.jetboots.common.items.equipment.GuardianSwordItem;
 import com.black_dog20.jetboots.common.util.ModUtils;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
@@ -23,6 +22,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static com.black_dog20.jetboots.common.util.NBTTags.TAG_FLIGHT_XP_COOLDOWN;
+import static net.minecraft.tags.DamageTypeTags.BYPASSES_ARMOR;
+import static net.minecraft.world.damagesource.DamageTypes.PLAYER_ATTACK;
 
 @Mod.EventBusSubscriber(modid = Jetboots.MOD_ID)
 public class XpHandler {
@@ -30,7 +31,7 @@ public class XpHandler {
     @SubscribeEvent
     public static void onPlayerMoveFlying(PlayerMoveEvent event) {
         Player player = event.getEntity();
-        if (player.level.isClientSide)
+        if (player.level().isClientSide)
             return;
         if (!ModUtils.hasJetBoots(player) && ModUtils.isJetbootsFlying(player))
             return;
@@ -63,8 +64,8 @@ public class XpHandler {
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onPlayerHurt(LivingHurtEvent event) {
-        if (event.getAmount() > 0 && !event.getSource().isBypassArmor() && event.getEntity() instanceof Player player) {
-            if (player.level.isClientSide)
+        if (event.getAmount() > 0 && !event.getSource().is(BYPASSES_ARMOR) && event.getEntity() instanceof Player player) {
+            if (player.level().isClientSide)
                 return;
 
             Set<ItemStack> levelableItems = player.getInventory().armor.stream()
@@ -82,12 +83,12 @@ public class XpHandler {
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onPlayerAttackEntity(LivingAttackEvent event) {
-        if (event.getAmount() > 0 && !event.getSource().isBypassArmor() && event.getSource().msgId.equals("player") && event.getSource() instanceof EntityDamageSource damageSource) {
-            if (damageSource.getEntity() == null)
+        if (event.getAmount() > 0 && !event.getSource().is(BYPASSES_ARMOR) && event.getSource().is(PLAYER_ATTACK)) {
+            if (event.getSource().getEntity() == null)
                 return;
-            if (!(damageSource.getEntity() instanceof Player player))
+            if (!(event.getSource().getEntity() instanceof Player player))
                 return;
-            if (player.level.isClientSide)
+            if (player.level().isClientSide)
                 return;
             ItemStack weapon = player.getMainHandItem();
 

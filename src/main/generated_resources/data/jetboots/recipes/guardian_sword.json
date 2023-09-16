@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "equipment",
   "key": {
     "b": {
       "tag": "forge:gems/diamond"
@@ -24,5 +25,6 @@
   ],
   "result": {
     "item": "jetboots:guardian_sword"
-  }
+  },
+  "show_notification": true
 }

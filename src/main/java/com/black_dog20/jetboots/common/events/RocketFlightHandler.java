@@ -79,7 +79,7 @@ public class RocketFlightHandler {
             ItemStack rocketboots = ModUtils.getRocketBoots(player);
             if (!RocketBootsProperties.getEngineState(rocketboots)) return;
 
-            boolean onGround = player.isOnGround();
+            boolean onGround = player.onGround();
             boolean isJumping = Minecraft.getInstance().options.keyJump.isDown();
 
             if (!onGround && isJumping && !player.isInWater()) {

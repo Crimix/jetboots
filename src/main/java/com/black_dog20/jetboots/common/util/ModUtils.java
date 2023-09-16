@@ -86,13 +86,13 @@ public class ModUtils {
 
         BlockPos blockPos = new BlockPos(player.blockPosition());
         for (int i = 0; i < max; i++) {
-            if (player.level.isEmptyBlock(blockPos.below()))
+            if (player.level().isEmptyBlock(blockPos.below()))
                 blockPos = blockPos.below();
             else
                 break;
         }
 
-        return blockPos.distSqr(new Vec3i(player.getX(), player.getY(), player.getZ())) > target;
+        return blockPos.distSqr(new Vec3i((int)player.getX(), (int)player.getY(), (int)player.getZ())) > target;
     }
 
     public static boolean isBetweenBlocksOverGround(Player player, double minTarget, double maxTarget) {
@@ -104,13 +104,13 @@ public class ModUtils {
 
         BlockPos blockPos = new BlockPos(player.blockPosition());
         for (int i = 0; i < max; i++) {
-            if (player.level.isEmptyBlock(blockPos.below()))
+            if (player.level().isEmptyBlock(blockPos.below()))
                 blockPos = blockPos.below();
             else
                 break;
         }
 
-        double distance = blockPos.distSqr(new Vec3i(player.getX(), player.getY(), player.getZ()));
+        double distance = blockPos.distSqr(new Vec3i((int)player.getX(), (int)player.getY(), (int)player.getZ()));
 
         return minTarget < distance && distance < maxTarget;
     }

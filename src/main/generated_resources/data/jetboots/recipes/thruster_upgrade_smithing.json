@@ -1,0 +1,15 @@
+{
+  "type": "jetboots:custom_smithing",
+  "addition": {
+    "item": "jetboots:thruster_upgrade"
+  },
+  "base": {
+    "item": "jetboots:jetboots"
+  },
+  "result": {
+    "item": "jetboots:jetboots"
+  },
+  "template": {
+    "item": "jetboots:jetboots_template"
+  }
+}

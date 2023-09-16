@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "jetboots:armor_core"
+        "recipe": "jetboots:guardian_jacket"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,8 @@
   ],
   "rewards": {
     "recipes": [
-      "jetboots:armor_core"
+      "jetboots:guardian_jacket"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

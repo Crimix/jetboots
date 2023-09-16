@@ -6,8 +6,8 @@ import com.black_dog20.jetboots.Jetboots;
 
 public class TranslationHelper extends TranslationUtil {
     public enum Translations implements ITranslation {
-        ITEM_CATEGORY("itemGroup.jetboots"),
-        ITEM_CATEGORY_EXTRAS("itemGroup.jetboots_compat"),
+        ITEM_CATEGORY("tab.jetboots"),
+        ITEM_CATEGORY_EXTRAS("tab.jetboots_compat"),
         SHOW_MORE_INFO("tooltip.item.show_upgrades"),
         OPEN_CONTAINER("tooltip.item.open_upgrades"),
         ENGINE_UPGRADE("tooltip.item.engine_upgrade"),
@@ -20,6 +20,12 @@ public class TranslationHelper extends TranslationUtil {
         UNDERWATER_UPGRADE_INFO("tooltip.item.underwater_upgrade.info"),
         MUFFLED_UPGRADE("tooltip.item.muffled_upgrade"),
         MUFFLED_UPGRADE_INFO("tooltip.item.muffled_upgrade.info"),
+
+        TEMPLATE_DESCRIPTION("tooltip.template.description"),
+        TEMPLATE_SLOT_DESCRIPTION("tooltip.template.slot_description"),
+        TEMPLATE_ADDITIONS_SLOT_DESCRIPTION("tooltip.template.additions_slot_description"),
+        TEMPLATE_SLOT_INFO("tooltip.template.slot_info"),
+        TEMPLATE_ADDITIONS_SLOT_INFO("tooltip.template.additions_slot_info"),
 
         CHANGE_FLIGHT_MODE("tooltip.item.change_flight_mode"),
         CHANGE_SPEED_MODE("tooltip.item.change_speed_mode"),

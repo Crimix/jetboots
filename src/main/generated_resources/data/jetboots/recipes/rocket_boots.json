@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "equipment",
   "key": {
     "b": {
       "tag": "minecraft:coals"
@@ -24,5 +25,6 @@
   ],
   "result": {
     "item": "jetboots:rocket_boots"
-  }
+  },
+  "show_notification": true
 }

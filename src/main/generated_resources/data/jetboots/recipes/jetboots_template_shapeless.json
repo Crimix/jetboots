@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "jetboots:jetboots_template"
+    },
+    {
+      "item": "jetboots:obsidian_infused_gold"
+    }
+  ],
+  "result": {
+    "count": 4,
+    "item": "jetboots:jetboots_template"
+  }
+}

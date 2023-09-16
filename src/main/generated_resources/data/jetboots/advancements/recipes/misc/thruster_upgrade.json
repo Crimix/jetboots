@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "jetboots:engine_upgrade"
+        "recipe": "jetboots:thruster_upgrade"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,8 @@
   ],
   "rewards": {
     "recipes": [
-      "jetboots:engine_upgrade"
+      "jetboots:thruster_upgrade"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

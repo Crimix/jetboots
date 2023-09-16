@@ -33,7 +33,8 @@
           "recipes": [
             "jetboots:wireless_range_upgrade_rs"
           ]
-        }
+        },
+        "sends_telemetry_event": true
       },
       "conditions": [
         {

@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "equipment",
   "key": {
     "b": {
       "tag": "forge:rods/blaze"
@@ -27,5 +28,6 @@
   ],
   "result": {
     "item": "jetboots:jetboots"
-  }
+  },
+  "show_notification": true
 }

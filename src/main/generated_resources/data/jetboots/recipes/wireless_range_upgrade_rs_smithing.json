@@ -1,0 +1,15 @@
+{
+  "type": "jetboots:custom_smithing",
+  "addition": {
+    "item": "jetboots:wireless_range_upgrade_rs"
+  },
+  "base": {
+    "item": "jetboots:guardian_helmet"
+  },
+  "result": {
+    "item": "jetboots:guardian_helmet"
+  },
+  "template": {
+    "item": "jetboots:jetboots_template"
+  }
+}

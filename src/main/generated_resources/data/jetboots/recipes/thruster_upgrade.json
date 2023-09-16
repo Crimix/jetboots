@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "d": {
       "tag": "forge:gems/diamond"
@@ -24,5 +25,6 @@
   ],
   "result": {
     "item": "jetboots:thruster_upgrade"
-  }
+  },
+  "show_notification": true
 }

@@ -10,6 +10,7 @@
       ],
       "recipe": {
         "type": "minecraft:crafting_shaped",
+        "category": "misc",
         "key": {
           "c": {
             "item": "jetboots:armor_core"
@@ -34,7 +35,8 @@
         ],
         "result": {
           "item": "jetboots:wireless_range_upgrade_rs"
-        }
+        },
+        "show_notification": true
       }
     }
   ]

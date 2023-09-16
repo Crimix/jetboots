@@ -1,5 +1,5 @@
 {
-  "type": "minecraft:smithing",
+  "type": "minecraft:smithing_transform",
   "addition": {
     "tag": "forge:obsidian"
   },
@@ -8,5 +8,8 @@
   },
   "result": {
     "item": "jetboots:obsidian_infused_gold"
+  },
+  "template": {
+    "item": "jetboots:jetboots_template"
   }
 }

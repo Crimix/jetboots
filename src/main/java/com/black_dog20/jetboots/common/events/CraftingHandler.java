@@ -21,7 +21,7 @@ public class CraftingHandler {
     @SubscribeEvent
     public static void onCraft(PlayerEvent.ItemCraftedEvent event) {
         Player player = event.getEntity();
-        if (!player.level.isClientSide() && event.getCrafting().getItem() instanceof JetBootsItem) {
+        if (!player.level().isClientSide() && event.getCrafting().getItem() instanceof JetBootsItem) {
             ItemStack jetboots = event.getCrafting();
             ItemStack rocketboots = ItemStack.EMPTY;
             Container container = event.getInventory();

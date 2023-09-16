@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_obsidian_infused_gold": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "jetboots:obsidian_infused_gold"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "jetboots:guardian_pants"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_obsidian_infused_gold",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "jetboots:guardian_pants"
+    ]
+  },
+  "sends_telemetry_event": false
+}

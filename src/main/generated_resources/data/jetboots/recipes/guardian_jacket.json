@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "equipment",
   "key": {
     "c": {
       "item": "jetboots:armor_core"
@@ -18,5 +19,6 @@
   ],
   "result": {
     "item": "jetboots:guardian_jacket"
-  }
+  },
+  "show_notification": true
 }

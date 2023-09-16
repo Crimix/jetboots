@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_jetboots": {
+    "has_guardianHelmet": {
       "conditions": {
         "items": [
           {
             "items": [
-              "jetboots:jetboots"
+              "jetboots:guardian_helmet"
             ]
           }
         ]
@@ -15,20 +15,21 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "jetboots:muffled_upgrade"
+        "recipe": "jetboots:wireless_range_upgrade_rs_smithing"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_jetboots",
+      "has_guardianHelmet",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "jetboots:muffled_upgrade"
+      "jetboots:wireless_range_upgrade_rs_smithing"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

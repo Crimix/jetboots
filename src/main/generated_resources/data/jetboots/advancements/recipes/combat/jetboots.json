@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "jetboots:guardian_pants"
+        "recipe": "jetboots:jetboots"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,8 @@
   ],
   "rewards": {
     "recipes": [
-      "jetboots:guardian_pants"
+      "jetboots:jetboots"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

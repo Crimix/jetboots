@@ -7,6 +7,7 @@ import com.black_dog20.jetboots.common.util.ModUtils;
 import com.black_dog20.jetboots.common.util.properties.GuardinanHelmetProperties;
 import com.google.common.collect.ImmutableSet;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -27,8 +28,11 @@ import static com.black_dog20.jetboots.common.util.NBTTags.USING_NIGHT_VISION;
 @Mod.EventBusSubscriber(modid = Jetboots.MOD_ID)
 public class HelmetHandler {
 
-    private static final Set<DamageSource> HELMET_SOURCES = ImmutableSet.of(DamageSource.DROWN, DamageSource.WITHER);
     private static final Set<MobEffect> HELMET_EFFECTS_REMOVED = ImmutableSet.of(MobEffects.WITHER);
+
+    private static boolean doesHelmetProtectAgainst(DamageSource source) {
+        return source.is(DamageTypes.DROWN) || source.is(DamageTypes.WITHER);
+    }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onPlayerAttack(LivingAttackEvent event) {
@@ -36,7 +40,7 @@ public class HelmetHandler {
 
             if (ModUtils.hasGuardianHelmet(player)) {
                 ItemStack helmet = ModUtils.getGuardianHelmet(player);
-                if (GuardinanHelmetProperties.getMode(helmet) && HELMET_SOURCES.contains(event.getSource())) {
+                if (GuardinanHelmetProperties.getMode(helmet) && doesHelmetProtectAgainst(event.getSource())) {
                     event.setCanceled(true);
                 }
             }
@@ -49,7 +53,7 @@ public class HelmetHandler {
 
             if (ModUtils.hasGuardianHelmet(player)) {
                 ItemStack helmet = ModUtils.getGuardianHelmet(player);
-                if (GuardinanHelmetProperties.getMode(helmet) && HELMET_SOURCES.contains(event.getSource())) {
+                if (GuardinanHelmetProperties.getMode(helmet) && doesHelmetProtectAgainst(event.getSource())) {
                     event.setCanceled(true);
                 }
             }
@@ -58,7 +62,7 @@ public class HelmetHandler {
 
     @SubscribeEvent
     public static void onLivingUpdatePlayer(TickEvent.PlayerTickEvent event) {
-        if (!event.player.level.isClientSide) {
+        if (!event.player.level().isClientSide) {
             Player player = event.player;
 
             if (ModUtils.hasGuardianHelmet(player) && GuardinanHelmetProperties.getMode(ModUtils.getGuardianHelmet(player))) {
@@ -81,11 +85,11 @@ public class HelmetHandler {
             float toolSpeed = tool.getItem().getDestroySpeed(tool, event.getState());
             if (ModUtils.hasGuardianHelmet(player) && player.isInWater()) {
                 if (toolSpeed > event.getOriginalSpeed())
-                    if (player.isOnGround())
+                    if (player.onGround())
                         event.setNewSpeed(event.getOriginalSpeed() * 5);
                     else
                         event.setNewSpeed(event.getOriginalSpeed() * 25);
-            } else if (ModUtils.isJetbootsFlying(player) && !player.isOnGround()) {
+            } else if (ModUtils.isJetbootsFlying(player) && !player.onGround()) {
                 if (toolSpeed > event.getOriginalSpeed())
                     event.setNewSpeed(event.getOriginalSpeed() * 5);
             }

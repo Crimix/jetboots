@@ -1,0 +1,15 @@
+{
+  "type": "jetboots:custom_smithing",
+  "addition": {
+    "item": "jetboots:shock_absorber_upgrade"
+  },
+  "base": {
+    "item": "jetboots:rocket_boots"
+  },
+  "result": {
+    "item": "jetboots:rocket_boots"
+  },
+  "template": {
+    "item": "jetboots:jetboots_template"
+  }
+}

@@ -8,8 +8,8 @@ import com.black_dog20.jetboots.Jetboots;
 import com.black_dog20.jetboots.common.util.EnergyUtil;
 import com.black_dog20.jetboots.common.util.ModUtils;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.ChatScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -50,12 +50,12 @@ public class BatteryIconOverlay extends ConfigurablePercentageScaledOverlay.Post
     }
 
     @Override
-    public void onRender(PoseStack matrixStack, int scaledwidth, int scaledheight) {
+    public void onRender(GuiGraphics guiGraphics, int scaledwidth, int scaledheight) {
         int xPos = (int) (scaledwidth * (getPercentagePosX() / 100.0));
         int yPos = (int) (scaledheight * (getPercentagePosY() / 100.0));
         Minecraft minecraft = Minecraft.getInstance();
         Player player = minecraft.player;
-        matrixStack.pushPose();
+        guiGraphics.pose().pushPose();
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         ItemStack jetboots = ModUtils.getJetBoots(player);
         if (!jetboots.isEmpty()) {
@@ -90,7 +90,7 @@ public class BatteryIconOverlay extends ConfigurablePercentageScaledOverlay.Post
             DrawUtil.drawNonStandardTexturedRect(xPos, yPos, 0, 0, 18,  18, 18, 18);
         }
 
-        matrixStack.popPose();
+        guiGraphics.pose().popPose();
     }
 
     private static boolean isBetween(int x, int lower, int upper) {

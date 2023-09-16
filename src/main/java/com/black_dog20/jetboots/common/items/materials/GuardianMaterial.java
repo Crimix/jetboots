@@ -2,7 +2,7 @@ package com.black_dog20.jetboots.common.items.materials;
 
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.crafting.Ingredient;
 
@@ -13,12 +13,12 @@ public class GuardianMaterial implements ArmorMaterial {
     private static final GuardianMaterial instance = new GuardianMaterial();
 
     @Override
-    public int getDurabilityForSlot(@Nonnull EquipmentSlot slotIn) {
+    public int getDurabilityForType(@Nonnull ArmorItem.Type pType) {
         return -1;
     }
 
     @Override
-    public int getDefenseForSlot(@Nonnull EquipmentSlot slotIn) {
+    public int getDefenseForType(@Nonnull ArmorItem.Type pType) {
         return 0;
     }
 

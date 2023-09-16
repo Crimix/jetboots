@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "jetboots:obsidian_infused_gold"
+        "recipe": "jetboots:jetboots_template_smithing"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,8 @@
   ],
   "rewards": {
     "recipes": [
-      "jetboots:obsidian_infused_gold"
+      "jetboots:jetboots_template_smithing"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

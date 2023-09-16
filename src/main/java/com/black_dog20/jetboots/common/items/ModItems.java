@@ -8,12 +8,18 @@ import com.black_dog20.jetboots.common.items.equipment.GuardianSwordItem;
 import com.black_dog20.jetboots.common.items.equipment.JetBootsItem;
 import com.black_dog20.jetboots.common.items.equipment.RocketBootsItem;
 import com.black_dog20.jetboots.common.util.NBTTags;
+import com.black_dog20.jetboots.common.util.TranslationHelper;
 import com.black_dog20.jetboots.common.util.TranslationHelper.Translations;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.SmithingTemplateItem;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
+import java.util.List;
 import java.util.Set;
 
 import static com.black_dog20.jetboots.common.util.UpgradeFunctionUtil.*;
@@ -21,6 +27,7 @@ import static com.black_dog20.jetboots.common.util.UpgradeFunctionUtil.*;
 public class ModItems {
     public static final Item.Properties ITEM_GROUP = new Item.Properties();
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Jetboots.MOD_ID);
+    public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Jetboots.MOD_ID);
 
     public static final RegistryObject<Item> JET_BOOTS = ITEMS.register("jetboots", () -> new JetBootsItem(ITEM_GROUP.stacksTo(1)));
     public static final RegistryObject<Item> OBSIDIAN_INFUSED_GOLD = ITEMS.register("obsidian_infused_gold", () -> new BaseItem(ITEM_GROUP.stacksTo(64)));
@@ -35,4 +42,16 @@ public class ModItems {
     public static final RegistryObject<Item> GUARDIAN_PANTS = ITEMS.register("guardian_pants", () -> new GuardianPantsItem(ITEM_GROUP.stacksTo(1)));
     public static final RegistryObject<Item> GUARDIAN_SWORD = ITEMS.register("guardian_sword", () -> new GuardianSwordItem(ITEM_GROUP.stacksTo(1)));
     public static final RegistryObject<Item> ROCKET_BOOTS = ITEMS.register("rocket_boots", () -> new RocketBootsItem(ITEM_GROUP.stacksTo(1)));
+
+    public static final RegistryObject<Item> JET_BOOTS_TEMPLATE = ITEMS.register("jetboots_template", () -> new SmithingTemplateItem(Translations.TEMPLATE_SLOT_DESCRIPTION.get(), Translations.TEMPLATE_ADDITIONS_SLOT_DESCRIPTION.get(), Translations.TEMPLATE_DESCRIPTION.get(), Translations.TEMPLATE_SLOT_INFO.get(), Translations.TEMPLATE_ADDITIONS_SLOT_INFO.get(), List.of(), List.of()));
+
+
+    public static final RegistryObject<CreativeModeTab> CREATIVE_TAB = CREATIVE_MODE_TABS.register("jetboots_tab", () -> CreativeModeTab.builder()
+            .icon(() -> JET_BOOTS.get().getDefaultInstance())
+            .title(TranslationHelper.Translations.ITEM_CATEGORY.get(ChatFormatting.RESET))
+            .displayItems((parameters, output) -> {
+                for (RegistryObject<Item> item : ModItems.ITEMS.getEntries()) {
+                    output.accept(item.get());
+                }
+            }).build());
 }

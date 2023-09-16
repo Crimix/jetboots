@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_obsidian_infused_gold": {
+    "has_jetboots": {
       "conditions": {
         "items": [
           {
             "items": [
-              "jetboots:obsidian_infused_gold"
+              "jetboots:jetboots"
             ]
           }
         ]
@@ -15,20 +15,21 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "jetboots:jetboots"
+        "recipe": "jetboots:thruster_upgrade_smithing"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_obsidian_infused_gold",
+      "has_jetboots",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "jetboots:jetboots"
+      "jetboots:thruster_upgrade_smithing"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

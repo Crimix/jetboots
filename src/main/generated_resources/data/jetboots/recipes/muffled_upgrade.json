@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "i": {
       "tag": "minecraft:wool"
@@ -15,5 +16,6 @@
   ],
   "result": {
     "item": "jetboots:muffled_upgrade"
-  }
+  },
+  "show_notification": true
 }
