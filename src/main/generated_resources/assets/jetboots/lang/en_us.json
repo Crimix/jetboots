@@ -46,7 +46,7 @@
   "jetboots.tooltip.item.refinedstorage_wireless_crafting_upgrade_info": "§7Upgrades the helmet to access the RS network\nRight click the helmet on a network to link it§r",
   "jetboots.tooltip.item.refinedstorage_wireless_crafting_upgrade_not_installed": "Wireless crafting grid upgrade not installed!",
   "jetboots.tooltip.item.refinedstorage_wireless_range_upgrade": "§7Wireless Range %s (RS)§r",
-  "jetboots.tooltip.item.refinedstorage_wireless_range_upgrade_info": "§7Upgrades the helmet range to the RS network\nMax 4 times§r",
+  "jetboots.tooltip.item.refinedstorage_wireless_range_upgrade_info": "§7Upgrades the helmet range to the RS network\nCan be applied maximum 4 times§r",
   "jetboots.tooltip.item.shock_absorber_upgrade": "§7Shock absorber§r",
   "jetboots.tooltip.item.shock_absorber_upgrade.info": "§7Removes fall damage while wearing jet or rocket boots§r",
   "jetboots.tooltip.item.show_upgrades": "Hold %s to show more info",

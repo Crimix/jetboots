@@ -97,7 +97,7 @@ public class GeneratorLanguage extends BaseLanguageProvider {
             addPrefixed(TranslationHelper.Compat.WIRELESS_CRAFTING_UPGRADE, "Wireless Transmitter (RS)", ChatFormatting.GRAY);
             addPrefixed(TranslationHelper.Compat.WIRELESS_CRAFTING_UPGRADE_INFO, "Upgrades the helmet to access the RS network\nRight click the helmet on a network to link it", ChatFormatting.GRAY);
             addPrefixed(TranslationHelper.Compat.WIRELESS_RANGE_UPGRADE, "Wireless Range %s (RS)", ChatFormatting.GRAY);
-            addPrefixed(TranslationHelper.Compat.WIRELESS_RANGE_UPGRADE_INFO, "Upgrades the helmet range to the RS network\nMax 4 times", ChatFormatting.GRAY);
+            addPrefixed(TranslationHelper.Compat.WIRELESS_RANGE_UPGRADE_INFO, "Upgrades the helmet range to the RS network\nCan be applied maximum 4 times", ChatFormatting.GRAY);
             addPrefixed(TranslationHelper.Compat.WIRELESS_CRAFTING_UPGRADE_NOT_INSTALLED, "Wireless crafting grid upgrade not installed!");
             addPrefixed(TranslationHelper.Compat.NETWORK_LINKED, "Helmet linked to network!");
             addPrefixed(TranslationHelper.Compat.NOT_LINKED_TO_NETWORK, "Not linked to a network!\nRight click the helmet on a network");
